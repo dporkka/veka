@@ -160,6 +160,24 @@ Matching a taught answer is **not** a test of human comprehension, spontaneous
 production, or equivalent translations. No learner outcomes have been collected.
 See [active-practice limitations and workflow](docs/active_practice_v11.md).
 
+## Experimental quotation and conversational repair (noncanonical)
+
+The opt-in `repair` reference parser introduces **four unverified research
+markers** for overt quotation, repetition requests, confirmation requests and
+corrections. Every quoted source uses the unchanged strict canonical Core
+grammar. A clarification/correction must supply an explicitly matching prior
+utterance; no arbitrary conversational referent is guessed.
+
+```sh
+python3 -m veka repair 'Ko-ta-ra Mi pa dak mel yu.'
+python3 -m veka repair 'Re-pe-ta Mi pa dak mel yu.' --prior 'Mi pa dak mel.'
+python3 -m veka repair 'Ko-re-ta Mi pa dak mel yu Mi pa ne dak mel yu.' --prior 'Mi pa dak mel.'
+```
+
+**No canonical lexicon or grammar changes.** These markers are untested in human
+conversation, and parser acceptance is not evidence of shared pragmatic meaning,
+acoustic intelligibility or truth. See [research grammar and limits](docs/repair_protocol_v01.md).
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
