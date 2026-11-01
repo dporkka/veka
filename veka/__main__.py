@@ -10,6 +10,7 @@ from .core import (Lexicon,Discourse,VekaError,validate_word,syllabify,parse,
 from .numbers import spell_number,read_number
 from .logic import parse_logic
 from .phonology import analyze_root_confusions
+from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
 from .study import write_manifest
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -50,6 +51,13 @@ def main(argv=None):
     t.add_argument('name',choices=PROFILES)
     t=sub.add_parser('convert',help='convert tonal root tokens in text without grammatical inference')
     t.add_argument('utterance');t.add_argument('--target',choices=PROFILES,required=True)
+    t=sub.add_parser('lexical-risk',help='rank symbolic phonological risks and experimental replacement candidates')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--priorities',default=str(DEFAULT_PRIORITIES))
+    t.add_argument('--target',action='append',default=None)
+    t.add_argument('--top',type=int,default=10)
+    t.add_argument('--candidates',type=int,default=5)
+    t.add_argument('--output')
     t=sub.add_parser('international-audit',help='audit noncanonical loanword candidates and donor evidence')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--evidence',default=str(DATA/'international_evidence_v04.csv'))
@@ -64,7 +72,14 @@ def main(argv=None):
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     args=ap.parse_args(argv)
     try:
-        if args.command=='international-audit':
+        if args.command=='lexical-risk':
+            lex=load_profile(args.profile)
+            priorities=load_priorities(args.priorities,lex)
+            result=audit_lexical_risk(lex,priorities,targets=args.target,top=args.top,
+                                      candidates=args.candidates,profile=args.profile)
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='international-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_candidates(read_candidates(args.candidates),lex,read_evidence(args.evidence))
             if args.output:

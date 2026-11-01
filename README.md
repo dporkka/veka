@@ -25,6 +25,17 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
+
+The new `lexical-risk` command ranks **symbolic** near-pair risks with explicit **assumed**, not measured, exposure and consequence priorities, and generates alternative *unadopted* word forms. It also reports the 708 noun-adjective compounds whose silent hyphen produces the same spoken sequence as an ordinary noun-adjective phrase. It does **not** predict human errors or change the 1,025 canonical entries.
+
+```sh
+python -m veka lexical-risk --top 10 --target mi --target ne --target ran
+python -m veka lexical-risk --profile toneless --top 10 --target mi
+```
+
+See [the v0.5 design and falsification protocol](docs/lexical_design_v05.md). No audio recordings or listener outcomes have been collected.
+
 ## Quick start (Python 3.10+, zero third-party dependencies)
 
 From the directory containing `README.md`:
@@ -83,6 +94,8 @@ For complete grammar and numeric digit table see **[`docs/grammar_v03.md`](docs/
 | `veka/numbers.py` | Lossless canonical spoken decimal encoding/decoding |
 | `veka/logic.py` | Explicitly bracketed propositional expressions, AST + truth evaluation |
 | `veka/phonology.py` | Structural minimal-pair and numeral-codeword audit; **not** an acoustic predictor |
+| `veka/lexical_risk.py` + `data/lexical_priors_v05.csv` | Explicit risk-prior hypothesis audit, unadopted single-root alternatives, spoken compound surface equivalence |
+| `docs/lexical_design_v05.md` + `tests/test_lexical_risk_v05.py` | Method, known limits, experimental gates, regression tests |
 | `veka/study.py` | Participant counterbalancing and ABX assignment generation |
 | `docs/grammar_v03.md` | Formal written/speech rules and defined semantics |
 | `docs/phonology_v03.md` | Phonological risks, evidence references, alternate toneless inventory |
