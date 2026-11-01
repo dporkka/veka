@@ -8,6 +8,1610 @@
     "zh",
     "pt-BR"
   ],
+  "root_glosses": {
+    "ti": {
+      "kind": "canonical_root",
+      "pos": "pronoun",
+      "glosses": {
+        "en": {
+          "gloss": "you",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "你",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "você",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "sen": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "understand",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "理解",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "entender",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "mel": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "message",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "消息",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "mensagem",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "ke": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "yes/no question",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "是非疑问",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "pergunta de sim/não",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "mi": {
+      "kind": "canonical_root",
+      "pos": "pronoun",
+      "glosses": {
+        "en": {
+          "gloss": "I/me",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "我",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "eu/mim",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "ne": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "not",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "不",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "não",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "fu": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "future",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "将来",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "futuro",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "mak": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "write",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "write (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "write (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "kal": {
+      "kind": "canonical_root",
+      "pos": "adjective",
+      "glosses": {
+        "en": {
+          "gloss": "clear",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "clear (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "clear (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "rok": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "read",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "阅读",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "ler",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "rin": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "need",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "需要",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "precisar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "sil": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "water",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "水",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "água",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "nak": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "give",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "give (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "give (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "to": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "recipient marker",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "接受者标记",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "marcador de destinatário",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "han": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "drink",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "drink (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "drink (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "fos": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "eat",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "eat (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "eat (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "ta": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "bread",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "bread (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "bread (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "pa": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "past",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "过去",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "passado",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "des": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "soup",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "soup (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "soup (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "sau": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "book",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "书",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "livro",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "pik": {
+      "kind": "canonical_root",
+      "pos": "adjective",
+      "glosses": {
+        "en": {
+          "gloss": "new",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "new (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "new (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "lol": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "learn",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "learn (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "learn (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "nol": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "language",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "语言",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "língua",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "en": {
+      "kind": "canonical_root",
+      "pos": "particle",
+      "glosses": {
+        "en": {
+          "gloss": "location marker",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "地点标记",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "marcador de lugar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "vik": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "school",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "school (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "school (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "ma": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "meet",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "meet (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "meet (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "lun": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "teacher",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "teacher (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "teacher (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "doi": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "own",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "own (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "own (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "fis": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "phone",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "phone (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "phone (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "dak": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "send",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "发送",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "enviar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "ton": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "receive",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "接收",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "receber",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "fan": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "friend",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "friend (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "friend (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "vin": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "park",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "park (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "park (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "re": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "walk",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "walk (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "walk (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "pun": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "city",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "city (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "city (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "soi": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "wait",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "wait (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "wait (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "lin": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "see",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "看见",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "ver",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "rai": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "train",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "train (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "train (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "kon": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "arrive",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "到达",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "chegar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "sun": {
+      "kind": "canonical_root",
+      "pos": "time",
+      "glosses": {
+        "en": {
+          "gloss": "tomorrow",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "tomorrow (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "tomorrow (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "zak": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "station",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "station (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "station (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "del": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "stay",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "stay (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "stay (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "dol": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "house",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "house (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "house (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "mau": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "open",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "open (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "open (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "dek": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "door",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "door (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "door (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "fak": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "close",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "close (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "close (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "pau": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "work",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "work (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "work (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "nik": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "office",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "office (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "office (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "tas": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "do",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "do (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "do (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "hai": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "task",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "task (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "task (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "ves": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "plan",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "plan (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "plan (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "vek": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "problem",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "problem (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "problem (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "zu": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "search",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "search (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "search (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "yau": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "solution",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "solution (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "solution (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "mas": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "create",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "create (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "create (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "pe": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "meeting",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "meeting (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "meeting (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "he": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "tool",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "tool (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "tool (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "mik": {
+      "kind": "canonical_root",
+      "pos": "adjective",
+      "glosses": {
+        "en": {
+          "gloss": "broken",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "broken (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "broken (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "ras": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "repair",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "repair (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "repair (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "yai": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "use",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "use (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "use (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "yel": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "market",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "market (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "market (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "vo": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "buy",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "buy (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "buy (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "sos": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "bottle",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "bottle (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "bottle (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "bes": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "cup",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "cup (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "cup (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "fik": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "pay",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "pay (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "pay (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "len": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "customer",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "customer (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "customer (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "hek": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "doctor",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "doctor (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "doctor (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "noi": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "hospital",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "hospital (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "hospital (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "fo": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "sleep",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "sleep (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "sleep (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "kus": {
+      "kind": "canonical_root",
+      "pos": "time",
+      "glosses": {
+        "en": {
+          "gloss": "tonight",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "tonight (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "tonight (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "zan": {
+      "kind": "canonical_root",
+      "pos": "time",
+      "glosses": {
+        "en": {
+          "gloss": "later",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "later (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "later (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "sol": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "wake",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "wake (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "wake (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "ral": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "rule",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "rule (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "rule (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "hol": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "law",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "law (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "law (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "hos": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "question",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "question (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "question (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "mal": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "risk",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "risk (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "risk (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "zin": {
+      "kind": "canonical_root",
+      "pos": "adjective",
+      "glosses": {
+        "en": {
+          "gloss": "important",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "important (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "important (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "nel": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "river",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "river (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "river (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "gun": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "lake",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "lake (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "lake (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "sus": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "listen",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "听",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "escutar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "woi": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "music",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "音乐",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "música",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "wel": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "art",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "art (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "art (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "vis": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "artist",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "artist (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "artist (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "dan": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "story",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "story (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "story (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "za": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "computer",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "计算机",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "computador",
+          "gloss_language": "pt-BR"
+        }
+      }
+    },
+    "kak": {
+      "kind": "canonical_root",
+      "pos": "noun",
+      "glosses": {
+        "en": {
+          "gloss": "project",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "project (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "project (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "nal": {
+      "kind": "canonical_root",
+      "pos": "time",
+      "glosses": {
+        "en": {
+          "gloss": "now",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "now (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "now (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "zuk": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "teach",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "teach (en)",
+          "gloss_language": "en"
+        },
+        "pt-BR": {
+          "gloss": "teach (en)",
+          "gloss_language": "en"
+        }
+      }
+    },
+    "vak": {
+      "kind": "canonical_root",
+      "pos": "verb",
+      "glosses": {
+        "en": {
+          "gloss": "speak",
+          "gloss_language": "en"
+        },
+        "zh": {
+          "gloss": "说话",
+          "gloss_language": "zh"
+        },
+        "pt-BR": {
+          "gloss": "falar",
+          "gloss_language": "pt-BR"
+        }
+      }
+    }
+  },
   "status": "editorial word-level glosses, not validated translations",
   "human_comprehension_validated": false,
   "canonical_vocabulary_changed": false,
@@ -314,7 +1918,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "ti",
+          "sen",
+          "mel",
+          "ke",
+          "mi",
+          "ne",
+          "fu",
+          "mak",
+          "kal",
+          "rok"
+        ],
+        "review_roots": []
+      }
     },
     {
       "id": "B02",
@@ -618,7 +2238,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "rin",
+          "sil",
+          "nak",
+          "to",
+          "han"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu"
+        ]
+      }
     },
     {
       "id": "B03",
@@ -907,7 +2543,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "fos",
+          "ta",
+          "pa",
+          "des"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu",
+          "han",
+          "sil"
+        ]
+      }
     },
     {
       "id": "B04",
@@ -1226,7 +2879,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "sau",
+          "pik"
+        ],
+        "review_roots": [
+          "ti",
+          "rok",
+          "ke",
+          "mi",
+          "fu",
+          "nak",
+          "to"
+        ]
+      }
     },
     {
       "id": "B05",
@@ -1590,7 +3259,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "lol",
+          "nol",
+          "en",
+          "vik",
+          "ma",
+          "lun"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu"
+        ]
+      }
     },
     {
       "id": "B06",
@@ -1894,7 +3580,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "doi",
+          "fis",
+          "dak",
+          "ton"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu",
+          "mel",
+          "to"
+        ]
+      }
     },
     {
       "id": "B07",
@@ -2213,7 +3916,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "fan",
+          "vin",
+          "re"
+        ],
+        "review_roots": [
+          "ti",
+          "ma",
+          "ke",
+          "mi",
+          "fu",
+          "en"
+        ]
+      }
     },
     {
       "id": "B08",
@@ -2547,7 +4266,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "pun",
+          "soi"
+        ],
+        "review_roots": [
+          "ti",
+          "re",
+          "en",
+          "ke",
+          "mi",
+          "fu",
+          "vin"
+        ]
+      }
     },
     {
       "id": "B09",
@@ -2836,7 +4571,25 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 11,
+        "new_roots": [
+          "lin",
+          "rai",
+          "kon",
+          "sun",
+          "zak"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu",
+          "soi",
+          "en"
+        ]
+      }
     },
     {
       "id": "B10",
@@ -3140,7 +4893,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "del",
+          "dol",
+          "mau",
+          "dek",
+          "fak"
+        ],
+        "review_roots": [
+          "ti",
+          "en",
+          "ke",
+          "mi",
+          "fu"
+        ]
+      }
     },
     {
       "id": "B11",
@@ -3444,7 +5214,25 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 11,
+        "new_roots": [
+          "pau",
+          "nik",
+          "tas",
+          "hai",
+          "ves"
+        ],
+        "review_roots": [
+          "ti",
+          "en",
+          "ke",
+          "mi",
+          "fu",
+          "rok"
+        ]
+      }
     },
     {
       "id": "B12",
@@ -3718,7 +5506,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "vek",
+          "zu",
+          "yau",
+          "mas"
+        ],
+        "review_roots": [
+          "ti",
+          "lin",
+          "ke",
+          "mi",
+          "fu",
+          "ves"
+        ]
+      }
     },
     {
       "id": "B13",
@@ -4007,7 +5812,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "pe"
+        ],
+        "review_roots": [
+          "ti",
+          "rin",
+          "ke",
+          "mi",
+          "fu",
+          "mak",
+          "ves",
+          "ma",
+          "sun"
+        ]
+      }
     },
     {
       "id": "B14",
@@ -4311,7 +6133,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "he",
+          "mik",
+          "ras",
+          "yai"
+        ],
+        "review_roots": [
+          "ti",
+          "lin",
+          "ke",
+          "mi",
+          "fu"
+        ]
+      }
     },
     {
       "id": "B15",
@@ -4615,7 +6453,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "yel",
+          "vo",
+          "sos",
+          "bes"
+        ],
+        "review_roots": [
+          "ti",
+          "pau",
+          "en",
+          "ke",
+          "mi",
+          "fu"
+        ]
+      }
     },
     {
       "id": "B16",
@@ -4904,7 +6759,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "fik",
+          "len"
+        ],
+        "review_roots": [
+          "ti",
+          "vo",
+          "fis",
+          "ke",
+          "mi",
+          "fu",
+          "ton"
+        ]
+      }
     },
     {
       "id": "B17",
@@ -5223,7 +7094,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "hek",
+          "noi"
+        ],
+        "review_roots": [
+          "ti",
+          "rin",
+          "ke",
+          "mi",
+          "fu",
+          "ma",
+          "en",
+          "soi"
+        ]
+      }
     },
     {
       "id": "B18",
@@ -5512,7 +7400,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "fo",
+          "kus",
+          "zan",
+          "sol"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu",
+          "sun"
+        ]
+      }
     },
     {
       "id": "B19",
@@ -5786,7 +7690,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "ral",
+          "hol",
+          "hos"
+        ],
+        "review_roots": [
+          "ti",
+          "sen",
+          "ke",
+          "mi",
+          "fu",
+          "rok",
+          "mak"
+        ]
+      }
     },
     {
       "id": "B20",
@@ -6075,7 +7996,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "mal",
+          "zin"
+        ],
+        "review_roots": [
+          "ti",
+          "lin",
+          "ke",
+          "mi",
+          "fu",
+          "mak",
+          "mel",
+          "rok"
+        ]
+      }
     },
     {
       "id": "B21",
@@ -6364,7 +8302,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "nel",
+          "gun"
+        ],
+        "review_roots": [
+          "ti",
+          "lin",
+          "ke",
+          "mi",
+          "fu",
+          "re",
+          "en",
+          "vin"
+        ]
+      }
     },
     {
       "id": "B22",
@@ -6638,7 +8593,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "sus",
+          "woi",
+          "wel",
+          "vis"
+        ],
+        "review_roots": [
+          "ti",
+          "ke",
+          "mi",
+          "fu",
+          "lin",
+          "ma"
+        ]
+      }
     },
     {
       "id": "B23",
@@ -6927,7 +8899,22 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 8,
+        "new_roots": [
+          "dan"
+        ],
+        "review_roots": [
+          "ti",
+          "mak",
+          "ke",
+          "mi",
+          "fu",
+          "rok",
+          "pik"
+        ]
+      }
     },
     {
       "id": "B24",
@@ -7201,7 +9188,24 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 10,
+        "new_roots": [
+          "za",
+          "kak",
+          "nal"
+        ],
+        "review_roots": [
+          "ti",
+          "yai",
+          "ke",
+          "mi",
+          "fu",
+          "mas",
+          "pau"
+        ]
+      }
     },
     {
       "id": "B25",
@@ -7475,7 +9479,23 @@
             ]
           }
         }
-      ]
+      ],
+      "vocabulary": {
+        "root_count": 9,
+        "new_roots": [
+          "zuk",
+          "vak"
+        ],
+        "review_roots": [
+          "ti",
+          "lol",
+          "nol",
+          "ke",
+          "mi",
+          "fu",
+          "sun"
+        ]
+      }
     }
   ]
 }

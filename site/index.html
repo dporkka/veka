@@ -30,6 +30,12 @@ button:focus-visible, select:focus-visible, input:focus-visible + span { outline
 .veka { font-size: 1.12rem; font-weight: 650; }
 .english { display: block; color: var(--sub); font-size: .94rem; margin-top: .15rem; }
 .word-gloss { display:block; margin-top:.35rem; font-size:.91rem; line-height:1.65; color:var(--primary); overflow-wrap:anywhere; }
+#vocab-preview { margin: 1rem 0 1.25rem; border: 1px solid var(--line); border-radius: 10px; background: var(--accent); padding: .7rem 1rem; }
+#vocab-preview summary { font-weight: 700; cursor: pointer; }
+#vocab-preview h3 { margin: 1rem 0 .25rem; font-size: 1rem; }
+.vocab-list { padding-left: 1.5rem; margin: .2rem 0 .8rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: .3rem 1.5rem; }
+.vocab-list li { overflow-wrap: anywhere; }
+.vocab-word { font-weight: 750; }
 .choice { display: flex; gap: .75rem; border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; margin: .55rem 0; cursor: pointer; }
 .choice:has(input:checked) { border-color: var(--primary); background: var(--accent); }
 .choice input { accent-color: var(--primary); }
@@ -66,6 +72,12 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
   <section aria-labelledby="lesson-title" id="reader">
     <h2 id="lesson-title">Loading…</h2>
     <p id="lesson-summary" class="muted">Read the Veka text, then practice recognizing its meaning.</p>
+    <details id="vocab-preview" open>
+      <summary id="vocab-summary">Preview lesson vocabulary</summary>
+      <p class="muted">New means not introduced in earlier lessons, not unknown to you. These are editorial word glosses, not translations or evidence of learning.</p>
+      <h3>First introduced in this lesson</h3><ul id="vocab-new" class="vocab-list"></ul>
+      <h3>Previously introduced roots</h3><ul id="vocab-review" class="vocab-list"></ul>
+    </details>
     <div id="dialogue" class="dialogue"></div>
     <div class="actions">
       <button id="toggle-translation" class="secondary" type="button" disabled>Hide English</button>
@@ -100,6 +112,8 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
   const glossPicker = document.getElementById("gloss-picker");
   const reader = document.getElementById("reader");
   const dialogue = document.getElementById("dialogue");
+  const vocabNew = document.getElementById("vocab-new");
+  const vocabReview = document.getElementById("vocab-review");
   const quiz = document.getElementById("quiz");
   const feedback = document.getElementById("feedback");
   const choices = document.getElementById("choices");
@@ -110,6 +124,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
   const check = document.getElementById("check-answer");
   let lessons = [];
   let glossLessons = [];
+  let rootGlosses = {};
   let reveal = true;
   let lesson = null;
   let index = 0;
@@ -131,12 +146,29 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
     }
     return copy;
   }
+  function drawVocabulary(vocabulary) {
+    const lang = glossPicker.value === "off" ? "en" : glossPicker.value;
+    document.getElementById("vocab-summary").textContent =
+      "Vocabulary preview: " + vocabulary.new_roots.length + " new, " +
+      vocabulary.review_roots.length + " previously introduced";
+    for (const [items, target] of [[vocabulary.new_roots, vocabNew], [vocabulary.review_roots, vocabReview]]) {
+      target.replaceChildren();
+      for (const form of items) {
+        const entry = node("li");
+        entry.append(node("span", form, "vocab-word"));
+        entry.append(document.createTextNode(" — " + rootGlosses[form].glosses[lang].gloss));
+        target.append(entry);
+      }
+      if (!items.length) target.append(node("li", "None"));
+    }
+  }
   function drawLesson() {
     lesson = lessons.find(item => item.id === picker.value);
     if (!lesson) return;
     document.getElementById("lesson-title").textContent = lesson.id + " · " + lesson.title;
     dialogue.replaceChildren();
     const glossLesson = glossLessons.find(item => item.id === lesson.id);
+    drawVocabulary(glossLesson.vocabulary);
     lesson.turns.forEach((turn, turnIndex) => {
       const row = node("div", undefined, "turn");
       const initials = node("span", turn.speaker, "speaker");
@@ -263,9 +295,21 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
           packet.canonical_vocabulary_changed !== false ||
           !Array.isArray(packet.lessons) || packet.lessons.length !== data.lessons.length ||
           !Array.isArray(packet.languages) || ["en","zh","pt-BR"].some(lang => !packet.languages.includes(lang)) ||
+          !packet.root_glosses || Array.isArray(packet.root_glosses) ||
+          typeof packet.root_glosses !== "object" ||
           !data.lessons.every((item, i) => {
             const counterpart = packet.lessons[i];
+            const vocabulary = counterpart?.vocabulary;
+            const rootRows = [...(vocabulary?.new_roots || []), ...(vocabulary?.review_roots || [])];
             return counterpart && counterpart.id === item.id &&
+              vocabulary && Number.isInteger(vocabulary.root_count) &&
+              vocabulary.root_count === rootRows.length &&
+              Array.isArray(vocabulary.new_roots) && Array.isArray(vocabulary.review_roots) &&
+              rootRows.every(form => typeof form === "string" &&
+                packet.root_glosses[form]?.kind === "canonical_root" &&
+                packet.languages.every(lang => packet.root_glosses[form].glosses?.[lang] &&
+                  typeof packet.root_glosses[form].glosses[lang].gloss === "string" &&
+                  ["en", lang].includes(packet.root_glosses[form].glosses[lang].gloss_language))) &&
               Array.isArray(counterpart.turns) && counterpart.turns.length === item.turns.length &&
               item.turns.every((turn, n) => {
                 const match = counterpart.turns[n];
@@ -279,6 +323,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
       }
       lessons = data.lessons;
       glossLessons = packet.lessons;
+      rootGlosses = packet.root_glosses;
       picker.replaceChildren();
       lessons.forEach(item => {
         const option = document.createElement("option");
