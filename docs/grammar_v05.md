@@ -22,9 +22,9 @@ python3 -m veka extend "Fok-nes pa gos." --profile toneless
 
 The existing `parse` CLI continues to accept only the 0.4 grammar. Use `extend` to opt in. All extension clauses parse **strictly**, prohibiting implicit missing roles and unresolved `sa` pronouns. Content questions set a separate `content_question` field in the AST; yes/no questions retain `ke`.
 
-## Productive event derivation (6 bound suffixes)
+## Productive event derivation (9 bound suffixes)
 
-The six operators apply to an existing **primitive verb**, not arbitrarily to nouns or compound entries. The derivation is separated with a hyphen and remains transparently compositional. Neither the original dictionary nor the number of headwords changes.
+The nine operators apply to an existing **primitive verb**, not arbitrarily to nouns or compound entries. The derivation is separated with a hyphen and remains transparently compositional. Neither the original dictionary nor the number of headwords changes.
 
 | Suffix | Input | Output | Meaning | Example |
 |---|---|---|---|---|
@@ -34,10 +34,13 @@ The six operators apply to an existing **primitive verb**, not arbitrarily to no
 | `-dil` | verb | noun | result of event | `dak-dil` = result of sending |
 | `-vuk` | intransitive verb | transitive verb | cause event | `gos-vuk` = cause to go |
 | `-kas` | transitive verb | transitive verb | attempt to undo event | `dak-kas` = attempt to undo sending |
+| `-mol` | transitive verb | noun | participant filling the direct-object role | `dak-mol` = thing sent |
+| `-koin` | verb | verb | repeat the event, retaining valency | `dak-koin` = send again |
+| `-vau` | transitive verb | adjective | capable of undergoing the event as direct object | `dak-vau` = sendable |
 
 These are semantic relations, **not** guaranteed lexical equivalents of English occupational or object nouns. `dak-nes` does not automatically mean professional postal worker. `-kas` does not assert that the event is reversible or that an attempted reversal succeeds. A transitive verb cannot take `-vuk` until the language defines three-place predicates; this fails closed.
 
-The minimum pairwise Hamming distance between suffixes (as three-segment forms) is two. This is a structural screen, **not a perceptual study**.
+The original six three-letter suffixes were screened for a minimum pairwise Hamming distance of two. The new suffixes include the four-letter `koin` and are distinct, phonotactically valid candidates. **No structural distance guarantees audibility**; a full all-operator acoustic-confusion study is still needed. The `patient` and `passive_able` operators require transitive direct-object verbs, and `repeat` preserves the source valency. None is a canonical Veka morpheme.
 
 ## Correlatives (4 × 6)
 
