@@ -1,0 +1,33 @@
+participant_id,item_id,condition,category,meaning,utterance,context_json,critical,recording_id
+P001,control-06,compact,uncompressible_control,The message is clear,Mel es kal.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-06_compact.wav
+P001,ellipsis-21,explicit,ellipsis,You will send me the message tomorrow,Ti fu dak mel to mi sun.,"{""objects"": [""mel""], ""recipients"": [""mi""], ""subjects"": [""ti""]}",0,ellipsis-21_explicit.wav
+P001,ellipsis-13,explicit,ellipsis,I remembered the message,Mi pa pái mel.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-13_explicit.wav
+P001,control-04,compact,uncompressible_control,Two people went,Ren wen kuk pa gos.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",1,control-04_compact.wav
+P001,ellipsis-12,compact,ellipsis,I trust you,Vén ti.,"{""objects"": [""ti""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-12_compact.wav
+P001,control-05,explicit,uncompressible_control,Three people went,Ren wen zun pa gos.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",1,control-05_explicit.wav
+P001,ellipsis-08,compact,ellipsis,I found the message,Pa fen.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-08_compact.wav
+P001,ellipsis-15,explicit,ellipsis,I see the clear message,Mi lin mel kal.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-15_explicit.wav
+P001,control-02,compact,uncompressible_control,I did not go,Mi pa ne gos.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-02_compact.wav
+P001,ellipsis-20,compact,ellipsis,I do not see the hill,Ne lin pál.,"{""objects"": [""pál""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-20_compact.wav
+P001,ellipsis-09,explicit,ellipsis,I do not understand the message,Mi ne sen mel.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-09_explicit.wav
+P001,ellipsis-11,explicit,ellipsis,I sent the message to you,Mi pa dak mel to ti.,"{""objects"": [""mel""], ""recipients"": [""ti""], ""subjects"": [""mi""]}",0,ellipsis-11_explicit.wav
+P001,control-07,explicit,uncompressible_control,I need water,Mi rin sil.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-07_explicit.wav
+P001,ellipsis-17,explicit,ellipsis,I will arrive tomorrow,Mi fu kon sun.,"{""objects"": [], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-17_explicit.wav
+P001,ellipsis-14,compact,ellipsis,You are doing the task,Du tas.,"{""objects"": [""hai""], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-14_compact.wav
+P001,ellipsis-04,compact,ellipsis,I see the hill,Lin pál.,"{""objects"": [""pál""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-04_compact.wav
+P001,ellipsis-10,compact,ellipsis,You will need water,Fu rin sil.,"{""objects"": [""sil""], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-10_compact.wav
+P001,ellipsis-22,compact,ellipsis,I understood the message,Pa sen.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-22_compact.wav
+P001,control-03,explicit,uncompressible_control,You will speak,Ti fu vak.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-03_explicit.wav
+P001,ellipsis-01,explicit,ellipsis,I will send you the message tomorrow,Mi fu dak mel to ti sun.,"{""objects"": [""mel""], ""recipients"": [""ti""], ""subjects"": [""mi""]}",0,ellipsis-01_explicit.wav
+P001,ellipsis-19,explicit,ellipsis,I needed water,Mi pa rin sil.,"{""objects"": [""sil""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-19_explicit.wav
+P001,control-01,explicit,uncompressible_control,The person went,Ren pa gos.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-01_explicit.wav
+P001,ellipsis-16,compact,ellipsis,You will go tomorrow,Fu gos sun.,"{""objects"": [], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-16_compact.wav
+P001,ellipsis-06,compact,ellipsis,We will arrive tomorrow,Fu kon sun.,"{""objects"": [], ""recipients"": [], ""subjects"": [""ni""]}",0,ellipsis-06_compact.wav
+P001,ellipsis-02,compact,ellipsis,I received the message,Pa ton mel.,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-02_compact.wav
+P001,ellipsis-07,explicit,ellipsis,I am speaking now,Mi du vak nal.,"{""objects"": [], ""recipients"": [], ""subjects"": [""mi""]}",0,ellipsis-07_explicit.wav
+P001,ellipsis-24,compact,ellipsis,Did you not receive the message?,Pa ne ton ke?,"{""objects"": [""mel""], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-24_compact.wav
+P001,control-08,compact,uncompressible_control,The person will arrive,Ren fu kon.,"{""objects"": [], ""recipients"": [], ""subjects"": []}",0,control-08_compact.wav
+P001,ellipsis-05,explicit,ellipsis,You went,Ti pa gos.,"{""objects"": [], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-05_explicit.wav
+P001,ellipsis-03,explicit,ellipsis,You saw the garden,Ti pa lin pal.,"{""objects"": [""pal""], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-03_explicit.wav
+P001,ellipsis-18,compact,ellipsis,You found the garden,Pa fen pal.,"{""objects"": [""pal""], ""recipients"": [], ""subjects"": [""ti""]}",0,ellipsis-18_compact.wav
+P001,ellipsis-23,explicit,ellipsis,I will not be sending you the message tomorrow,Mi fu du ne dak mel to ti sun.,"{""objects"": [""mel""], ""recipients"": [""ti""], ""subjects"": [""mi""]}",0,ellipsis-23_explicit.wav

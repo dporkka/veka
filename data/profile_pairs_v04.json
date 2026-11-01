@@ -1,0 +1,14 @@
+{
+  "status": "constructed machine-validated lexical equivalence examples, NOT human auditory outcomes",
+  "profiles": ["tonal", "toneless"],
+  "items": [
+    {"id":"remember", "meaning":"I remember a message", "tonal":"Mi pái mel.", "toneless":"Mi fok mel."},
+    {"id":"hill", "meaning":"The hill is clear", "tonal":"Pál es kal.", "toneless":"Lek es kal."},
+    {"id":"idea", "meaning":"The idea is clear", "tonal":"Lé es kal.", "toneless":"Hok es kal."},
+    {"id":"trust", "meaning":"I trust you", "tonal":"Mi vén ti.", "toneless":"Mi gon ti."},
+    {"id":"combined", "meaning":"I remember the idea", "tonal":"Mi pái lé.", "toneless":"Mi fok hok."},
+    {"id":"negative", "meaning":"I do not trust you", "tonal":"Mi ne vén ti.", "toneless":"Mi ne gon ti."},
+    {"id":"control-send", "meaning":"I send a message", "tonal":"Mi dak mel.", "toneless":"Mi dak mel."},
+    {"id":"control-go", "meaning":"I went", "tonal":"Mi pa gos.", "toneless":"Mi pa gos."}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "n_cases": 24,
+  "parse_passes": 24,
+  "failures": [],
+  "explicit_syllables": 108,
+  "compact_syllables": 65,
+  "syllable_reduction_fraction": 0.3981,
+  "measures_spoken_throughput": false,
+  "measures_comprehension": false
+}
