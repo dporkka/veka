@@ -7,11 +7,13 @@ registered in the Veka grammar or lexicon.
 from __future__ import annotations
 
 import unicodedata
+import json
 
 from .core import Lexicon, VekaError, _normalize_sentence, parse
 from .international import audit_candidates
 from .numbers import DIGIT_VALUES
 from .profiles import DATA, PROFILES
+from .semantic_families import describe_family
 
 GRAMMAR_GLOSSES = {
     "pa": "past", "fu": "future", "du": "progressive", "ne": "not",
@@ -38,6 +40,8 @@ def guide_sentence(
     *,
     profile: str = "tonal",
     include_cues: bool = True,
+    include_families: bool = False,
+    include_readings: bool = False,
 ) -> dict:
     """Explain one *strictly parsed* sentence without modifying its vocabulary.
 
@@ -115,9 +119,21 @@ def guide_sentence(
                 "accepted_vocabulary": False,
             })
 
+    families = {}
+    if include_families:
+        for word in words:
+            form = word["form"]
+            if form not in lex:
+                continue
+            item = lex[form]
+            if item.pos in ("noun", "verb", "adjective") and form not in families:
+                families[form] = describe_family(
+                    form, lex, candidates, limit=5, include_cues=include_cues
+                )
+
     ending = normalized[-1] if normalized and normalized[-1] in ".?!" else ""
     reading = " ".join(f'{w["token"]} [{w["gloss"]}]' for w in words) + ending
-    return {
+    result = {
         "canonical": normalized, "profile": profile,
         "interlinear": reading, "words": words,
         "structure": structure,
@@ -131,6 +147,23 @@ def guide_sentence(
             "International-looking draft forms are NOT accepted Veka and have no measured recognition benefit."
         ),
     }
+    if include_families:
+        result["word_families"] = families
+    if include_readings:
+        # An exact-match editorial reading is not a translation engine.
+        corpus = json.loads((DATA / "editorial_readings_v09.json").read_text(encoding="utf8"))
+        key = tuple(t.casefold() for t in tokens)
+        example = next((
+            item for item in corpus["examples"]
+            if tuple(t.casefold() for t in _normalize_sentence(item["veka"])) == key
+        ), None)
+        result["editorial_reading"] = (
+            {"en": example["en"], "pt-BR": example["pt-BR"],
+             "machine_translation": False, "human_comprehension_validated": False,
+             "status": "unverified_editorial_example"}
+            if example is not None else None
+        )
+    return result
 
 
 def format_beginner_guide(guide: dict) -> str:
@@ -158,6 +191,20 @@ def format_beginner_guide(guide: dict) -> str:
                 f'  {cue["canonical_form"]} [{cue["gloss"]}]: '
                 f'{cue["illustrative_spelling"]} '
                 f'(unverified experimental form: {cue["draft_form"]})'
+            )
+    if guide.get("editorial_reading"):
+        example = guide["editorial_reading"]
+        lines.append(
+            f'Illustrative editorial reading (not a validated translation): '
+            f'English: {example["en"]} / Brazilian Portuguese: {example["pt-BR"]}'
+        )
+    if "word_families" in guide and guide["word_families"]:
+        lines.append("Experimental word families (read-only; derivations NOT core Veka):")
+        for word, family in guide["word_families"].items():
+            lines.append(
+                f'  {word} [{family["base_gloss"]}]: '
+                f'{family["canonical_compound_total"]} established compound links, '
+                f'{len(family["experimental_derivations"])} opt-in derivations'
             )
     lines.append(guide["notice"])
     return "\n".join(lines)
