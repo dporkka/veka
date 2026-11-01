@@ -63,12 +63,18 @@ Globasa's *check existing expressions → select donor source → define sense �
 screen exact word form* process, it exposes written near-pairs (including
 silent-hyphen overlaps), marks registered versus unverified alternatives, and
 separates language-family attestations from **independent borrowing origins**.
-It does **not** create a new word or establish acoustic/learner performance.
+It also displays the already collected five `music_source_screening_v10.csv`
+leads as **unreviewed source records**, not approved donor attestations, and
+exposes existing English, Mandarin and Portuguese learner word-glosses with
+explicit fallback labels. It does **not** create a new word or establish
+acoustic/learner performance.
 
 ```sh
 python3 -m veka root-review C002 --format text  # woi versus unverified mu-si-ka
 python3 -m veka root-review C056 --format text  # di-a near critical dis
 python3 -m veka root-review C002 --format json  # structured review and source records
+python3 -m veka root-review C002 --format text --lang zh  # curated word gloss, source leads
+python3 -m veka root-review C002 --format text --lang pt-BR
 ```
 
 See [Globasa-informed root review, sources and limitations](docs/globasa_root_review_v01.md).

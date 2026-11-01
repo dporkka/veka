@@ -13,6 +13,8 @@ from .international import audit_candidates
 from .international_plan import build_international_plan
 from .phonology import edit_distance
 from .semantic_families import describe_family
+from .learner_locales import LANGUAGES, localized_gloss
+from .source_leads import audit_screening_leads
 
 VERSION = "veka.root-review.v01"
 
@@ -50,7 +52,8 @@ def near_spelling_forms(candidate: str, forms, *, limit: int = 20) -> list[dict]
 
 
 def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
-                      priorities: list[dict], evidence: list[dict]) -> dict:
+                      priorities: list[dict], evidence: list[dict], *,
+                      leads: list[dict] | None = None) -> dict:
     """Join existing audited Veka research instead of creating another ranking.
 
     Reviewer flags are assertions; even a verified semantic attestation does
@@ -64,6 +67,7 @@ def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
     queue = {item["concept_id"]: item for item in plan["queue"]}
     if concept_id not in queue:
         raise VekaError(f"unknown international root concept: {concept_id}")
+    screened = audit_screening_leads(leads if leads is not None else [], candidates)
     # Validate all source records against the structural candidate contracts.
     global_report = audit_global_candidates(candidates, lex, evidence)
     structural = audit_candidates(candidates, lex)
@@ -100,6 +104,13 @@ def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
         arms.append({"condition": "candidate", "form": candidate_form,
                      "accepted_vocabulary": False})
     audit = global_report["candidates"].get(concept_id, {})
+    glosses = {}
+    for language in LANGUAGES:
+        gloss, used_language = localized_gloss(core.form, core.gloss, language)
+        glosses[language] = {
+            "gloss": gloss, "gloss_language": used_language,
+            "status": "curated_word_gloss_not_full_translation",
+        }
     return {
         "schema_version": VERSION,
         "concept_id": concept_id,
@@ -130,9 +141,12 @@ def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
             "note": "Language families are not independent borrowing histories; donor senses and loan chains require manual source review.",
         },
         "source_records": sources,
+        "source_leads": [lead for lead in screened if lead["concept_id"] == concept_id],
+        "learner_glosses": glosses,
         "review_gates": {
             "already_expressible": True,
             "meaning_and_false_friends_reviewed": False,
+            "screening_leads_independently_reviewed": False,
             "etymological_independence_reviewed": False,
             "phonological_listening_tested": False,
             "human_recognition_measured": False,
@@ -153,12 +167,17 @@ def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
     }
 
 
-def format_root_review(report: dict) -> str:
+def format_root_review(report: dict, *, language: str = "en") -> str:
     """Print a readable learner/researcher card with unambiguous status tags."""
+    if language not in LANGUAGES:
+        raise VekaError(f"unsupported root review language: {language}")
     core, draft = report["canonical"], report["candidate"]
+    local = report["learner_glosses"][language]
     lines = [
         f'{report["concept_id"]}: {core["gloss"]} ({core["pos"]})',
         f'Veka Core: {core["form"]} (accepted; already expresses this concept)',
+        f'Learner gloss ({language}): {local["gloss"]} '
+        f'[source language: {local["gloss_language"]}; editorial word gloss]',
     ]
     if draft["form"]:
         lines.append(
@@ -177,6 +196,8 @@ def format_root_review(report: dict) -> str:
         f'Existing compounds affected: {core["affected_compounds"]}',
         f'Source records: {len(report["source_records"])} '
         '(reviewer assertions, not recognition evidence)',
+        f'unreviewed source leads: {len(report["source_leads"])} '
+        '(not verified attestations)',
         'Etymological borrowing-chain independence: not established',
         'Compare: ' + ' vs '.join(f'{arm["condition"]} {arm["form"]}'
                                  for arm in report["comparison_arms"]),
@@ -184,4 +205,11 @@ def format_root_review(report: dict) -> str:
         'No human recognition or spoken listening evidence; '
         'no canonical vocabulary changes or adoption approval.',
     ])
+    if report["source_leads"]:
+        lines.append("Source-screening forms (none independently reviewed):")
+        for lead in report["source_leads"]:
+            lines.append(
+                f'  {lead["language"]}: {lead["sourced_form"]} '
+                f'({lead["relation_to_draft"]}; {lead["review_status"]})'
+            )
     return "\n".join(lines)

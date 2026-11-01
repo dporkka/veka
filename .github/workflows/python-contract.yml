@@ -40,6 +40,8 @@ jobs:
           python -m veka root-review C002 --output /tmp/veka-root-review.json > /dev/null
           test -s /tmp/veka-root-review.json
           python -m veka root-review C056 --format text > /dev/null
+          python -m veka root-review C002 --format text --lang zh > /dev/null
+          python -m veka root-review C002 --format text --lang pt-BR > /dev/null
           python -m veka borrowing-audit --output /tmp/veka-borrowing-audit.json > /dev/null
           python -m veka conversation-score --output /tmp/veka-conversation-score.json > /dev/null
           python -m veka conversation-session --help > /dev/null

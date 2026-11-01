@@ -31,6 +31,8 @@ automatic adoption criterion for Veka.
 python3 -m veka root-review C002 --format text
 python3 -m veka root-review C002 --format json
 python3 -m veka root-review C009 --format text  # no invented candidate
+python3 -m veka root-review C002 --format text --lang zh
+python3 -m veka root-review C002 --format text --lang pt-BR
 python3 -m veka root-review C002 --output /tmp/veka-root-review.json
 python3 -m veka international-plan
 python3 -m veka lexical-readiness
@@ -39,9 +41,24 @@ python3 -m unittest discover -s tests -p 'test_root_review_v01.py' -v
 
 The command accepts the existing v0.10 candidate/priorities CSV and v0.7
 cross-family evidence CSV through `--candidates`, `--priorities` and
-`--evidence`. It validates **the entire input queue and all evidence**, not
-merely the selected concept, to prevent malformed records from being silently
-ignored. Bad or unknown concepts fail closed.
+`--evidence`. The separate `--leads` flag defaults to
+`data/music_source_screening_v10.csv`, a five-row, source-linked research
+screening file. Its research reference `R03` joins canonical research concept
+`C002` **only via unique exact candidate spelling** `mu-si-ka` (not by
+guessing that the reference IDs are equivalent or that the source words share
+a meaning). No source-screening row can count as a verified attestation;
+only a separately reviewed `--evidence` record has that ability.
+
+The optional `--lang en|zh|pt-BR` controls the readable word-gloss language.
+JSON includes all three curated word-glosses, their actual source languages,
+and an explicit English `(en)` fallback when a gloss is not in Veka's existing
+teaching list. Word glosses are not verified sentence translations.
+
+The tool validates **the entire input queue, all evidence, and all source
+leads**, not merely the selected concept, to prevent malformed records from
+being silently ignored. Unknown concepts, duplicate lead languages, unknown
+candidate forms, non-HTTPS URLs, unsupported provenance statuses, and purported
+independently verified screening leads all fail closed.
 
 A concept card provides:
 
@@ -56,6 +73,13 @@ A concept card provides:
   registered vocabulary from other unverified candidate forms.
 - Source attestations, including language, branch, claimed verification,
   claimed semantic equivalence and reviewer-supplied URLs/notes.
+- **Separately labeled unreviewed source-screening leads**, including both
+  related loanwords (English, Portuguese, Indonesian, Swahili) and a
+  nonmatching Mandarin form. The screened file's five entries still require
+  independent human sense, sound and borrowing-path review. An indexed search
+  result is not source-page verification.
+- Curated word-level learner glosses in English, Mandarin and Brazilian
+  Portuguese, with transparent English fallback and no invented translations.
 - A mandatory unresolved etymological-independence gate. Even claims of
   attestations from two different language families do not show two
   independently evolved roots or any probability of comprehension.
@@ -100,14 +124,16 @@ with collisions, compound dependencies and study results audited.
 
 ## Evidence boundaries
 
-The default Veka source and human-trial tables are **empty**, so output
-contains zero source records and establishes no human learning benefit.
+The default Veka **verified-attestation** and human-trial tables are **empty**,
+so the root review contains zero verified source records but now shows five
+**unreviewed** music-screening leads. There is no established human learning
+benefit, independently reviewed loanword etymology, or license to adopt forms.
 Reviewer labels are not independently authenticated; provenance URLs are
 untrusted research input, not certified source quality. The word card is
 English-first and machine-readable; the existing `beginner`, `lessons`
 and `family` commands provide separate English, Mandarin and Portuguese
-learning paths. Do not imply the research card itself translates or teaches
-all three languages.
+learning paths. The review's multilingual field is a *curated word gloss*, not
+a full dictionary of verified cross-language senses or a translation engine.
 
 Parser passing is not word comprehension, family coverage is not recognition,
 and spelling edit distance is not phonetic or noise robustness. This tool

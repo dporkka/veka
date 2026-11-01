@@ -9,6 +9,7 @@ from veka.core import Lexicon, VekaError
 from veka.international import read_candidates
 from veka.international_plan import read_review_priorities
 from veka.root_review import build_root_review, near_spelling_forms
+from veka.source_leads import read_screening_leads, audit_screening_leads
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -20,9 +21,11 @@ class RootReviewTests(unittest.TestCase):
         cls.candidates = read_candidates(ROOT / "data/international_candidates_v10.csv")
         cls.priorities = read_review_priorities(ROOT / "data/international_priorities_v10.csv")
 
-    def review(self, concept="C002", evidence=None):
+    def review(self, concept="C002", evidence=None, leads=None):
+        if leads is None:
+            leads = read_screening_leads(ROOT / "data/music_source_screening_v10.csv")
         return build_root_review(concept, self.candidates, self.lex,
-                                 self.priorities, evidence or [])
+                                 self.priorities, evidence or [], leads=leads)
 
     def test_music_card_has_two_separate_experimental_arms(self):
         data = self.review()
@@ -103,6 +106,54 @@ class RootReviewTests(unittest.TestCase):
         self.assertEqual(p.returncode, 0, p.stderr)
         self.assertIn("woi", p.stdout)
         self.assertIn("mu-si-ka", p.stdout)
+
+    def test_music_screening_leads_are_not_verified_attestations(self):
+        report = self.review()
+        self.assertEqual(len(report["source_leads"]), 5)
+        self.assertEqual(report["source_records"], [])
+        self.assertEqual(report["etymology"]["attested_language_families_claimed"], 0)
+        self.assertTrue(all(row["review_status"] == "pending" for row in report["source_leads"]))
+        self.assertTrue(all(row["accepted_as_attestation"] is False for row in report["source_leads"]))
+        mandarin = next(r for r in report["source_leads"] if r["language"] == "Mandarin")
+        self.assertEqual(mandarin["relation_to_draft"], "unrelated_common_translation")
+        self.assertFalse(report["adoption_authorized"])
+
+    def test_localized_dictionary_glosses_and_explicit_fallback(self):
+        report = self.review()
+        self.assertEqual(report["learner_glosses"]["zh"]["gloss"], "音乐")
+        self.assertEqual(report["learner_glosses"]["pt-BR"]["gloss"], "música")
+        self.assertEqual(report["learner_glosses"]["pt-BR"]["gloss_language"], "pt-BR")
+        fallback = self.review("C009")
+        self.assertEqual(fallback["learner_glosses"]["pt-BR"]["gloss_language"], "en")
+        self.assertTrue(fallback["learner_glosses"]["pt-BR"]["gloss"].endswith("(en)"))
+        from veka.root_review import format_root_review
+        self.assertIn("音乐", format_root_review(report, language="zh"))
+        self.assertIn("música", format_root_review(report, language="pt-BR"))
+        process = subprocess.run([sys.executable, "-m", "veka", "root-review",
+                                  "C002", "--format", "text", "--lang", "pt-BR"],
+                                 cwd=ROOT, text=True, capture_output=True)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertIn("música", process.stdout)
+        self.assertIn("unreviewed source leads: 5", process.stdout)
+
+    def test_screening_leads_fail_closed_without_creating_attestations(self):
+        import csv
+        import tempfile
+        leads = read_screening_leads(ROOT / "data/music_source_screening_v10.csv")
+        self.assertEqual(len(audit_screening_leads(leads, self.candidates)), 5)
+        with self.assertRaises(VekaError):
+            audit_screening_leads(leads + [leads[0]], self.candidates)
+        with self.assertRaises(VekaError):
+            audit_screening_leads([dict(leads[0], candidate_form="fake")], self.candidates)
+        with self.assertRaises(VekaError):
+            audit_screening_leads([dict(leads[0], independent_review_status="verified")], self.candidates)
+        with self.assertRaises(VekaError):
+            audit_screening_leads([dict(leads[0], source_url="file:///tmp/leak")], self.candidates)
+        with tempfile.TemporaryDirectory() as folder:
+            file = Path(folder) / "bad.csv"
+            file.write_text("candidate_form,language\nmu-si-ka,English\n", encoding="utf8")
+            with self.assertRaises(VekaError):
+                read_screening_leads(file)
 
     def test_cli_json_and_rejected_unknown_concept(self):
         cmd = [sys.executable, "-m", "veka", "root-review", "C002"]
