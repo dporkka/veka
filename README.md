@@ -82,9 +82,12 @@ python -m veka global-score
 python -m unittest discover -s tests -q
 ```
 
-The bundled CSV templates have **zero** verified attestations and **zero**
-participant trials. All 1,025 canonical entries and existing parsing semantics
-are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
+The bundled default CSV templates have **zero** verified attestations and **zero**
+participant trials. A separate [source-linked music loanword case study](docs/music_loanword_case_study_v07.md)
+contains five explicitly **unverified** leads. Audit with
+`python -m veka global-audit --evidence data/global_music_leads_v07.csv`
+without counting unreviewed items as verified cognates. All 1,025 canonical entries and existing
+parsing semantics are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
 for evidence fields, blinded pilot methods, candidate provenance rules, privacy,
 and empirical adoption gates.
 
