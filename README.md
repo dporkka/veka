@@ -31,6 +31,25 @@ python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register r
 **Parser acceptance is not human comprehension or safety validation.** See
 [register semantics and limitations](docs/registers_v08.md).
 
+## Lojban-inspired semantic scope (opt-in; no language changes)
+
+The new `semantic` CLI projects **already-valid canonical** Veka into an
+inspectable predicate/argument tree. It shows why `ne` inside a quantified
+clause differs from a fully scoped `na ... yu`, labels a few reviewed
+predicate places (other verbs retain subject/object labels), and expands
+existing transparent noun compounds into their component tokens. There are
+**no** new particles, dictionary entries, or mandatory spoken constructions.
+
+```sh
+python3 -m veka semantic 'Al ren ne gos.'
+python3 -m veka semantic 'Na al ren gos yu.'
+python3 -m veka semantic 'Mi dak mel to ti en pas sun.'
+```
+
+This is structural annotation, not real-world truth evaluation or evidence of
+improved listener comprehension. Multiple quantified participants and
+quantified possessors fail closed. Read the [semantic scope specification](docs/semantic_scope_v01.md).
+
 ## Interlingua-inspired learning aids (opt-in; no language changes)
 
 The `family` command exposes *existing* canonical noun-modifier compounds
