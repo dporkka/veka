@@ -42,7 +42,9 @@ python3 -m veka conversation-session \
 ```
 
 The command refuses overwrites and creates a participant-only JSON with
-restricted permissions on systems supporting POSIX permissions. Its payload
+restricted permissions on systems supporting POSIX permissions. Browser uploads
+accept up to 1 MiB, covering the maximum 40 trials of 2,000 Unicode code points
+per context and utterance (including non-BMP characters). Its payload
 contains only a pseudonym and an ordered set of opaque trial IDs, assigned
 language labels, context text and utterance text; it contains **no scenario
 ID, reference answer, meaning key, score or reviewer assertion**.

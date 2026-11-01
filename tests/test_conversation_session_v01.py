@@ -91,6 +91,25 @@ class ConversationSessionTests(unittest.TestCase):
             with self.assertRaises(VekaError):
                 write_conversation_session([dict(self.rows[0], correct='1'), self.rows[1]], Path(tmp) / 'bad.json')
 
+    def test_maximal_unicode_session_is_accepted_by_browser_contract(self):
+        # 2,000 Unicode code points can exceed 2,000 UTF-16 code units.
+        # A 40-trial JSON export may exceed the old 100 KB browser limit.
+        rows = []
+        for i in range(40):
+            rows.append(dict(participant_id='S001', trial_id=f'D01-{i:016x}',
+                             scenario_id=f'ED-{i + 1:03d}', language='veka',
+                             context='𐐀' * 2000, utterance='𐐀' * 2000))
+        with tempfile.TemporaryDirectory() as tmp:
+            destination = Path(tmp) / 'large.json'
+            result = write_conversation_session(rows, destination)
+            self.assertEqual(result['trials'], 40)
+            self.assertGreater(destination.stat().st_size, 100000)
+            self.assertLess(destination.stat().st_size, 1048576)
+            self.assertEqual(len(json.loads(destination.read_text())['trials']), 40)
+        html = (ROOT / 'site/conversation-study.html').read_text(encoding='utf-8')
+        self.assertIn('file.size > 1048576', html)
+        self.assertIn('Array.from(text).length > 2000', html)
+
     def test_cli_and_offline_page_do_not_embed_keys_or_external_scripts(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp)
