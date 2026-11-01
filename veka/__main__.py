@@ -21,6 +21,7 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
@@ -139,6 +140,9 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('register-check',help='check canonical Core/Precise versus opt-in Research syntax')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--max-register',choices=REGISTERS,default='core')
     t=sub.add_parser('aesthetics',help='screen proposed word forms using text-only sound-shape heuristics')
     t.add_argument('forms',nargs='+');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('prosody',help='guidance for delivery of strictly parsed Veka without audio')
@@ -160,7 +164,9 @@ def main(argv=None):
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='meaning-plan':
+        if args.command=='register-check':
+            result=inspect_register(args.sentence,profile=args.profile,max_register=args.max_register)
+        elif args.command=='meaning-plan':
             items=json.loads((DATA/'study_items_v03.json').read_text(encoding='utf-8'))
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
             result=write_meaning_packet(packet,args.participant_csv,
