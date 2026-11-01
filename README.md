@@ -31,6 +31,8 @@ python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register r
 **Parser acceptance is not human comprehension or safety validation.** See
 [register semantics and limitations](docs/registers_v08.md).
 
+**International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before
