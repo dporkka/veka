@@ -53,35 +53,64 @@ Open `site/conversation-study.html` directly in a modern browser without a
 server or network connection. Load the participant JSON, provide the
 researcher-assigned language-background family label, and obtain consent.
 The participant answers the second turn of each dialogue in their own words
-(or "I don't know"). The page uses `textContent`, not HTML injection, when
-rendering supplied stimuli. It flags window/tab interruptions, and makes no
-claims about calibrated reaction-time measurements. No input is sent by the
+(or "I don't know"). For a researcher-mediated clarification, the participant
+clicks **Request clarification** at the start of the request, asks the
+researcher for the clarification outside the browser, and clicks **Mark
+clarification received** when the clarification is delivered. Any number of
+completed intervals may be recorded. An active timer blocks response submission;
+a new trial clears the timer, request count and unrecorded-repair flag.
+The researcher must separately document the actual intervention, timing
+protocol and script, and standardize the clarification opportunity across
+conditions. The browser cannot prove that a real intervention occurred.
+
+If any clarification happened without complete timer coverage, the participant
+checks **I received additional clarification that was not fully timed here**.
+This exports a blank `repair_ms` and `repair_tracking=incomplete`, not a
+fabricated zero. An explicit zero is emitted only if the participant has
+reported no untracked clarification and used no timer, still subject to
+researcher verification. The page uses `textContent`, not HTML injection,
+when rendering supplied stimuli. It flags window/tab interruptions and makes
+no claims about calibrated reaction-time measurements. No input is sent by the
 page to a remote service. Reloading the page loses unexported responses.
 
 At completion the participant may **optionally** export a private unscored CSV
 with the fields:
 
 ```csv
-participant_id,trial_id,language,response_text,response_ms,timing_interrupted,background_family
+participant_id,trial_id,language,response_text,response_ms,repair_ms,repair_requests,repair_tracking,timing_interrupted,background_family
 ```
+
+`response_ms` is elapsed time from displaying the prompt to submission
+**minus** completed in-page clarification intervals. `repair_ms` is the
+sum of those recorded intervals. Do not subtract it again in the scorer or
+add it to an unadjusted wall-clock duration: that would double count.
+`repair_requests` is the number of completed measured intervals.
+`repair_tracking` is `participant_recorded` or `incomplete`, not
+proof of researcher verification. Blank `repair_ms` is an explicitly
+unknown value, not zero.
 
 Free text is spreadsheet-formula neutralized in the exported CSV. This changes
 only suspicious output prefixes, not their display. The researcher must
 securely join the participant data with the *researcher-only* scenario mapping
 and independently adjudicate meaning correctness and critical errors. Exclude
-or separately analyze interrupted timing observations under preregistered
-rules; don't silently treat them as calibrated reaction times.
+or separately analyze interrupted or incomplete timing observations under
+preregistered rules; don't silently treat them as calibrated reaction times.
 
 ## Subsequent scoring remains explicitly human-gated
 
 `python3 -m veka conversation-score` consumes a **different** CSV schema:
 `participant_id,background_family,scenario_id,language,correct,elapsed_ms,repair_ms,critical_error`.
 That scored file must only be produced after independent human review and
-confirmed timing and clarification/repair records. The offline page collects
-only first-response time. It does **not** measure actual repair duration, so
-never invent `repair_ms=0` to satisfy the scoring contract if repair was
-not observed. Do not infer `correct` by text matching and never declare that
-parser acceptance establishes semantic equivalence.
+confirmed timing and clarification/repair records. The browser now records
+participant-operated clarification intervals, not verified conversational
+repairs. An eligible complete row can map `response_ms` to `elapsed_ms`
+and its `repair_ms` to scored `repair_ms` only after researcher verification
+that all requests were recorded and no time was double-counted. Rows with
+`repair_tracking=incomplete`, missing durations or unresolvable interruptions
+must be excluded or resolved against independently preserved actual records,
+never silently filled with `repair_ms=0`. Do not infer `correct` by text
+matching and never declare that parser acceptance establishes semantic
+equivalence.
 
 This pipeline is not a substitute for recruitment, informed consent review,
 stimulus licensing, translator review, prospective registration, acoustic

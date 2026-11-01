@@ -24,7 +24,7 @@ const upload = (page, value) => page.locator('#session-file').setInputFiles({
 });
 
 async function main() {
-  const browser = await chromium.launch({headless: true, args: ['--no-sandbox']});
+  const browser = await chromium.launch({headless: true, executablePath: process.env.VEKA_BROWSER_PATH || undefined, args: ['--no-sandbox']});
   try {
     const context = await browser.newContext({acceptDownloads: true});
     const page = await context.newPage();
@@ -54,27 +54,51 @@ async function main() {
     const small = session([
       trial(0, '<img src=x onerror=alert(1)>', 'Test dialogue A'),
       trial(1, 'Context B', 'Test dialogue B'),
+      trial(2, 'Context C', 'Test dialogue C'),
     ]);
     await upload(page, small);
-    assert.match(await page.locator('#status').innerText(), /Session validated: 2 prompts/);
+    assert.match(await page.locator('#status').innerText(), /Session validated: 3 prompts/);
     await page.locator('#family').fill('Austronesian');
     assert.equal(await page.locator('#begin').isDisabled(), true, 'consent still needed');
     await page.locator('#consent').check();
     await page.locator('#begin').click();
     assert.equal(await page.locator('#context').innerText(), small.trials[0].context);
     assert.equal(await page.locator('img').count(), 0, 'stimuli must be escaped text');
+    // One observed clarification interval: submission must wait for its completion.
+    await page.locator('#repair-toggle').click();
+    assert.equal(await page.locator('#response-form button').isDisabled(), true);
+    await page.waitForTimeout(50);
+    await page.locator('#repair-toggle').click();
+    assert.equal(await page.locator('#response-form button').isDisabled(), false);
     await page.locator('#response').fill('=SUM(1)');
     await page.locator('#response-form button').click();
-    await page.locator('#response').fill('I understood the other message');
+
+    // Unrecorded researcher intervention must not silently become zero repair time.
+    await page.locator('#untracked-repair').check();
+    await page.locator('#response').fill('I needed additional help');
+    await page.locator('#response-form button').click();
+    assert.equal(await page.locator('#untracked-repair').isChecked(), false, 'trial state resets');
+
+    await page.locator('#response').fill('I understood without repair');
     await page.locator('#response-form button').click();
     assert.equal(await page.locator('#done').isVisible(), true);
     const [download] = await Promise.all([
       page.waitForEvent('download'), page.locator('#export-responses').click(),
     ]);
     const csv = fs.readFileSync(await download.path(), 'utf8');
-    assert.equal(csv.trim().split(/\r?\n/).length, 3);
+    const rows = csv.trim().split(/\r?\n/);
+    assert.equal(rows.length, 4);
+    assert.equal(rows[0], 'participant_id,trial_id,language,response_text,response_ms,repair_ms,repair_requests,repair_tracking,timing_interrupted,background_family');
+    const cells = rows.slice(1).map(line => line.split(',').map(value => value.replace(/^"|"$/g, '')));
     assert.match(csv, /"'=SUM\(1\)"/, 'spreadsheet formula neutralized');
-    assert.match(csv, /I understood the other message/);
+    assert.ok(Number(cells[0][5]) >= 30, 'real clarification interval is timed');
+    assert.equal(cells[0][6], '1', 'count only completed explicit requests');
+    assert.equal(cells[0][7], 'participant_recorded');
+    assert.equal(cells[1][5], '', 'unrecorded repairs must have unknown timing');
+    assert.equal(cells[1][7], 'incomplete');
+    assert.equal(cells[2][5], '0', 'no declared clarification is an observed zero');
+    assert.equal(cells[2][6], '0');
+    assert.equal(cells[2][7], 'participant_recorded');
     assert.doesNotMatch(csv, /ED-083|SECRET-ANSWER|target_gloss|correct,/);
     assert.deepEqual(network, []);
     assert.deepEqual(errors, []);
