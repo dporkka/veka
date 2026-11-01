@@ -291,6 +291,27 @@ None of the six draft operator forms is accepted as canonical Veka, and
 the mechanical checks are not empirical pronunciation or comprehension
 evidence. See [modal scope and comparison design](docs/modality_comparison_v01.md).
 
+## Cross-language efficiency comparison (research-only)
+
+A new reproducible instrument reuses ten existing canonical Veka lessons and
+unverified English, Mandarin, and Brazilian Portuguese editorial readings.
+It checks Veka syllables, morphemes, and strict grammar without pretending that
+orthographic length determines cross-script information efficiency. Optional
+reviewed annotations can be added for Indonesian, Turkish, Esperanto,
+Interlingua, and other supported languages. Human outcome scoring requires
+separate actual trial observations and reviewed comparator translations;
+no learner result or language ranking is claimed.
+
+```sh
+python3 -m veka efficiency-audit
+python3 -m veka efficiency-template --output /tmp/veka-efficiency-input.json
+python3 -m veka efficiency-score  # empty trial template; no observations
+```
+
+See [cross-language efficiency protocol](docs/efficiency_comparison_v01.md)
+for the annotation schema, the comprehension/repair-time measure, and
+independent translation-review and human-study prerequisites.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.

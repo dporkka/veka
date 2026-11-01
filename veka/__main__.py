@@ -43,6 +43,8 @@ from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
 from .conversation_session import read_conversation_manifest, write_conversation_session
+from .efficiency import (default_manifest, audit_efficiency,
+                         read_efficiency_trials, score_efficiency_trials)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -291,9 +293,34 @@ def main(argv=None):
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('efficiency-template',help='export editable aligned lesson corpus without overwriting')
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('efficiency-audit',help='reproducible cross-language structural comparison; no ranking')
+    t.add_argument('--manifest',help='researcher-authored aligned JSON; default ten curated lessons')
+    t.add_argument('--output')
+    t=sub.add_parser('efficiency-score',help='descriptive observed correct meanings per minute with repair')
+    t.add_argument('--manifest',help='aligned JSON; non-Veka observations require reviewer status')
+    t.add_argument('--trials',default=str(DATA/'efficiency_trials_v01.csv'))
+    t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='repair':
+        if args.command=='efficiency-template':
+            template=default_manifest()
+            with Path(args.output).open('x',encoding='utf-8') as f:
+                f.write(json.dumps(template,indent=2,ensure_ascii=False)+'\n')
+            result={'schema_version':template['schema_version'],'output':args.output,
+                    'items':len(template['items']),'canonical_changes':0,
+                    'translation_reviewed':False}
+        elif args.command in ('efficiency-audit', 'efficiency-score'):
+            manifest=(json.loads(Path(args.manifest).read_text(encoding='utf-8'))
+                      if args.manifest else default_manifest())
+            if args.command=='efficiency-audit':
+                result=audit_efficiency(manifest)
+            else:
+                result=score_efficiency_trials(read_efficiency_trials(args.trials),manifest)
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='repair':
             result=parse_repair(args.utterance,load_profile(args.profile),prior=args.prior)
         elif args.command=='modal-compare':
             result=parse_modality_comparison(args.utterance,load_profile(args.profile))
@@ -591,7 +618,7 @@ def main(argv=None):
                 result=evaluate_stimuli(json.loads((DATA/'stimuli.json').read_text(encoding='utf-8')),lex)
         print(json.dumps(result,indent=2,ensure_ascii=False))
         return 0
-    except (VekaError,OSError,UnicodeError) as exc:
+    except (VekaError,OSError,UnicodeError,json.JSONDecodeError) as exc:
         print('VEKA ERROR: '+str(exc),file=sys.stderr)
         return 2
 
