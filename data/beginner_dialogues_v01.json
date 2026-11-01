@@ -1,0 +1,658 @@
+{
+  "schema_version": "veka.beginner-dialogues.v01",
+  "canonical_profile": "tonal",
+  "canonical_language_version": "0.4",
+  "status": "human-authored controlled dialogue examples; not empirical or machine-verified translation",
+  "lessons": [
+    {
+      "id": "B01",
+      "title": "Understanding and messages",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti sen mel ke?",
+          "english": "Do you understand the message?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi ne sen mel.",
+          "english": "I do not understand the message."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu mak mel kal.",
+          "english": "I will write a clear message."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu rok mel.",
+          "english": "I will read the message."
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "title": "Water and quantities",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti rin sil ke?",
+          "english": "Do you need water?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi rin sil.",
+          "english": "I need water."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu nak sil to ti.",
+          "english": "I will give you water."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu han sil.",
+          "english": "I will drink water."
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "title": "Food and drink",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti fos ta ke?",
+          "english": "Do you eat bread?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu fos ta.",
+          "english": "I will eat bread."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu han sil.",
+          "english": "I will drink water."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi pa fos des.",
+          "english": "I ate soup."
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "title": "Books and reading",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti rok sau ke?",
+          "english": "Do you read a book?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi rok sau.",
+          "english": "I read a book."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu nak sau to ti.",
+          "english": "I will give you a book."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu rok sau pik.",
+          "english": "I will read a new book."
+        }
+      ]
+    },
+    {
+      "id": "B05",
+      "title": "At school",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti gos en vik ke?",
+          "english": "Do you go to the school?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi gos en vik.",
+          "english": "I go to the school."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu ma lun en vik.",
+          "english": "I will meet the teacher at school."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu lol nol.",
+          "english": "I will learn a language."
+        }
+      ]
+    },
+    {
+      "id": "B06",
+      "title": "Phones and messages",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti doi fis ke?",
+          "english": "Do you own a phone?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi doi fis.",
+          "english": "I own a phone."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu dak mel to ti.",
+          "english": "I will send a message to you."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu ton mel.",
+          "english": "I will receive a message."
+        }
+      ]
+    },
+    {
+      "id": "B07",
+      "title": "Friends and meeting",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti ma fan ke?",
+          "english": "Do you meet a friend?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi ma fan.",
+          "english": "I meet a friend."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu ma ti en vin.",
+          "english": "I will meet you in the park."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu gos en vin.",
+          "english": "I will go to the park."
+        }
+      ]
+    },
+    {
+      "id": "B08",
+      "title": "City and walking",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti re en pun ke?",
+          "english": "Do you walk in the city?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi re en pun.",
+          "english": "I walk in the city."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu re en vin.",
+          "english": "I will walk in the park."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu gos en vin.",
+          "english": "I will go to the park."
+        }
+      ]
+    },
+    {
+      "id": "B09",
+      "title": "Transport and arrival",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lin rai ke?",
+          "english": "Do you see the train?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lin rai.",
+          "english": "I see the train."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu kon sun.",
+          "english": "I will arrive tomorrow."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu soi en zak.",
+          "english": "I will wait at the station."
+        }
+      ]
+    },
+    {
+      "id": "B10",
+      "title": "At home",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti del en dol ke?",
+          "english": "Do you stay at home?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi del en dol.",
+          "english": "I stay at home."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu mau dek.",
+          "english": "I will open the door."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu fak dek.",
+          "english": "I will close the door."
+        }
+      ]
+    },
+    {
+      "id": "B11",
+      "title": "In the office",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti pau en nik ke?",
+          "english": "Do you work in the office?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi pau en nik.",
+          "english": "I work in the office."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu tas hai.",
+          "english": "I will do the task."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu rok ves.",
+          "english": "I will read the plan."
+        }
+      ]
+    },
+    {
+      "id": "B12",
+      "title": "A project problem",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lin vek ke?",
+          "english": "Do you see the problem?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lin vek.",
+          "english": "I see the problem."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu zu yau.",
+          "english": "I will search for a solution."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu mas ves.",
+          "english": "I will create a plan."
+        }
+      ]
+    },
+    {
+      "id": "B13",
+      "title": "Meeting plans",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti rin pe ke?",
+          "english": "Do you need a meeting?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi rin pe.",
+          "english": "I need a meeting."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu mak ves.",
+          "english": "I will write a plan."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu ma ti sun.",
+          "english": "I will meet you tomorrow."
+        }
+      ]
+    },
+    {
+      "id": "B14",
+      "title": "Repairing a tool",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lin he mik ke?",
+          "english": "Do you see the broken tool?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lin he mik.",
+          "english": "I see the broken tool."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu ras he.",
+          "english": "I will repair the tool."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu yai he.",
+          "english": "I will use the tool."
+        }
+      ]
+    },
+    {
+      "id": "B15",
+      "title": "At the market",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti gos en yel ke?",
+          "english": "Do you go to the market?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi gos en yel.",
+          "english": "I go to the market."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu vo sos.",
+          "english": "I will buy a bottle."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu vo bes.",
+          "english": "I will buy a cup."
+        }
+      ]
+    },
+    {
+      "id": "B16",
+      "title": "Payments and buying",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti vo fis ke?",
+          "english": "Do you buy a phone?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu vo fis.",
+          "english": "I will buy a phone."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu fik len.",
+          "english": "I will pay a customer."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu ton fis.",
+          "english": "I will receive a phone."
+        }
+      ]
+    },
+    {
+      "id": "B17",
+      "title": "Getting help",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti rin hek ke?",
+          "english": "Do you need a doctor?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi rin hek.",
+          "english": "I need a doctor."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu ma hek en noi.",
+          "english": "I will meet a doctor at the hospital."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu soi en noi.",
+          "english": "I will wait at the hospital."
+        }
+      ]
+    },
+    {
+      "id": "B18",
+      "title": "Night and sleep",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti fo kus ke?",
+          "english": "Do you sleep tonight?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu fo kus.",
+          "english": "I will sleep tonight."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu fo zan.",
+          "english": "I will sleep later."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu sol sun.",
+          "english": "I will wake tomorrow."
+        }
+      ]
+    },
+    {
+      "id": "B19",
+      "title": "Rules and rights",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti sen ral ke?",
+          "english": "Do you understand the rule?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi sen ral.",
+          "english": "I understand the rule."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu rok hol.",
+          "english": "I will read the law."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu mak hos.",
+          "english": "I will write a question."
+        }
+      ]
+    },
+    {
+      "id": "B20",
+      "title": "Risk and safety",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lin mal ke?",
+          "english": "Do you see the risk?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lin mal.",
+          "english": "I see the risk."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu mak mel zin.",
+          "english": "I will write an important message."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu rok mel.",
+          "english": "I will read the message."
+        }
+      ]
+    },
+    {
+      "id": "B21",
+      "title": "The park and river",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lin nel ke?",
+          "english": "Do you see the river?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lin nel.",
+          "english": "I see the river."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu re en vin.",
+          "english": "I will walk in the park."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu lin gun.",
+          "english": "I will see the lake."
+        }
+      ]
+    },
+    {
+      "id": "B22",
+      "title": "Music and art",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti sus woi ke?",
+          "english": "Do you listen to music?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi sus woi.",
+          "english": "I listen to music."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu lin wel.",
+          "english": "I will see art."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu ma vis.",
+          "english": "I will meet an artist."
+        }
+      ]
+    },
+    {
+      "id": "B23",
+      "title": "Writing a story",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti mak dan ke?",
+          "english": "Do you write a story?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi mak dan.",
+          "english": "I write a story."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu rok dan.",
+          "english": "I will read the story."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu mak dan pik.",
+          "english": "I will write a new story."
+        }
+      ]
+    },
+    {
+      "id": "B24",
+      "title": "Computers and work",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti yai za ke?",
+          "english": "Do you use a computer?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi yai za.",
+          "english": "I use a computer."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu mas kak.",
+          "english": "I will create a project."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu pau nal.",
+          "english": "I will work now."
+        }
+      ]
+    },
+    {
+      "id": "B25",
+      "title": "Learning a language",
+      "turns": [
+        {
+          "speaker": "A",
+          "veka": "Ti lol nol ke?",
+          "english": "Do you learn a language?"
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi lol nol.",
+          "english": "I learn a language."
+        },
+        {
+          "speaker": "A",
+          "veka": "Mi fu zuk nol.",
+          "english": "I will teach a language."
+        },
+        {
+          "speaker": "B",
+          "veka": "Mi fu vak sun.",
+          "english": "I will speak tomorrow."
+        }
+      ]
+    }
+  ]
+}

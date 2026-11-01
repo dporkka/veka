@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Learn canonical Veka with short, grammar-checked dialogues and self-guided comprehension practice.">
+<title>Veka Learn — beginner laboratory</title>
+<style>
+:root { color-scheme: light; --ink: #183042; --sub: #526773; --line: #d9e4e8; --bg: #f6f9f9; --card: #fff; --primary: #135f5a; --accent: #edf7f3; --focus: #ad5b09; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; }
+header { background: #123b42; color: white; padding: 2.5rem max(1.25rem, calc((100vw - 880px)/2)); }
+header p { color: #d3eaed; margin: 0.5rem 0 0; max-width: 65ch; }
+h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.035em; }
+h2 { margin: 0.2rem 0 0.5rem; line-height: 1.25; font-size: 1.4rem; }
+main { max-width: 920px; margin: 1.75rem auto 3rem; padding: 0 1rem; display: grid; gap: 1rem; }
+section, .controls { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: clamp(1rem,3vw,1.75rem); }
+label { font-weight: 600; }
+select { display: block; margin-top: 0.5rem; max-width: 100%; width: 100%; border: 1px solid #9cb3bb; border-radius: 8px; background: white; padding: .75rem; font: inherit; color: var(--ink); }
+button { font: inherit; font-weight: 650; border: 1px solid var(--primary); border-radius: 8px; padding: .7rem 1rem; cursor: pointer; background: var(--primary); color: white; }
+button.secondary { background: white; color: var(--primary); }
+button:disabled { opacity: 0.52; cursor: not-allowed; }
+button:focus-visible, select:focus-visible, input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 3px; }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+.muted { color: var(--sub); margin: .35rem 0 1rem; }
+.dialogue { display: grid; gap: .75rem; }
+.turn { display: flex; align-items: baseline; gap: 1rem; padding: .8rem 1rem; border-radius: 10px; border: 1px solid var(--line); }
+.turn:nth-child(even) { background: var(--accent); }
+.speaker { flex: 0 0 1.5rem; font-weight: 800; color: var(--primary); }
+.veka { font-size: 1.12rem; font-weight: 650; }
+.english { display: block; color: var(--sub); font-size: .94rem; margin-top: .15rem; }
+.choice { display: flex; gap: .75rem; border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; margin: .55rem 0; cursor: pointer; }
+.choice:has(input:checked) { border-color: var(--primary); background: var(--accent); }
+.choice input { accent-color: var(--primary); }
+.progress { font-size: .9rem; color: var(--sub); font-weight: 600; margin-bottom: .4rem; }
+#question-veka { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+#feedback { min-height: 1.75rem; margin-top: 1rem; font-weight: 650; }
+#feedback[data-state="wrong"] { color: #973900; }
+#feedback[data-state="right"] { color: #0d6150; }
+small { color: var(--sub); }
+footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--sub); }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: no-preference) { button { transition: background-color .12s; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Veka Learn</h1>
+  <p>Start speaking a little, not memorizing an entire dictionary. Canonical tonal vocabulary · beginner laboratory · no audio or human-performance claims.</p>
+</header>
+<main>
+  <section class="controls" aria-label="Choose lesson">
+    <label for="lesson-picker">Choose a beginner lesson</label>
+    <select id="lesson-picker" disabled><option>Loading lessons…</option></select>
+    <p class="muted">Four short turns per lesson, using the frozen 0.4 vocabulary and strict 0.3 grammar. English interpretations are editorial.</p>
+  </section>
+  <section aria-labelledby="lesson-title" id="reader">
+    <h2 id="lesson-title">Loading…</h2>
+    <p id="lesson-summary" class="muted">Read the Veka text, then practice recognizing its meaning.</p>
+    <div id="dialogue" class="dialogue"></div>
+    <div class="actions">
+      <button id="toggle-translation" class="secondary" type="button" disabled>Hide English</button>
+      <button id="start-quiz" type="button" disabled>Practice comprehension</button>
+    </div>
+  </section>
+  <section id="quiz" aria-labelledby="quiz-title" hidden>
+    <h2 id="quiz-title" tabindex="-1">Comprehension practice</h2>
+    <p id="quiz-progress" class="progress"></p>
+    <p id="question-veka"></p>
+    <form id="answer-form">
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend>Which English meaning matches the Veka sentence?</legend>
+        <div id="choices"></div>
+      </fieldset>
+      <div class="actions">
+        <button type="submit" id="check-answer">Check answer</button>
+        <button type="button" id="next-question" class="secondary" hidden>Next question</button>
+        <button type="button" id="exit-quiz" class="secondary">Return to lesson</button>
+      </div>
+    </form>
+    <p id="feedback" aria-live="polite" role="status"></p>
+  </section>
+</main>
+<footer>
+  <small>Experimental constructed language. Grammar checks establish structural compatibility, not translation accuracy or real human comprehension. This is an educational prototype; do not use it for safety-critical communication.</small>
+</footer>
+<script>
+"use strict";
+(() => {
+  const picker = document.getElementById("lesson-picker");
+  const reader = document.getElementById("reader");
+  const dialogue = document.getElementById("dialogue");
+  const quiz = document.getElementById("quiz");
+  const feedback = document.getElementById("feedback");
+  const choices = document.getElementById("choices");
+  const toggle = document.getElementById("toggle-translation");
+  const start = document.getElementById("start-quiz");
+  const form = document.getElementById("answer-form");
+  const next = document.getElementById("next-question");
+  const check = document.getElementById("check-answer");
+  let lessons = [];
+  let reveal = true;
+  let lesson = null;
+  let index = 0;
+  let correct = 0;
+  let currentChoices = [];
+  let submitted = false;
+
+  function node(tag, text, className) {
+    const el = document.createElement(tag);
+    if (text !== undefined) el.textContent = text;
+    if (className) el.className = className;
+    return el;
+  }
+  function shuffle(items) {
+    const copy = items.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  function drawLesson() {
+    lesson = lessons.find(item => item.id === picker.value);
+    if (!lesson) return;
+    document.getElementById("lesson-title").textContent = lesson.id + " · " + lesson.title;
+    dialogue.replaceChildren();
+    lesson.turns.forEach(turn => {
+      const row = node("div", undefined, "turn");
+      const initials = node("span", turn.speaker, "speaker");
+      initials.setAttribute("aria-label", "Speaker " + turn.speaker);
+      const text = node("div");
+      text.append(node("div", turn.veka, "veka"));
+      const meaning = node("span", turn.english, "english");
+      meaning.hidden = !reveal;
+      text.append(meaning);
+      row.append(initials, text);
+      dialogue.append(row);
+    });
+    toggle.textContent = reveal ? "Hide English" : "Show English";
+  }
+  function leaveQuiz() {
+    quiz.hidden = true;
+    reader.hidden = false;
+    start.focus();
+  }
+  function drawQuestion() {
+    submitted = false;
+    feedback.textContent = "";
+    feedback.dataset.state = "";
+    next.hidden = true;
+    check.hidden = false;
+    check.disabled = false;
+    if (index >= lesson.turns.length) {
+      document.getElementById("quiz-progress").textContent = "Lesson complete";
+      document.getElementById("question-veka").textContent = "You recognized " + correct + " out of 4 sentences on the first attempt.";
+      choices.replaceChildren();
+      check.hidden = true;
+      next.hidden = false;
+      next.textContent = "Practice again";
+      return;
+    }
+    document.getElementById("quiz-progress").textContent = "Question " + (index + 1) + " of " + lesson.turns.length;
+    document.getElementById("question-veka").textContent = lesson.turns[index].veka;
+    currentChoices = shuffle(lesson.turns.map(turn => turn.english));
+    choices.replaceChildren();
+    currentChoices.forEach((meaning, choiceIndex) => {
+      const label = node("label", undefined, "choice");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "meaning";
+      input.value = String(choiceIndex);
+      input.required = true;
+      const caption = node("span", String.fromCharCode(65 + choiceIndex) + ". " + meaning);
+      label.append(input, caption);
+      choices.append(label);
+    });
+  }
+  picker.addEventListener("change", () => {
+    reveal = true;
+    drawLesson();
+    leaveQuiz();
+  });
+  toggle.addEventListener("click", () => {
+    reveal = !reveal;
+    drawLesson();
+  });
+  start.addEventListener("click", () => {
+    index = 0;
+    correct = 0;
+    next.textContent = "Next question";
+    reader.hidden = true;
+    quiz.hidden = false;
+    drawQuestion();
+    document.getElementById("quiz-title").focus();
+  });
+  document.getElementById("exit-quiz").addEventListener("click", leaveQuiz);
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    if (submitted || index >= lesson.turns.length) return;
+    const selected = form.querySelector('input[name="meaning"]:checked');
+    if (!selected) {
+      feedback.textContent = "Choose an answer first.";
+      return;
+    }
+    submitted = true;
+    const isCorrect = currentChoices[Number(selected.value)] === lesson.turns[index].english;
+    if (isCorrect) correct++;
+    feedback.dataset.state = isCorrect ? "right" : "wrong";
+    feedback.textContent = isCorrect ? "Correct." : "Not quite. Meaning: " + lesson.turns[index].english;
+    choices.querySelectorAll("input").forEach(input => { input.disabled = true; });
+    check.hidden = true;
+    next.hidden = false;
+    next.textContent = index === lesson.turns.length - 1 ? "See score" : "Next question";
+    next.focus();
+  });
+  next.addEventListener("click", () => {
+    if (index >= lesson.turns.length) {
+      index = 0;
+      correct = 0;
+    } else {
+      index++;
+    }
+    drawQuestion();
+  });
+
+  fetch("../data/beginner_dialogues_v01.json", {cache:"no-store"})
+    .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
+    .then(data => {
+      if (data.schema_version !== "veka.beginner-dialogues.v01" ||
+          data.canonical_profile !== "tonal" || !Array.isArray(data.lessons)) {
+        throw new Error("Unsupported beginner curriculum");
+      }
+      lessons = data.lessons;
+      picker.replaceChildren();
+      lessons.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.id + " · " + item.title;
+        picker.append(option);
+      });
+      picker.disabled = false;
+      toggle.disabled = false;
+      start.disabled = false;
+      drawLesson();
+    })
+    .catch(error => {
+      document.getElementById("lesson-title").textContent = "Could not load the lessons";
+      document.getElementById("lesson-summary").textContent = "Run a local HTTP server from the repository root (see the beginner guide). " + error.message;
+    });
+})();
+</script>
+</body>
+</html>

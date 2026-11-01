@@ -19,6 +19,7 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .learning import load_lessons, lesson_by_id, create_question, check_answer, public_question
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -101,6 +102,12 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('learn',help='beginner lessons and deterministic comprehension quizzes')
+    t.add_argument('mode',choices=('list','show','quiz'))
+    t.add_argument('lesson_id',nargs='?')
+    t.add_argument('--question',type=int,default=1)
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--answer')
     t=sub.add_parser('aesthetics',help='screen proposed word forms using text-only sound-shape heuristics')
     t.add_argument('forms',nargs='+');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('prosody',help='guidance for delivery of strictly parsed Veka without audio')
@@ -114,7 +121,33 @@ def main(argv=None):
     t.add_argument('--researcher-key',required=True)
     args=ap.parse_args(argv)
     try:
-        if args.command=='listening-plan':
+        if args.command=='learn':
+            lessons=load_lessons()
+            if args.mode=='list':
+                if args.lesson_id is not None or args.answer is not None:
+                    raise VekaError('learn list does not accept a lesson or answer')
+                result={'schema_version':'veka.beginner-lessons.v01',
+                        'lessons':[{'id':x['id'],'title':x['title'],'turns':len(x['turns'])}
+                                   for x in lessons],
+                        'translation_validation':'human-authored English; grammar-checked Veka only'}
+            else:
+                if args.lesson_id is None:
+                    raise VekaError('learn show/quiz requires lesson_id (for example B01)')
+                lesson=lesson_by_id(lessons,args.lesson_id)
+                if args.mode=='show':
+                    if args.answer is not None:
+                        raise VekaError('learn show does not accept --answer')
+                    result={'id':lesson['id'],'title':lesson['title'],'turns':lesson['turns'],
+                            'english_translation':'editorial, not formally validated'}
+                else:
+                    question=create_question(lesson,args.question,args.seed)
+                    result=public_question(question)
+                    if args.answer is not None:
+                        correct=check_answer(question,args.answer)
+                        result['submitted_answer']=args.answer
+                        result['correct']=correct
+                        result['correct_answer']=question['correct_choice']
+        elif args.command=='listening-plan':
             lex=load_profile(args.profile)
             pairs=load_contrasts(args.contrasts,lex,args.profile)
             packet=make_packet(pairs,args.participant,tuple(args.talker or ('S01','S02')),
