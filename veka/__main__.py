@@ -26,6 +26,9 @@ from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
 from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
+from .learner_locales import LANGUAGES
+from .learner_audit import audit_learner_forms
+from .lessons import build_lessons, format_lessons
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
@@ -56,8 +59,9 @@ def main(argv=None):
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('number',help='convert between decimal numbers and canonical spoken Veka')
     t.add_argument('mode',choices=['spell','read']);t.add_argument('value')
-    t=sub.add_parser('beginner',help='first-sight word-by-word English guide; international draft cues are NOT Veka')
+    t=sub.add_parser('beginner',help='first-sight word-by-word guide; international draft cues are NOT Veka')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--lang',choices=LANGUAGES,default='en',help='language of teaching glosses')
     t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
     t.add_argument('--families',action='store_true',help='add structural families without registering new words')
     t.add_argument('--readings',action='store_true',help='show exact-match unverified English/Portuguese editorial readings')
@@ -67,6 +71,12 @@ def main(argv=None):
     t.add_argument('--limit',type=int,default=12)
     t.add_argument('--no-cues',action='store_true')
     t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('lessons',help='progressive first-sight lessons in English, Mandarin or Brazilian Portuguese')
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('learner-audit',help='structural pronunciation screening by learner language; not human data')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
     t.add_argument('query');t.add_argument('--limit',type=int,default=20)
     t.add_argument('--profile',choices=PROFILES,default='tonal')
@@ -252,11 +262,19 @@ def main(argv=None):
             with open(args.annotated,encoding='utf8',newline='') as f:
                 observed=list(csv.DictReader(f))
             result=score_pilot(key,observed)
+        elif args.command=='lessons':
+            result=build_lessons(args.lang,profile=args.profile)
+            if args.format=='text':
+                print(format_lessons(result))
+                return 0
+        elif args.command=='learner-audit':
+            result=audit_learner_forms(load_profile(args.profile),profile=args.profile)
         elif args.command=='beginner':
             result=guide_sentence(args.sentence,load_profile(args.profile),
                                   read_candidates(DATA/'international_candidates_v04.csv'),
                                   profile=args.profile,include_cues=not args.no_cues,
-                                  include_families=args.families,include_readings=args.readings)
+                                  language=args.lang,include_families=args.families,
+                                  include_readings=args.readings)
             if args.format=='text':
                 print(format_beginner_guide(result))
                 return 0

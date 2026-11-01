@@ -106,6 +106,27 @@ practice sentences. This is a presentation improvement, **not** evidence
 that Veka is as immediately recognizable as Interlingua or that new word
 forms are accepted into its grammar.
 
+## English / Mandarin / Brazilian Portuguese learning aids
+
+First-sight teaching is available in three languages, without changing Veka
+vocabulary, grammar, or tonal profile. The ten progressive lessons include
+strictly parsed Veka examples and curated editorial sentence translations.
+Unsupported words in localized interlinear output are **explicitly** marked
+as English fallbacks, never silently translated.
+
+```sh
+python3 -m veka lessons --lang en
+python3 -m veka lessons --lang zh
+python3 -m veka lessons --lang pt-BR
+python3 -m veka beginner 'Mi pa dak mel.' --lang zh
+python3 -m veka beginner 'Mi pa dak mel.' --lang pt-BR --format json
+python3 -m veka learner-audit --profile tonal
+```
+
+The learner audit reports *structural pronunciation review candidates*, not
+acoustic risk scores or actual speaker errors. There are **no human study
+results**. See [multilingual first-sight learning](docs/learning_en_zh_pt_v09.md).
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.

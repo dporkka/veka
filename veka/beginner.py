@@ -13,6 +13,7 @@ from .core import Lexicon, VekaError, _normalize_sentence, parse
 from .international import audit_candidates
 from .numbers import DIGIT_VALUES
 from .profiles import DATA, PROFILES
+from .learner_locales import LANGUAGES, localized_gloss, local_labels, local_notice
 from .semantic_families import describe_family
 
 GRAMMAR_GLOSSES = {
@@ -40,6 +41,7 @@ def guide_sentence(
     *,
     profile: str = "tonal",
     include_cues: bool = True,
+    language: str = "en",
     include_families: bool = False,
     include_readings: bool = False,
 ) -> dict:
@@ -48,6 +50,8 @@ def guide_sentence(
     Any unsupported construction fails closed rather than producing misleading
     interlinear information. International cues are separate from the text.
     """
+    if language not in LANGUAGES:
+        raise VekaError(f"unsupported beginner language: {language}")
     if profile not in PROFILES:
         raise VekaError(f"unsupported beginner profile: {profile}")
     if not isinstance(sentence, str):
@@ -82,15 +86,19 @@ def guide_sentence(
 
     words = []
     cues = []
+    english_fallback = 0
     for i, raw in enumerate(tokens):
         form = raw.lower()
         if form not in lex:
             # The grammar permits capitalized proper names but does not
             # translate or infer their identity.
+            gloss, gloss_language = localized_gloss(raw, "proper name (not translated)", language)
             words.append({
-                "token": raw, "form": raw, "gloss": "proper name (not translated)",
+                "token": raw, "form": raw, "gloss": gloss, "gloss_language": gloss_language,
                 "pos": "proper", "kind": "proper_name",
             })
+            if language != "en" and gloss_language == "en":
+                english_fallback += 1
             continue
 
         entry = lex[form]
@@ -98,13 +106,18 @@ def guide_sentence(
         if entry.kind == "compound":
             if entry.head not in lex or entry.modifier not in lex:
                 raise VekaError("compound decomposition is missing from lexicon")
-            gloss = f"{lex[entry.head].gloss} + {lex[entry.modifier].gloss}"
+            head, head_lang = localized_gloss(entry.head, lex[entry.head].gloss, language)
+            modifier, mod_lang = localized_gloss(entry.modifier, lex[entry.modifier].gloss, language)
+            gloss = f"{head} + {modifier}"
+            gloss_language = language if head_lang == mod_lang == language else "en"
             kind = "transparent_compound"
         else:
-            gloss = _gloss(form, following, lex)
+            gloss, gloss_language = localized_gloss(form, _gloss(form, following, lex), language)
             kind = "canonical_root"
         word = {"token": raw, "form": form, "gloss": gloss,
-                "pos": entry.pos, "kind": kind}
+                "gloss_language": gloss_language, "pos": entry.pos, "kind": kind}
+        if language != "en" and gloss_language == "en":
+            english_fallback += 1
         if kind == "transparent_compound":
             word["silent_hyphen"] = True
         words.append(word)
@@ -134,6 +147,8 @@ def guide_sentence(
     ending = normalized[-1] if normalized and normalized[-1] in ".?!" else ""
     reading = " ".join(f'{w["token"]} [{w["gloss"]}]' for w in words) + ending
     result = {
+        "gloss_coverage": {"localized": len(words) - english_fallback,
+                           "english_fallback": english_fallback},
         "canonical": normalized, "profile": profile,
         "interlinear": reading, "words": words,
         "structure": structure,
@@ -141,11 +156,8 @@ def guide_sentence(
         "grammar_validated": True, "translated": False,
         "canonical_vocabulary_changed": False,
         "human_recognition_measured": False,
-        "language_of_glosses": "English",
-        "notice": (
-            "English word glosses are a learning aid, not a complete translation. "
-            "International-looking draft forms are NOT accepted Veka and have no measured recognition benefit."
-        ),
+        "language_of_glosses": language if language != "en" else "English",
+        "notice": local_notice(language, english_fallback),
     }
     if include_families:
         result["word_families"] = families
@@ -179,13 +191,17 @@ def format_beginner_guide(guide: dict) -> str:
         roles.append("negated=yes")
     if structure["question"]:
         roles.append("question=yes")
+    language = guide["language_of_glosses"]
+    language = "en" if language == "English" else language
+    name, structure_label, cue_label = local_labels(language)
+    heading = {"en": "Reading aid", "zh": "逐词释义", "pt-BR": "Glosas"}
     lines = [
         f'Veka ({guide["profile"]}): {guide["canonical"]}',
-        f'Reading aid (English): {guide["interlinear"]}',
-        "Parsed structure: " + "; ".join(roles),
+        f'{heading[language]} ({name}): {guide["interlinear"]}',
+        f'{structure_label}: ' + "; ".join(roles),
     ]
     if guide["experimental_cues"]:
-        lines.append("Illustrative international associations (NOT accepted Veka):")
+        lines.append(cue_label + ":")
         for cue in guide["experimental_cues"]:
             lines.append(
                 f'  {cue["canonical_form"]} [{cue["gloss"]}]: '
