@@ -13,6 +13,25 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## International-root selection research (v1.1 tooling, noncanonical)
+
+The read-only `root-research` command now audits **all 317 atomic roots** and
+all **708 dependent compounds**, including the 217 roots not yet in the
+100-concept international research queue. Grammar, numbers, and other structural
+roots are explicitly protected from routine vocabulary-replacement proposals.
+Research drafts are never accepted into the dictionary or parser.
+
+```bash
+python3 -m veka root-research --output /tmp/veka-root-research.json
+# Optional: researcher-authored HYPOTHETICAL assumptions, never human-study evidence
+python3 -m veka root-research --scenarios /path/to/scenarios.csv
+```
+
+A strict, empty scenario CSV template lives at
+`data/root_scenarios_template_v11.csv`. Hypothetical weighted comparisons
+never constitute recognition estimates or authorize canonical changes.
+See [the root audit and research protocol](docs/root_research_v11.md).
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing

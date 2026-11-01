@@ -33,6 +33,7 @@ from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
+from .root_research import build_root_inventory, compare_scenarios, read_scenarios
 from .international_plan import build_international_plan, read_review_priorities
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
@@ -221,6 +222,10 @@ def main(argv=None):
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('root-research',help='audit all atomic roots and optional hypothetical international forms')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--scenarios',help='optional hypothetical researcher ratings CSV, NOT human trial data')
+    t.add_argument('--output')
     t=sub.add_parser('international-plan',help='rank unverified international root research, NEVER accepted vocabulary')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
@@ -317,6 +322,14 @@ def main(argv=None):
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='root-research':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            candidates=read_candidates(args.candidates)
+            result={'root_inventory':build_root_inventory(lex,candidates),
+                    'scenario_comparison':compare_scenarios(
+                        read_scenarios(args.scenarios) if args.scenarios else [],lex,candidates)}
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='international-plan':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=build_international_plan(read_candidates(args.candidates), lex,
