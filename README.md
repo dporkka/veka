@@ -13,6 +13,18 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Learner-core vocabulary and compound transparency (read-only v0.1)
+
+`python3 -m veka learner-core --budget 20` ranks primitive roots by their
+appearance in **canonical teaching examples**, deduplicating repeated
+sentences and decomposing registered transparent compounds rather than
+counting each compound as a separate atomic word. A strict one-column CSV of
+other canonical teaching examples can be screened with `--sentences-csv`.
+The JSON exposes lexical coverage, uncovered lesson roots and screening gaps
+for critical contrasts like `ne/na`. **This is neither natural-language
+frequency nor simulated human comprehension evidence.** It changes no
+canonical grammar or words. See [learner-core protocol](docs/learner_core_v01.md).
+
 ## Source-backed international root review and study packets (v1.2, noncanonical)
 
 An explicitly **unreviewed** research packet tracks 13 sourced lexical leads

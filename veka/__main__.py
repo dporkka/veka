@@ -28,6 +28,7 @@ from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
+from .learner_core import audit_learner_core, load_learner_examples_csv
 from .lessons import build_lessons, format_lessons
 from .practice import build_practice, format_practice, grade_practice, read_practice_responses
 from .semantic_families import describe_family, format_semantic_family
@@ -103,6 +104,9 @@ def main(argv=None):
     t.add_argument('--mode',choices=('recognition','recall'),default='recognition')
     t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--count',type=int,default=10)
+    t=sub.add_parser('learner-core',help='rank taught canonical roots and decomposed compounds; no real-world frequency claims')
+    t.add_argument('--budget',type=int,default=20)
+    t.add_argument('--sentences-csv',help='optional single-column CSV of strict canonical examples; not observed frequency')
     t=sub.add_parser('learner-audit',help='structural pronunciation screening by learner language; not human data')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
@@ -372,6 +376,10 @@ def main(argv=None):
             if args.format=='text':
                 print(format_lessons(result))
                 return 0
+        elif args.command=='learner-core':
+            result=audit_learner_core(budget=args.budget,
+                   sentences=(load_learner_examples_csv(args.sentences_csv)
+                              if args.sentences_csv else None))
         elif args.command=='learner-audit':
             result=audit_learner_forms(load_profile(args.profile),profile=args.profile)
         elif args.command=='beginner':
