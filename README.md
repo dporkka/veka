@@ -120,6 +120,22 @@ practice sentences. This is a presentation improvement, **not** evidence
 that Veka is as immediately recognizable as Interlingua or that new word
 forms are accepted into its grammar.
 
+## Cross-language grammar contrast drills (v0.10, read-only)
+
+Six strictly parser-validated minimal pairs show which single pronoun, tense,
+negation, quantifier, or object change affects the **structure** of a sentence.
+The explanations are editorial (not human-tested), localized to English,
+Mandarin and Brazilian Portuguese, and never create new canonical forms.
+
+```sh
+python3 -m veka contrast-drills --lang en
+python3 -m veka contrast-drills --lang zh
+python3 -m veka contrast-drills --lang pt-BR --format json
+```
+
+See [the contrast-drill contract](docs/contrast_drills_v10.md) for limits,
+phonology caveats, and the English/Esperanto design rationale.
+
 ## English / Mandarin / Brazilian Portuguese learning aids
 
 First-sight teaching is available in three languages, without changing Veka

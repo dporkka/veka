@@ -29,6 +29,7 @@ from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
 from .lessons import build_lessons, format_lessons
+from .contrast_drills import make_contrast_drills, format_contrast_drills
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
@@ -75,6 +76,10 @@ def main(argv=None):
     t.add_argument('--no-cues',action='store_true')
     t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lessons',help='progressive first-sight lessons in English, Mandarin or Brazilian Portuguese')
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('contrast-drills',help='canonical one-feature grammar contrasts for first-sight learners')
     t.add_argument('--lang',choices=LANGUAGES,default='en')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--format',choices=('text','json'),default='text')
@@ -292,6 +297,11 @@ def main(argv=None):
             result=build_lessons(args.lang,profile=args.profile)
             if args.format=='text':
                 print(format_lessons(result))
+                return 0
+        elif args.command=='contrast-drills':
+            result=make_contrast_drills(args.lang,profile=args.profile)
+            if args.format=='text':
+                print(format_contrast_drills(result))
                 return 0
         elif args.command=='learner-audit':
             result=audit_learner_forms(load_profile(args.profile),profile=args.profile)
