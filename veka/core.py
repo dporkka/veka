@@ -120,10 +120,28 @@ def _normalize_sentence(text: str) -> list[str]:
     return tokens
 
 
+def _is_proper_name(token: str) -> bool:
+    """Recognize capitalized, single-token Unicode names without guessing words.
+
+    Unlike Veka syllables, foreign names retain their original spelling. A
+    name must begin with an uppercase/titlecase letter; optional internal
+    apostrophes and hyphens separate nonempty letter sequences. No digits,
+    whitespace, controls, format characters, or arbitrary punctuation.
+    """
+    if not token or len(token) > 128 or unicodedata.category(token[0]) not in ('Lu', 'Lt'):
+        return False
+    parts = re.split(r"[-'’]", token)
+    return all(
+        part and unicodedata.category(part[0]).startswith('L')
+        and all(unicodedata.category(ch)[0] in ('L', 'M') for ch in part)
+        for part in parts
+    )
+
+
 def _token_info(token: str, lex: Lexicon) -> tuple[str,str]:
     form = token.lower()
     if form in lex: return form, lex[form].pos
-    if token[0:1].isupper() and re.fullmatch(r'[A-ZÁÉÍÓÚ][a-záéíóú]+',token):
+    if _is_proper_name(token):
         return token,'proper'
     raise VekaError(f'unknown Veka word: {token}')
 
@@ -236,7 +254,7 @@ def parse(sentence: str, lex: Lexicon, context: Discourse | None = None, strict:
         pos+=1;recipient,pos=_np(tokens,pos,lex,ctx,strict)
     if pos<len(tokens) and tokens[pos]=='en':
         pos+=1;location,pos=_np(tokens,pos,lex,ctx,strict)
-    if pos<len(tokens) and lex[tokens[pos]].pos=='time':
+    if pos<len(tokens) and tokens[pos] in lex and lex[tokens[pos]].pos=='time':
         time=tokens[pos]; pos+=1
     question=False
     if pos < len(tokens) and tokens[pos]=='ke':
