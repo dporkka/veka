@@ -14,15 +14,19 @@ from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIE
 from .compound_semantics import audit_compound_semantics, load_compound_reviews
 from .study import write_manifest
 from .meaning_v06 import make_meaning_packet, write_meaning_packet
+from .communication_v07 import generate_cases, audit_communication
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
+from .audio_preflight import audit_recordings
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
 from .learning import load_lessons, lesson_by_id, create_question, check_answer, public_question
+from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
+from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -30,6 +34,10 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
+from .cognate_session import read_blind_manifest, write_blind_session, prepare_judge_sheet
+from .cognate_review import read_cognate_leads, audit_cognate_leads
+
+from .everyday import audit_dialogues, get_lesson
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -50,6 +58,13 @@ def main(argv=None):
     t=sub.add_parser('beginner',help='first-sight word-by-word English guide; international draft cues are NOT Veka')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
+    t.add_argument('--families',action='store_true',help='add structural families without registering new words')
+    t.add_argument('--readings',action='store_true',help='show exact-match unverified English/Portuguese editorial readings')
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('family',help='inspect canonical compounds and opt-in derived word families')
+    t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--limit',type=int,default=12)
+    t.add_argument('--no-cues',action='store_true')
     t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
     t.add_argument('query');t.add_argument('--limit',type=int,default=20)
@@ -59,6 +74,9 @@ def main(argv=None):
     t=sub.add_parser('read-script',help='recover romanization from rendered SVG metadata, not OCR')
     t.add_argument('--input',required=True)
     sub.add_parser('benchmark',help='deterministic parse-equivalence and syllable-count evaluation')
+    t=sub.add_parser('communication-audit',help='synthetic meaning reversals and context-safety checks (not human data)')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--domains',default=str(DATA/'communication_domains_v07.json'))
     t=sub.add_parser('score',help='score actual listener trials CSV');t.add_argument('csv_file')
     t=sub.add_parser('audit',help='lexical structural confusion audit (not speech testing)')
     t.add_argument('--top',type=int,default=20);t.add_argument('--output')
@@ -94,6 +112,9 @@ def main(argv=None):
     t.add_argument('--participant-csv',required=True)
     t.add_argument('--key-csv',required=True)
     t.add_argument('--recording-csv',required=True)
+    t=sub.add_parser('listening-preflight',help='audit real ABX WAV PCM before manual speech review')
+    t.add_argument('--recording-csv',required=True)
+    t.add_argument('--audio-root',required=True)
     t=sub.add_parser('listening-score',help='score complete responses with recorded WAV verification')
     t.add_argument('--key-csv',required=True)
     t.add_argument('--responses-csv',required=True)
@@ -120,11 +141,19 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
     t.add_argument('--evidence',default=str(DATA/'cognate_evidence_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('cognate-leads',help='review sourced but unverified cognate attestations')
+    t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
+    t.add_argument('--leads',default=str(DATA/'cognate_source_leads_v07.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('cognate-manifest',help='blinded 0.7 cognate study packet')
     t.add_argument('--participant',required=True);t.add_argument('--arm',required=True,type=int,choices=(0,1))
     t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
     t.add_argument('--output',required=True);t.add_argument('--answer-key',required=True)
+    t=sub.add_parser('cognate-session',help='export an answer-key-free JSON session from a blinded participant CSV')
+    t.add_argument('--manifest',required=True);t.add_argument('--output',required=True)
+    t=sub.add_parser('cognate-judge-sheet',help='create private, blank manual adjudication sheet from participant responses')
+    t.add_argument('--answer-key',required=True);t.add_argument('--responses',required=True);t.add_argument('--output',required=True)
     t=sub.add_parser('cognate-score',help='score manually judged 0.7 cognate trials')
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     t=sub.add_parser('extend',help='experimental Veka 0.5 typed morphology and bounded embedding')
@@ -135,12 +164,9 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
-    t=sub.add_parser('learn',help='beginner lessons and deterministic comprehension quizzes')
-    t.add_argument('mode',choices=('list','show','quiz'))
-    t.add_argument('lesson_id',nargs='?')
-    t.add_argument('--question',type=int,default=1)
-    t.add_argument('--seed',type=int,default=20261101)
-    t.add_argument('--answer')
+    t=sub.add_parser('register-check',help='check canonical Core/Precise versus opt-in Research syntax')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--max-register',choices=REGISTERS,default='core')
     t=sub.add_parser('aesthetics',help='screen proposed word forms using text-only sound-shape heuristics')
     t.add_argument('forms',nargs='+');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('prosody',help='guidance for delivery of strictly parsed Veka without audio')
@@ -160,24 +186,38 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('everyday-audit',help='summarize 100 untranslated everyday dialogue requirements')
+    t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
+    t=sub.add_parser('learn',help='view canonical parser-checked beginner examples')
+    t.add_argument('--level',required=True,type=int)
+    t=sub.add_parser('practice',help='read canonical four-turn dialogues and answer quizzes')
+    t.add_argument('mode',choices=('list','show','quiz'))
+    t.add_argument('lesson_id',nargs='?')
+    t.add_argument('--question',type=int,default=1)
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--answer')
     args=ap.parse_args(argv)
     try:
-        if args.command=='learn':
+        if args.command=='everyday-audit':
+            result=audit_dialogues(domain=args.domain,include_items=args.include_items)
+        elif args.command=='learn':
+            result=get_lesson(args.level)
+        elif args.command=='practice':
             lessons=load_lessons()
             if args.mode=='list':
                 if args.lesson_id is not None or args.answer is not None:
-                    raise VekaError('learn list does not accept a lesson or answer')
+                    raise VekaError('practice list does not accept a lesson or answer')
                 result={'schema_version':'veka.beginner-lessons.v01',
                         'lessons':[{'id':x['id'],'title':x['title'],'turns':len(x['turns'])}
                                    for x in lessons],
                         'translation_validation':'human-authored English; grammar-checked Veka only'}
             else:
                 if args.lesson_id is None:
-                    raise VekaError('learn show/quiz requires lesson_id (for example B01)')
+                    raise VekaError('practice show/quiz requires lesson_id (for example B01)')
                 lesson=lesson_by_id(lessons,args.lesson_id)
                 if args.mode=='show':
                     if args.answer is not None:
-                        raise VekaError('learn show does not accept --answer')
+                        raise VekaError('practice show does not accept --answer')
                     result={'id':lesson['id'],'title':lesson['title'],'turns':lesson['turns'],
                             'english_translation':'editorial, not formally validated'}
                 else:
@@ -188,6 +228,12 @@ def main(argv=None):
                         result['submitted_answer']=args.answer
                         result['correct']=correct
                         result['correct_answer']=question['correct_choice']
+        elif args.command=='communication-audit':
+            seeds=json.loads(Path(args.domains).read_text(encoding='utf-8'))
+            lex=load_profile(args.profile)
+            result=audit_communication(generate_cases(seeds,lex),lex,profile=args.profile)
+        elif args.command=='register-check':
+            result=inspect_register(args.sentence,profile=args.profile,max_register=args.max_register)
         elif args.command=='meaning-plan':
             items=json.loads((DATA/'study_items_v03.json').read_text(encoding='utf-8'))
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
@@ -196,6 +242,12 @@ def main(argv=None):
         elif args.command=='cognate-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_pilot(read_pilot(args.candidates),lex,read_evidence(args.evidence))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='cognate-leads':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_cognate_leads(read_pilot(args.candidates),
+                                      read_cognate_leads(args.leads),lex)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='cognate-manifest':
@@ -212,6 +264,12 @@ def main(argv=None):
                     'trials':len(participants),'participant_sheet':args.output,
                     'researcher_key':args.answer_key,
                     'human_data_collected':False,'audio_recorded':False}
+        elif args.command=='cognate-session':
+            if Path(args.manifest).resolve() == Path(args.output).resolve():
+                raise VekaError('input and output must be separate files')
+            result=write_blind_session(read_blind_manifest(args.manifest),args.output)
+        elif args.command=='cognate-judge-sheet':
+            result=prepare_judge_sheet(args.answer_key,args.responses,args.output)
         elif args.command=='cognate-score':
             with open(args.answer_key,encoding='utf8',newline='') as f:
                 key=list(csv.DictReader(f))
@@ -221,9 +279,17 @@ def main(argv=None):
         elif args.command=='beginner':
             result=guide_sentence(args.sentence,load_profile(args.profile),
                                   read_candidates(DATA/'international_candidates_v04.csv'),
-                                  profile=args.profile,include_cues=not args.no_cues)
+                                  profile=args.profile,include_cues=not args.no_cues,
+                                  include_families=args.families,include_readings=args.readings)
             if args.format=='text':
                 print(format_beginner_guide(result))
+                return 0
+        elif args.command=='family':
+            result=describe_family(args.word,load_profile(args.profile),
+                                   read_candidates(DATA/'international_candidates_v04.csv'),
+                                   limit=args.limit,include_cues=not args.no_cues)
+            if args.format=='text':
+                print(format_semantic_family(result))
                 return 0
         elif args.command=='global-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
@@ -253,6 +319,8 @@ def main(argv=None):
                     'recording_csv':args.recording_csv,
                     'human_results_collected':False,'audio_recorded':False,
                     'warning':'Restricted answer key and recording manifest must not be shared with participants.'}
+        elif args.command=='listening-preflight':
+            result=audit_recordings(read_csv(args.recording_csv),args.audio_root)
         elif args.command=='listening-score':
             result=score_packet(read_csv(args.key_csv),read_csv(args.responses_csv),
                                 read_csv(args.recording_csv),args.audio_root)

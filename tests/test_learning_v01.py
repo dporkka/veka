@@ -64,7 +64,7 @@ class BeginnerLearningTests(unittest.TestCase):
 
     def test_cli_lists_lessons_and_hides_quiz_answer_until_submitted(self):
         def run(*args):
-            return subprocess.run([sys.executable, "-m", "veka", "learn", *args],
+            return subprocess.run([sys.executable, "-m", "veka", "practice", *args],
                                   cwd=ROOT, capture_output=True, text=True)
         listing = run("list")
         self.assertEqual(listing.returncode, 0, listing.stderr)
@@ -77,6 +77,10 @@ class BeginnerLearningTests(unittest.TestCase):
         self.assertEqual(prompt["veka"], "Ti sen mel ke?")
         invalid = run("quiz", "B99")
         self.assertNotEqual(invalid.returncode, 0)
+        starter = subprocess.run([sys.executable, "-m", "veka", "learn", "--level", "1"],
+                                 cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(starter.returncode, 0, starter.stderr)
+        self.assertEqual(json.loads(starter.stdout)["level"], 1)
 
 
 if __name__ == "__main__":

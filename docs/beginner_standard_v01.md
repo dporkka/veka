@@ -10,15 +10,17 @@ New learners need **one stable target** and short exchanges they can read, say a
 
 Latin romanization is the primary teaching script. Rising-tone accent marks in canonical vocabulary must be preserved; the alternative toneless profile remains experimental. The SVG featural script is not standardized input text.
 
+The existing `python -m veka learn --level 1..4` command teaches four short introductory levels. The complementary `practice` command below selects four-turn dialogue exercises; it does not replace `learn`.
+
 ## Start here
 
 From the repository root, with Python 3.10 or newer:
 
-    python -m veka learn list
-    python -m veka learn show B01
-    python -m veka learn quiz B01 --question 1 --seed 6
+    python -m veka practice list
+    python -m veka practice show B01
+    python -m veka practice quiz B01 --question 1 --seed 6
     # Choose a letter from the displayed multiple-choice answers:
-    python -m veka learn quiz B01 --question 1 --seed 6 --answer A
+    python -m veka practice quiz B01 --question 1 --seed 6 --answer A
 
 The **dependency-free local web learner** uses the same curriculum as the CLI. From the repository root:
 

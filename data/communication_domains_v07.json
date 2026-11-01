@@ -1,0 +1,33 @@
+{
+  "schema_version": "veka.communication-domains.v07",
+  "status": "curated_synthetic_templates_not_human_conversation",
+  "transitive": [
+    {"id": "send_message", "verb": "dak", "object": "mel", "countable": true, "recipient": true},
+    {"id": "receive_message", "verb": "ton", "object": "mel", "countable": true},
+    {"id": "see_garden", "verb": "lin", "object": "pal", "countable": true},
+    {"id": "find_message", "verb": "fen", "object": "mel", "countable": true},
+    {"id": "read_message", "verb": "rok", "object": "mel", "countable": true},
+    {"id": "write_message", "verb": "mak", "object": "mel", "countable": true},
+    {"id": "repair_house", "verb": "ras", "object": "dol", "countable": true},
+    {"id": "open_house", "verb": "mau", "object": "dol", "countable": true},
+    {"id": "close_house", "verb": "fak", "object": "dol", "countable": true},
+    {"id": "build_house", "verb": "yul", "object": "dol", "countable": true},
+    {"id": "learn_language", "verb": "lol", "object": "nol", "countable": true},
+    {"id": "teach_child", "verb": "zuk", "object": "te", "countable": true, "recipient": true},
+    {"id": "listen_message", "verb": "sus", "object": "mel", "countable": true},
+    {"id": "hear_message", "verb": "vil", "object": "mel", "countable": true},
+    {"id": "need_water", "verb": "rin", "object": "sil", "countable": false},
+    {"id": "drink_water", "verb": "han", "object": "sil", "countable": false}
+  ],
+  "intransitive": [
+    {"id": "go", "verb": "gos"},
+    {"id": "arrive", "verb": "kon"},
+    {"id": "speak", "verb": "vak"},
+    {"id": "sleep", "verb": "fo"},
+    {"id": "wake", "verb": "sol"},
+    {"id": "walk", "verb": "re"},
+    {"id": "run", "verb": "man"},
+    {"id": "stop", "verb": "bok"}
+  ],
+  "locations": ["pas", "nik"]
+}

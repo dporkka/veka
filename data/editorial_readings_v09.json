@@ -1,0 +1,41 @@
+{
+  "status": "unverified_editorial_examples",
+  "notice": "Illustrative English and Brazilian Portuguese learner readings; neither linguistic semantic equivalence nor human comprehension has been validated.",
+  "examples": [
+    {
+      "veka": "Mi pa dak mel.",
+      "en": "I sent a message.",
+      "pt-BR": "Eu enviei uma mensagem."
+    },
+    {
+      "veka": "Ti sen kun.",
+      "en": "You understand information.",
+      "pt-BR": "Você entende informações."
+    },
+    {
+      "veka": "Mi sen kun.",
+      "en": "I understand information.",
+      "pt-BR": "Eu entendo informações."
+    },
+    {
+      "veka": "Mi pa ne dak mel.",
+      "en": "I did not send a message.",
+      "pt-BR": "Eu não enviei uma mensagem."
+    },
+    {
+      "veka": "Al ren pa gos.",
+      "en": "Every person went.",
+      "pt-BR": "Todas as pessoas foram."
+    },
+    {
+      "veka": "Mi lin za.",
+      "en": "I see a computer.",
+      "pt-BR": "Eu vejo um computador."
+    },
+    {
+      "veka": "Mi rin sil wen ran dis gel su wok.",
+      "en": "I need 1.5 liters of water.",
+      "pt-BR": "Preciso de 1,5 litro de água."
+    }
+  ]
+}

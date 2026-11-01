@@ -17,9 +17,11 @@ regression validation for PRs and `main`; check real run results.
 
 **Start here instead of the research CLI:** [Veka Beginner 0.1](docs/beginner_standard_v01.md) uses the stable canonical tonal vocabulary with short, tightly checked lessons.
 
-    python -m veka learn list
-    python -m veka learn show B01
-    python -m veka learn quiz B01 --question 1 --seed 6
+Use `learn --level 1..4` for the four introductory levels; use `practice list|show|quiz` for the separate 25-dialogue exercise corpus. The commands are intentionally distinct.
+
+    python -m veka practice list
+    python -m veka practice show B01
+    python -m veka practice quiz B01 --question 1 --seed 6
 
 Run a zero-dependency local web learner from the repository root:
 
@@ -28,6 +30,62 @@ Run a zero-dependency local web learner from the repository root:
 Visit http://127.0.0.1:8765/site/. The [25 four-turn exchanges](data/beginner_dialogues_v01.json) contain 100 strict-grammar-checked Veka sentences with editorial English interpretations. The [browser learner](site/index.html) offers reading and multiple-choice practice. These are **controlled exercises, not evidence of natural fluency or human comprehension**. No locked grammar or vocabulary is changed.
 
 **Licensing decision still required:** [distribution licensing action items](docs/licensing_decision.md). No license is implicitly granted by the learner application.
+
+## Core / Precise / Research usage gate (tooling v0.8)
+
+New `register-check` classifies **machine-accepted syntax** without changing
+canonical vocabulary or grammar. `Core` is strict canonical single clauses;
+`Precise` additionally permits explicitly scoped canonical propositional logic;
+`Research` explicitly permits opt-in v0.5/v0.6 syntax and the experimental
+toneless profile. Broader input never silently becomes canonical.
+
+```sh
+python3 -m veka register-check 'Mi pa dak mel.'
+python3 -m veka register-check 'Zi mi gos ve ti gos yu.' --max-register precise
+python3 -m veka register-check 'Mi gos zi ti gos.' --max-register research
+python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register research
+```
+
+**Parser acceptance is not human comprehension or safety validation.** See
+[register semantics and limitations](docs/registers_v08.md).
+
+## Interlingua-inspired learning aids (opt-in; no language changes)
+
+The `family` command exposes *existing* canonical noun-modifier compounds
+and separately labeled experimental v0.5 event derivations. The optional
+`beginner --families` flag explains related forms without registering
+any new word. `--readings` adds **exact-match**, unverified editorial
+examples in English and Brazilian Portuguese (not machine translation);
+unlisted sentences receive no translation.
+
+```sh
+python3 -m veka family dak
+python3 -m veka family kun --limit 5 --format json
+python3 -m veka beginner 'Mi pa dak mel.' --families --readings
+```
+
+Canonical forms and grammar remain frozen, and comprehension benefits have
+**not** been measured. See [semantic family learning study and limits](docs/semantic_family_learning_v09.md).
+
+## Everyday-language learning and requirements (v0.9, noncanonical)
+
+A **four-level beginner lesson set** checks 16 starter examples against strict
+canonical Veka. A separate **100-scenario, two-turn English dialogue inventory**
+maps common communication requirements without inventing Veka translations or
+claiming missing grammar. Neither tool provides human comprehension evidence.
+
+```sh
+python3 -m veka learn --level 1
+python3 -m veka learn --level 4
+python3 -m veka everyday-audit
+python3 -m veka everyday-audit --domain clarification --include-items
+```
+
+See [the v0.9 everyday learnability protocol](docs/everyday_learning_v09.md).
+Canonical vocabulary and grammar remain frozen; extensions are still opt-in.
+
+**International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before
@@ -68,6 +126,28 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka audio-quality preflight (research-only)
+
+After collecting **real, independently produced** ABX WAV files, run an
+additional read-only screening step before an authorized researcher listens to
+the recordings. It uses only Python's standard library and does **not** alter
+the canonical language, convert audio, mark clips as recorded, or fabricate
+human observations.
+
+```sh
+python -m veka listening-preflight \
+  --recording-csv /secure/recording_jobs.csv \
+  --audio-root /secure/actual-wavs > /secure/preflight.json
+```
+
+The preflight requires a complete confirmed recording bank. It rejects
+malformed ABX manifests, missing/truncated WAV files, byte-identical files,
+and repeated decoded PCM even if WAV container bytes differ. It reports
+per-clip RMS, clipping fraction, DC offset and advisory review warnings.
+A clean report **never** certifies human speech, independent takes,
+correct pronunciation, +5 dB SNR, or listener comprehension. See
+[recording preflight protocol](docs/audio_preflight_v09.md).
+
 ## Veka 0.6 — blinded meaning-recovery study packet
 
 The new `meaning-plan` command prepares a condition-blinded **participant
@@ -85,6 +165,19 @@ python -m veka meaning-plan --participant P001 --arm 0 \
 
 See [meaning-recovery pilot protocol](docs/meaning_pilot_v06.md) for
 blinding, recording, consent, adjudication and measurement limits.
+
+## Veka 0.7 — structural communication regression corpus (noncanonical)
+
+A new opt-in `communication-audit` command generates deterministic, curated **synthetic**
+meaning contrasts, negative controls, and ambiguous-ellipsis examples. It checks strict
+parser-field differences and conservative context recovery without changing canonical
+forms. This is **not a human comprehension benchmark** and supplies no observed speech
+or listener results. See [communication benchmark design](docs/communication_benchmark_v07.md).
+
+```sh
+python -m veka communication-audit
+python -m veka communication-audit --profile toneless
+```
 
 ## Veka 0.6 — empirical listening-study preparation
 
@@ -314,6 +407,36 @@ python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
 
 Review the candidate list, evidence requirements, exact experimental conditions,
 and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
+
+Source-linked, **unverified** attestation leads for taxi, hotel, and robot
+are available for independent multilingual review. To audit the 12 pending
+review records without claiming human validation, run:
+
+```sh
+python -m veka cognate-leads
+```
+
+See [the Veka 0.7 source-review packet](docs/cognate_source_review_v07.md).
+
+### Blinded, local first-sight trial collection (research only)
+
+Prepare a participant-only JSON from the pre-generated blind manifest, then
+open `site/cognate-study.html` locally and load that JSON. The page shows
+18 unfamiliar words without translations, captures voluntary free-text guesses
+and exploratory browser durations, and exports an unscored response CSV.
+**No responses are automatically uploaded or collected by this repository.**
+
+```sh
+python -m veka cognate-session --manifest p001.csv --output p001-session.json
+# After a volunteer returns an exported CSV, separately create a PRIVATE human review sheet:
+python -m veka cognate-judge-sheet --answer-key p001_key.csv \
+  --responses /path/to/participant-responses.csv --output p001-PRIVATE-review.csv
+# After independent human adjudication, score with cognate-score as above.
+```
+
+Never provide the researcher key or judgment sheet to participants. No
+cross-language recognition advantage is demonstrated by this tooling. See
+[the first-sight pilot procedure](docs/cognate_first_sight_session_v07.md).
 
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
