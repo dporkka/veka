@@ -37,6 +37,29 @@ marked English fallbacks. The sentence interpretations and quizzes are still
 does not translate them. The page verifies that every displayed Veka sentence
 matches its gloss export before enabling lessons.
 
+### Vocabulary before each dialogue (stacked learner improvement)
+
+Each lesson includes a native, accessible **Vocabulary preview** above its
+four turns. It separates **new roots** (first introduced in this ordered
+25-lesson curriculum) from **previously introduced roots** (encountered in
+an earlier lesson), so learners can prepare before interpreting the dialogue.
+A root is listed once per lesson even if repeated in several turns. This is
+not proof that a person has retained it. The preview uses the existing
+word-by-word glossary language picker, falling back to English for the preview
+when sentence-level hints are turned off. Missing localized glosses retain
+the explicit `(en)` label.
+
+The checked-in `data/site_glosses_v01.json` is regenerated from the strict
+canonical parser and lexicon; no third-party translation engine, experimental
+loanwords, automatic proficiency assessments, speech recordings or
+unverified dialogue translations are added. The export decomposes transparent
+noun-adjective compounds into existing roots rather than treating those
+combinations as new unrelated memorization targets. This curriculum currently
+contains **89 distinct primitive roots** across 25 controlled dialogues.
+Lesson 1 introduces 10 roots; later lessons expose increasing opportunities
+to revisit earlier forms. These are editorial exposure counts, not natural
+language frequency or validated learning outcomes.
+
 When maintaining the curriculum or curated teaching glossary, rebuild the
 checked-in static asset from the repository root:
 
