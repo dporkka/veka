@@ -31,7 +31,7 @@ No source-word verification, participant trial, or human communication gain is c
 
 ## Familiar vocabulary pilot
 
-A separate, usable Core-grammar profile replaces five nouns with familiar-looking
+A separate, usable Core-grammar profile replaces seven nouns with familiar-looking
 forms and converts their existing compounds in both directions. It is an
 experimental first step, not a validated or complete vocabulary reform.
 See [the pilot and its limitations](docs/familiar_vocabulary_pilot.md).
