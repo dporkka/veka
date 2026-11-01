@@ -1,29 +1,50 @@
-# VEKA 0.4 candidate — experimental high-reliability constructed language
+# VEKA 0.5 — experimental, opt-in derivation and correlative research
 
-**Release candidate:** 1 November 2026  
+**Build date:** 1 November 2026. **Status:** mechanically checked experimental prototype; no human speech validation and no accepted new vocabulary. The Veka 0.3 canonical lexicon and grammar are retained.
+
+This combined package preserves *both* distinct Veka 0.4 research branches (international-recognition experiments and explicitly selected tonal/toneless profiles) and adds a noncanonical Veka 0.5 module with six typed verb derivations and a 24-cell semantic correlative design. It does **not** accept novel correlatives without approved Veka spellings or add multi-quantifier binding.
+
+```sh
+python -m unittest discover -s tests -v
+python -m veka experimental-audit
+python -m veka experimental-derive dak agent
+python -m veka parse 'Mi pa dak-koin mel.' --experimental-v05 --strict
+python -m veka profile toneless
+python -m veka parse 'Mi fok-koin mel.' --profile toneless --experimental-v05 --strict
+python -m veka experimental-correlative question place  # no approved surface form
+```
+
+See [`docs/experimental_v05.md`](docs/experimental_v05.md) for explicit semantics, suffix candidates, boundaries, status, validation and the remaining research work. Default `parse` behavior is unaffected. The additional candidate derivatives exist only in a temporary, opt-in lexicon; `data/lexicon.csv` is unchanged.
+
+---
+
+# VEKA 0.4 — international vocabulary research extension over the Veka 0.3 prototype
+
+**Research extension:** 1 November 2026; canonical grammar/lexicon remain Veka 0.3.  
 **Status:** executable, machine-tested limited language prototype — **not empirically validated**.  
 **Licensing:** No distribution license has been selected for this prototype. Third-party cited research retains its publishers' terms.
+
+
+## Veka 0.4 experimental vocabulary work
+
+This package adds an **Interlingua-inspired, noncanonical international recognition experiment** while retaining **byte-for-byte identical** `data/lexicon.csv` and Veka 0.3 parser/grammar. `data/international_candidates_v04.csv` contains a deterministic 100-concept queue (8 *illustrative*, unverified adapted draft forms and 92 unfilled entries). The multilingual evidence log is empty, and no human comprehension data have been collected. International candidates are **not** accepted by the Veka parser.
+
+```sh
+python make_international_v04.py
+python -m veka international-audit --output pilot_audit.json
+python -m veka international-family --noun ren --adjective sak
+python -m veka international-manifest --participant P001 --output blind.csv --answer-key key.csv
+# Only after collecting and manually annotating real answers:
+python -m veka international-score --answer-key key.csv --annotated real_trials.csv
+```
+
+See **[`docs/international_v04.md`](docs/international_v04.md)** for the adaptation, provenance, counterbalancing, scoring, and explicit no-adoption policy. The historical Veka 0.3 behavior and baseline counts documented below remain valid.
 
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
 
-The preserved 0.3 baseline focuses on: (1) transparent numbers and units, (2) logical scope without precedence ambiguity, (3) a sound-confusion audit and tone-free test condition, and (4) randomized, reproducible *human listening study materials*. It does not synthesize convincing Veka speech or fabricate test participants.
-
-## 0.4 experimental profile (new)
-
-This candidate adds an **opt-in toneless lexicon** preserving the original 1,025 meanings, parts of speech, and valency. Canonical 0.3 tonal forms remain the default. The toneless vocabulary is **not** empirically proven superior: its structural near-pair count rises from 2,262 to 2,320. See [`docs/design_review_v04.md`](docs/design_review_v04.md) for the review, compatibility rules, known tradeoffs, and human go/no-go criteria.
-
-```sh
-python -m veka profile tonal
-python -m veka profile toneless
-python -m veka parse 'Mi fok mel.' --profile toneless
-python -m veka parse 'Mi pái mel.' --profile tonal
-python -m veka convert 'Mi pái mel.' --target toneless
-python -m veka audit --profile toneless --top 5
-```
-
-0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
+Version 0.3's focus: (1) transparent numbers and units, (2) logical scope without precedence ambiguity, (3) a sound-confusion audit and tone-free test condition, and (4) randomized, reproducible *human listening study materials*. It does not synthesize convincing Veka speech or fabricate test participants.
 
 ## Quick start (Python 3.10+, zero third-party dependencies)
 
@@ -93,11 +114,7 @@ For complete grammar and numeric digit table see **[`docs/grammar_v03.md`](docs/
 | `data/sample_abx_manifest_p001.csv` | Recording manifest for 28 ABX trials; no recordings |
 | `data/phonology_audit.json` | Full lexical pair audit, labeled as nonempirical |
 | `data/tone_free_ablation.csv` | Four alternative candidate words to compare against tonal forms; not canonical |
-| `data/profile_pairs_v04.json` | Eight constructed profile-matched semantic checks, **not audio or listener data** |
 | `tests/test_v03.py` | 0.3 behavior and regression tests |
-| `veka/profiles.py` | 0.4 opt-in lexical profile loader and token converter |
-| `tests/test_v04.py` | 0.4 profile, CLI and fail-closed regression tests |
-| `docs/design_review_v04.md` | 0.4 architecture review, tradeoffs, experimental release gates |
 | `docs/veka_script_v0_1.svg` | Original hand-designed syllable-block writing prototype |
 
 ## Important numeric facts

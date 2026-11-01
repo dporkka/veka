@@ -20,3 +20,10 @@ This is an engineered reference grammar and computer-tool prototype, not a speak
 3. Increase realistic ambiguous, noncompressible, lengthy, repair-driven discourse examples and real conversational corpora.
 4. Implement explicit first-order variable binding, scope, count semantics and SI dimensional syntax with formal proof tests.
 5. Validate the Veka writing system for rapid reading and typing independently of the spoken-language claims.
+
+## Veka 0.5 additional limitations
+
+- All six proposed suffix spellings are candidates only, not canonical lexical entries and not human-tested. Legal phonotactics and orthographic distances are weak proxies for acoustic distinguishability.
+- The correlative matrix is a typed semantic table, **not** a complete spoken/written grammar: only four existing quantified noun phrases have surface realizations.
+- Derivational type contracts do not establish that there is a real-world instrument, agent, patient, or place for every verb. Only direct verb-root derivation is permitted; nested derivations are deliberately rejected.
+- The optional parser accepts derived word classes and unchanged valency only. It does not implement compositional event semantics, multi-quantifier scope, modality or relative clauses.
