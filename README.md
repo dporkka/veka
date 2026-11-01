@@ -141,6 +141,25 @@ The learner audit reports *structural pronunciation review candidates*, not
 acoustic risk scores or actual speaker errors. There are **no human study
 results**. See [multilingual first-sight learning](docs/learning_en_zh_pt_v09.md).
 
+## First-sight practice and recall (v0.11, noncanonical)
+
+The new `practice` command creates deterministic, answer-free exercises from
+the ten **existing** parser-checked editorial lessons. Use `recognition` to
+select a taught sentence meaning from three translations, or `recall` to
+reproduce the taught Veka wording. English, Mandarin and Brazilian Portuguese
+are supported; the canonical vocabulary and grammar are unchanged.
+
+```sh
+python3 -m veka practice --lang zh --mode recognition --seed 42
+python3 -m veka practice --lang pt-BR --mode recall --seed 42
+# Write a UTF-8 question_id,response CSV of your own responses, then:
+python3 -m veka practice-check --responses my-answers.csv --lang pt-BR --mode recall --seed 42
+```
+
+Matching a taught answer is **not** a test of human comprehension, spontaneous
+production, or equivalent translations. No learner outcomes have been collected.
+See [active-practice limitations and workflow](docs/active_practice_v11.md).
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
