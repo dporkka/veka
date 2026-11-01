@@ -14,6 +14,7 @@ from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIE
 from .study import write_manifest
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
+from .discourse import parse_discourse
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -79,6 +80,8 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('correlative',help='inspect one generated reference form')
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     args=ap.parse_args(argv)
     try:
         if args.command=='lexical-risk':
@@ -88,6 +91,8 @@ def main(argv=None):
                                       candidates=args.candidates,profile=args.profile)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='discourse':
+            result=parse_discourse(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
             result=parse_extended(args.sentence,load_profile(args.profile),strict=True)
         elif args.command=='derive':

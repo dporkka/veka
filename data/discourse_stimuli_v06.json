@@ -1,0 +1,63 @@
+{
+  "version": "veka-v06",
+  "kind": "proposed listening stimuli — no human data",
+  "interpretation_facts": "Semantics expected by reference parser, not verified speaker comprehension",
+  "items": [
+    {
+      "id": "v06-t01",
+      "sentence": "Sas ren yu pa gos.",
+      "question": "Which argument is the topic?",
+      "answer": "subject",
+      "control": "Ren pa gos.",
+      "contrast": "topic vs unmarked"
+    },
+    {
+      "id": "v06-t02",
+      "sentence": "Mi pa dak kol mel yu.",
+      "question": "Which argument is highlighted as focus?",
+      "answer": "object",
+      "control": "Mi pa dak mel.",
+      "contrast": "focus vs unmarked"
+    },
+    {
+      "id": "v06-t03",
+      "sentence": "Sas mi yu pa dak kol mel yu.",
+      "question": "What grammatical roles are topic and focus?",
+      "answer": "topic=subject,focus=object",
+      "control": "Mi pa dak mel.",
+      "contrast": "dual marking"
+    },
+    {
+      "id": "v06-q01",
+      "sentence": "Al ren gin pas yu pa gos.",
+      "question": "Where must the people covered by every be located?",
+      "answer": "inside the room",
+      "control": "Al ren pa gos.",
+      "contrast": "restricted vs unrestricted universal"
+    },
+    {
+      "id": "v06-q02",
+      "sentence": "Mi lin kis ren gin pas yu.",
+      "question": "Which person set is restricted by some?",
+      "answer": "people in the room",
+      "control": "Mi lin kis ren.",
+      "contrast": "restricted vs unrestricted existential"
+    },
+    {
+      "id": "v06-time01",
+      "sentence": "Sik ti ton mel yu mi dak mel.",
+      "question": "Which event is earlier?",
+      "answer": "I send the message",
+      "control": "Men ti ton mel yu mi dak mel.",
+      "contrast": "before vs after"
+    },
+    {
+      "id": "v06-time02",
+      "sentence": "Men ti ton mel yu mi dak mel.",
+      "question": "Which event is earlier?",
+      "answer": "you receive the message",
+      "control": "Sik ti ton mel yu mi dak mel.",
+      "contrast": "after vs before"
+    }
+  ]
+}
