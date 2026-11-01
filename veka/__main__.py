@@ -12,6 +12,7 @@ from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .study import write_manifest
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
+from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -62,9 +63,21 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t=sub.add_parser('international-score',help='score manually annotated recognition trials')
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
+    t=sub.add_parser('extend',help='experimental Veka 0.5 typed morphology and bounded embedding')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('derive',help='inspect compositional event-derived vocabulary')
+    t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('correlative',help='inspect one generated reference form')
+    t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     args=ap.parse_args(argv)
     try:
-        if args.command=='international-audit':
+        if args.command=='extend':
+            result=parse_extended(args.sentence,load_profile(args.profile),strict=True)
+        elif args.command=='derive':
+            result=derive(args.word,load_profile(args.profile))
+        elif args.command=='correlative':
+            result=correlative(args.word,load_profile(args.profile))
+        elif args.command=='international-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_candidates(read_candidates(args.candidates),lex,read_evidence(args.evidence))
             if args.output:

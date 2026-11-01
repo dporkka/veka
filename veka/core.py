@@ -224,7 +224,7 @@ def parse(sentence: str, lex: Lexicon, context: Discourse | None = None, strict:
             raise VekaError(f'unknown verb valency: {pred}')
     obj=None; recipient=None; location=None; time=None
     # Lexical NP cannot begin with a grammatical marker or time adverb.
-    if pos < len(tokens) and (tokens[pos] in ('al','kis') or lex[tokens[pos]].pos in ('noun','pronoun') or tokens[pos] not in lex):
+    if pos < len(tokens) and (tokens[pos] in ('al','kis') or tokens[pos] not in lex or lex[tokens[pos]].pos in ('noun','pronoun')):
         if valency=='intransitive':raise VekaError('this predicate does not accept a direct object')
         obj,pos=_np(tokens,pos,lex,ctx,strict)
     if pos<len(tokens) and tokens[pos]=='to':
