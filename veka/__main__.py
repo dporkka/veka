@@ -46,6 +46,7 @@ from .cognate_review import read_cognate_leads, audit_cognate_leads
 
 from .everyday import audit_dialogues, get_lesson
 from .dialogue_eval import evaluate_attempts, load_attempts
+from .repair import parse_repair
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -225,6 +226,10 @@ def main(argv=None):
     t.add_argument('--output')
     t=sub.add_parser('everyday-audit',help='summarize 100 untranslated everyday dialogue requirements')
     t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
+    t=sub.add_parser('repair',help='research-only explicit quotation, clarification and correction (requires matching --prior for repair)')
+    t.add_argument('utterance')
+    t.add_argument('--prior',help='exact canonical utterance being discussed; required except standalone quote')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('dialogue-check',help='screen proposed dialogue translations; no meaning or human validation')
     t.add_argument('--attempts',required=True)
     t.add_argument('--max-register',choices=REGISTERS,default='core')
@@ -243,7 +248,9 @@ def main(argv=None):
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='dialogue-check':
+        if args.command=='repair':
+            result=parse_repair(args.utterance,load_profile(args.profile),prior=args.prior)
+        elif args.command=='dialogue-check':
             result=evaluate_attempts(load_attempts(args.attempts),
                                      max_register=args.max_register,profile=args.profile)
         elif args.command=='everyday-audit':
