@@ -13,6 +13,26 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Root-study human adjudication and descriptive scoring (v1.3, noncanonical)
+
+The original v1.2 root-study planner creates balanced participant-only sheets
+and private researcher keys. New research-only commands **require actual filled
+participant responses** and manually completed, condition-blind judgments:
+
+```sh
+python3 -m veka root-study-judge --key /private/researcher-key.csv \
+  --responses /private/responses.csv --output /private/judge-blank.csv
+python3 -m veka root-study-score --key /private/researcher-key.csv \
+  --responses /private/responses.csv --judgments /private/judge-reviewed.csv
+```
+
+The scorer fails closed on incomplete, inconsistent, tampered, or unjudged
+inputs, excludes known/uncertain prior exposure from first-sight results,
+and summarizes correctness, critical errors, and observed response time by
+condition, language background and concept. It **never invents human outcomes,
+proves causation, or approves vocabulary changes**. Source-review priorities
+and privacy/blinding requirements: [root-study adjudication protocol](docs/root_study_adjudication_v13.md).
+
 ## Source-backed international root review and study packets (v1.2, noncanonical)
 
 An explicitly **unreviewed** research packet tracks 13 sourced lexical leads
