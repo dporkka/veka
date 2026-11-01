@@ -162,3 +162,30 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 ```
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
+
+## Concise statements and experimental reversible script metadata (0.5)
+
+Use an **opt-in** two-clause conversational register when only one logical
+connective is needed. Complex logic remains explicitly bracketed; the original
+`parse` command is unchanged:
+
+```sh
+python -m veka extend 'Mi gos zi ti gos.'
+python -m veka extend 'Mi gos oi ti gos.'
+python -m veka logic 'Zi mi gos ve ti gos yu.'
+```
+
+The SVG syllable-block renderer now preserves word and syllable indexes in
+machine-readable metadata. The `read-script` command reconstructs lowercase
+romanized text, including tone marks and hyphenated compounds:
+
+```sh
+python -m veka render 'Mi pái mel.' --output my_script.svg
+python -m veka read-script --input my_script.svg
+```
+
+**Limitations:** reconstruction reads embedded labels, **not the drawn shapes**.
+It is not OCR, a Unicode writing standard, or proof that two shapes are visually
+distinguishable. Case, original spaces, and sentence-final punctuation are not
+preserved. SVG metadata is checked for ordering, legal syllables, and tone-label
+consistency. See `docs/grammar_v05.md` for the concise syntax and limitations.

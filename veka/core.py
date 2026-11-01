@@ -297,8 +297,8 @@ def render_svg(sentence: str) -> str:
     words = _normalize_sentence(sentence)
     for word in words: syllabify(word.lower())
     blocks=[]; x=10
-    for word in words:
-        for syll in syllabify(word.lower()):
+    for word_index, word in enumerate(words):
+        for syllable_index, syll in enumerate(syllabify(word.lower())):
             onset,nucleus,coda,rising=_syllable_info(syll)
             contents=['<rect x="0" y="0" width="88" height="92" rx="9" fill="#fafcff" stroke="#c4ced8" stroke-width="1.5"/>']
             if onset:contents.append(_strokes(onset,7,10,.9,'#18324e'))
@@ -309,13 +309,67 @@ def render_svg(sentence: str) -> str:
             if coda: contents.append(_strokes(coda,32,53,.62,'#18324e'))
             if rising:contents.append('<path d="M69 11 L79 3" stroke="#a54136" stroke-width="3.7"/>')
             tone = 'rising' if rising else 'level'
-            blocks.append(f'<g transform="translate({x} 6)" data-veka="{html.escape(syll,quote=True)}" data-tone="{tone}">'+''.join(contents)+'</g>')
+            blocks.append(f'<g transform="translate({x} 6)" data-veka="{html.escape(syll,quote=True)}" data-tone="{tone}" data-word-index="{word_index}" data-syllable-index="{syllable_index}">'+''.join(contents)+'</g>')
             x+=92
         x+=14
     width=max(125,x+10)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="118" viewBox="0 0 {width} 118" role="img" aria-label="Veka block script for {html.escape(sentence,quote=True)}">'
             '<rect width="100%" height="100%" fill="#f4f8fc"/>'
             '<g fill="none" stroke="#18324e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">'+''.join(blocks)+'</g></svg>')
+
+
+def read_svg(svg_text: str) -> str:
+    """Recover normalized romanization from Veka SVG *metadata*, not glyphs.
+
+    This is a reversible export format, NOT OCR or verification that the drawn
+    strokes match their labels. Only render_svg's word/segment index format is
+    accepted, so dropped or reordered blocks cannot be silently repaired.
+    """
+    from xml.etree import ElementTree as ET
+
+    if (not isinstance(svg_text, str) or not svg_text or len(svg_text) > 2_000_000
+            or "<!DOCTYPE" in svg_text.upper() or "<!ENTITY" in svg_text.upper()):
+        raise VekaError("invalid Veka SVG metadata input")
+    try:
+        root = ET.fromstring(svg_text)
+    except ET.ParseError as exc:
+        raise VekaError("malformed Veka SVG") from exc
+    if root.tag != "{http://www.w3.org/2000/svg}svg":
+        raise VekaError("expected an SVG document")
+    words: list[list[str]] = []
+    block_count = 0
+    for element in root.iter():
+        syll = element.get("data-veka")
+        if syll is None:
+            continue
+        block_count += 1
+        if block_count > 4096:
+            raise VekaError("Veka script exceeds block limit")
+        raw_word = element.get("data-word-index")
+        raw_syllable = element.get("data-syllable-index")
+        if (raw_word is None or raw_syllable is None or not raw_word.isascii()
+                or not raw_word.isdecimal() or not raw_syllable.isascii()
+                or not raw_syllable.isdecimal()):
+            raise VekaError("missing or invalid Veka script position")
+        word_index, syll_index = int(raw_word), int(raw_syllable)
+        if (str(word_index) != raw_word or str(syll_index) != raw_syllable
+                or word_index > len(words) or word_index < len(words) - 1):
+            raise VekaError("nonconsecutive Veka word indexes")
+        if not validate_word(syll) or "-" in syll or syll != syll.lower():
+            raise VekaError("invalid Veka script syllable")
+        expected_tone = "rising" if any(c in syll for c in "áéíóú") else "level"
+        if element.get("data-tone") != expected_tone:
+            raise VekaError("Veka script tone metadata mismatch")
+        if word_index == len(words):
+            if syll_index != 0:
+                raise VekaError("word must start with syllable zero")
+            words.append([])
+        if syll_index != len(words[word_index]):
+            raise VekaError("missing or reordered Veka syllable")
+        words[word_index].append(syll)
+    if not words:
+        raise VekaError("SVG has no Veka script blocks")
+    return " ".join("-".join(parts) for parts in words)
 
 
 def count_syllables(sentence: str) -> int:

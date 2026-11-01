@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 from .core import (Lexicon,Discourse,VekaError,validate_word,syllabify,parse,
-                   render_svg,evaluate_stimuli,score_human_trials)
+                   render_svg,read_svg,evaluate_stimuli,score_human_trials)
 from .numbers import spell_number,read_number
 from .logic import parse_logic
 from .phonology import analyze_root_confusions
@@ -40,6 +40,8 @@ def main(argv=None):
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('render',help='export native syllable blocks as SVG')
     t.add_argument('sentence');t.add_argument('--output',required=True)
+    t=sub.add_parser('read-script',help='recover romanization from rendered SVG metadata, not OCR')
+    t.add_argument('--input',required=True)
     sub.add_parser('benchmark',help='deterministic parse-equivalence and syllable-count evaluation')
     t=sub.add_parser('score',help='score actual listener trials CSV');t.add_argument('csv_file')
     t=sub.add_parser('audit',help='lexical structural confusion audit (not speech testing)')
@@ -134,6 +136,9 @@ def main(argv=None):
             data=render_svg(args.sentence)
             Path(args.output).write_text(data,encoding='utf-8')
             result={'output':str(args.output),'bytes':len(data.encode())}
+        elif args.command=='read-script':
+            result={'romanized':read_svg(Path(args.input).read_text(encoding='utf-8')),
+                    'source':'SVG syllable metadata', 'optical_recognition':False}
         elif args.command=='number':
             result={'value':args.value,'result':spell_number(args.value) if args.mode=='spell' else read_number(args.value)}
         elif args.command=='score':
