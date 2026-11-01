@@ -9,6 +9,7 @@ from .core import (Lexicon,Discourse,VekaError,validate_word,syllabify,parse,
                    render_svg,read_svg,evaluate_stimuli,score_human_trials)
 from .numbers import spell_number,read_number
 from .logic import parse_logic
+from .semantic_scope import analyze_scope
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
 from .compound_semantics import audit_compound_semantics, load_compound_reviews
@@ -163,6 +164,8 @@ def main(argv=None):
     t=sub.add_parser('correlative',help='inspect one generated reference form')
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('semantic',help='project canonical Veka into an explicit semantic scope tree')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('register-check',help='check canonical Core/Precise versus opt-in Research syntax')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
@@ -331,6 +334,8 @@ def main(argv=None):
                 Path(args.output).write_text(json.dumps(full,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='discourse':
             result=parse_discourse(args.sentence,load_profile(args.profile))
+        elif args.command=='semantic':
+            result=analyze_scope(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
             result=parse_extended(args.sentence,load_profile(args.profile),strict=True)
         elif args.command=='derive':
