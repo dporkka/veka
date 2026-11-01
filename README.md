@@ -13,6 +13,25 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Veka at first sight (beginner reading guide)
+
+Use the **read-only interlinear guide** to understand canonical Veka before
+memorizing its vocabulary. It shows English word glosses, strict grammatical
+roles, and separate **unverified** international-looking associations where
+available. It never substitutes experimental drafts into canonical text.
+
+```sh
+python3 -m veka beginner 'Mi pa dak mel.'
+python3 -m veka beginner 'Mi sen kun.'
+python3 -m veka beginner 'Mi sen kun.' --format json
+python3 -m veka beginner 'Mi sen kun.' --no-cues
+```
+
+See [the beginner guide](docs/first_sight_guide.md) for a short lesson and
+practice sentences. This is a presentation improvement, **not** evidence
+that Veka is as immediately recognizable as Interlingua or that new word
+forms are accepted into its grammar.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.

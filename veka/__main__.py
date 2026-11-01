@@ -21,6 +21,7 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .beginner import guide_sentence, format_beginner_guide
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -44,6 +45,10 @@ def main(argv=None):
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('number',help='convert between decimal numbers and canonical spoken Veka')
     t.add_argument('mode',choices=['spell','read']);t.add_argument('value')
+    t=sub.add_parser('beginner',help='first-sight word-by-word English guide; international draft cues are NOT Veka')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
+    t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
     t.add_argument('query');t.add_argument('--limit',type=int,default=20)
     t.add_argument('--profile',choices=PROFILES,default='tonal')
@@ -143,6 +148,13 @@ def main(argv=None):
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
             result=write_meaning_packet(packet,args.participant_csv,
                                         args.key_csv,args.recording_csv)
+        elif args.command=='beginner':
+            result=guide_sentence(args.sentence,load_profile(args.profile),
+                                  read_candidates(DATA/'international_candidates_v04.csv'),
+                                  profile=args.profile,include_cues=not args.no_cues)
+            if args.format=='text':
+                print(format_beginner_guide(result))
+                return 0
         elif args.command=='global-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_global_candidates(read_candidates(args.candidates),lex,
