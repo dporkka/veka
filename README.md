@@ -332,6 +332,25 @@ python -m veka score collected_trials.csv  # Only after real human data exist
 
 **All tools operate locally.** The CSV trial template is deliberately blank. The `score` command does not invent results.
 
+## v0.10 international-root research plan (noncanonical)
+
+The `international-plan` CLI prioritizes the **existing 100-concept**
+research queue without changing any accepted Veka word. A separate
+`data/international_candidates_v10.csv` includes 24 **unverified** loanword
+hypotheses (16 beyond the original eight); the other 76 need proposals.
+An editorial exposure tier and compound migration count guide **research order
+only**, not vocabulary adoption or predicted comprehension. Protected grammar
+syllables and conflicting undelimited word surfaces are screened.
+
+```sh
+python3 -m veka international-plan --output /tmp/international-plan.json
+python3 -m veka lexical-readiness --candidates data/international_candidates_v10.csv
+```
+
+All canonical roots, the 708 compounds, and parser semantics remain frozen.
+Human comprehension and pronunciation studies have **not** been conducted.
+See [international root plan and adoption gates](docs/international_root_plan_v10.md).
+
 ## Core spoken vocabulary
 
 | Veka | English | Notes |
