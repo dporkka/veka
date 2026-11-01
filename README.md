@@ -35,6 +35,17 @@ experimental international root proposals to canonical Veka. It does not
 recruit participants, create responses, establish efficacy, or change any words.
 See [source review and study instructions](docs/root_sources_and_study_v12.md).
 
+### Manually judged root recognition (v1.3, noncanonical)
+
+Once the original blinded participant CSVs have been completed, use
+`root-study-review` to export a private, unscored review sheet that shows
+only the target meaning and response, **not** which word form was tested.
+After independent manual semantic rating, `root-study-score` strictly joins
+all judgments to the original 8-root randomized assignment and reports
+written first-sight outcomes by background and concept. It never interprets
+an observed advantage as permission to replace canonical Veka words.
+See [v1.3 reviewer workflow](docs/root_adjudication_v13.md).
+
 ## International-root selection research (v1.1 tooling, noncanonical)
 
 The read-only `root-research` command now audits **all 317 atomic roots** and

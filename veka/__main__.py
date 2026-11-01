@@ -37,6 +37,8 @@ from .lexical_readiness import build_lexical_readiness
 from .root_research import build_root_inventory, compare_scenarios, read_scenarios
 from .root_sources import audit_root_sources, read_root_sources
 from .root_study import plan_root_cohorts
+from .root_adjudication import (build_root_review, write_root_review, read_root_review,
+                                score_root_review, KEY_FIELDS)
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
@@ -257,6 +259,14 @@ def main(argv=None):
     t.add_argument('--participants-dir',required=True)
     t.add_argument('--researcher-dir',required=True)
     t.add_argument('--seed',type=int,default=20261101)
+    t=sub.add_parser('root-study-review',help='export an unscored, condition-blind private root-response reviewer sheet')
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses-dir',required=True)
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('root-study-score',help='score exact study-keyed manual verdicts descriptively (never adoption)')
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses-dir',required=True)
+    t.add_argument('--reviews',required=True)
     t=sub.add_parser('root-sources',help='audit source-linked multilingual leads with independent review pending')
     t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'))
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
@@ -389,6 +399,20 @@ def main(argv=None):
             plan=plan_root_cohorts(read_candidates(args.candidates),lex,
                         read_cohort_roster(args.roster),seed=args.seed)
             result=write_cohort_plan(plan,args.participants_dir,args.researcher_dir)
+        elif args.command=='root-study-review':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            keys=read_global_csv(args.key,KEY_FIELDS)
+            packet=build_root_review(keys,args.responses_dir,
+                                     read_candidates(DATA/'international_candidates_v04.csv'),lex)
+            write_root_review(packet,args.output)
+            result={'schema_version':'veka.root-study-review.v13','trials':len(packet),
+                    'output':str(args.output),'condition_blinded':True,
+                    'manual_judgments_supplied':False,'adoption_authorized':False}
+        elif args.command=='root-study-score':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=score_root_review(read_global_csv(args.key,KEY_FIELDS),args.responses_dir,
+                    read_root_review(args.reviews),
+                    read_candidates(DATA/'international_candidates_v04.csv'),lex)
         elif args.command=='root-sources':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_root_sources(read_root_sources(args.leads), lex,
