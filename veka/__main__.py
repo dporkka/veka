@@ -25,6 +25,7 @@ from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
 from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
+from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -56,6 +57,13 @@ def main(argv=None):
     t=sub.add_parser('beginner',help='first-sight word-by-word English guide; international draft cues are NOT Veka')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
+    t.add_argument('--families',action='store_true',help='add structural families without registering new words')
+    t.add_argument('--readings',action='store_true',help='show exact-match unverified English/Portuguese editorial readings')
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('family',help='inspect canonical compounds and opt-in derived word families')
+    t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--limit',type=int,default=12)
+    t.add_argument('--no-cues',action='store_true')
     t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
     t.add_argument('query');t.add_argument('--limit',type=int,default=20)
@@ -238,9 +246,17 @@ def main(argv=None):
         elif args.command=='beginner':
             result=guide_sentence(args.sentence,load_profile(args.profile),
                                   read_candidates(DATA/'international_candidates_v04.csv'),
-                                  profile=args.profile,include_cues=not args.no_cues)
+                                  profile=args.profile,include_cues=not args.no_cues,
+                                  include_families=args.families,include_readings=args.readings)
             if args.format=='text':
                 print(format_beginner_guide(result))
+                return 0
+        elif args.command=='family':
+            result=describe_family(args.word,load_profile(args.profile),
+                                   read_candidates(DATA/'international_candidates_v04.csv'),
+                                   limit=args.limit,include_cues=not args.no_cues)
+            if args.format=='text':
+                print(format_semantic_family(result))
                 return 0
         elif args.command=='global-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')

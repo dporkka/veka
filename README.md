@@ -31,6 +31,24 @@ python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register r
 **Parser acceptance is not human comprehension or safety validation.** See
 [register semantics and limitations](docs/registers_v08.md).
 
+## Interlingua-inspired learning aids (opt-in; no language changes)
+
+The `family` command exposes *existing* canonical noun-modifier compounds
+and separately labeled experimental v0.5 event derivations. The optional
+`beginner --families` flag explains related forms without registering
+any new word. `--readings` adds **exact-match**, unverified editorial
+examples in English and Brazilian Portuguese (not machine translation);
+unlisted sentences receive no translation.
+
+```sh
+python3 -m veka family dak
+python3 -m veka family kun --limit 5 --format json
+python3 -m veka beginner 'Mi pa dak mel.' --families --readings
+```
+
+Canonical forms and grammar remain frozen, and comprehension benefits have
+**not** been measured. See [semantic family learning study and limits](docs/semantic_family_learning_v09.md).
+
 ## Everyday-language learning and requirements (v0.9, noncanonical)
 
 A **four-level beginner lesson set** checks 16 starter examples against strict
