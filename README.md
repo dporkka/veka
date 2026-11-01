@@ -49,6 +49,8 @@ python3 -m veka beginner 'Mi pa dak mel.' --families --readings
 Canonical forms and grammar remain frozen, and comprehension benefits have
 **not** been measured. See [semantic family learning study and limits](docs/semantic_family_learning_v09.md).
 
+**International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before
@@ -106,6 +108,19 @@ python -m veka meaning-plan --participant P001 --arm 0 \
 
 See [meaning-recovery pilot protocol](docs/meaning_pilot_v06.md) for
 blinding, recording, consent, adjudication and measurement limits.
+
+## Veka 0.7 — structural communication regression corpus (noncanonical)
+
+A new opt-in `communication-audit` command generates deterministic, curated **synthetic**
+meaning contrasts, negative controls, and ambiguous-ellipsis examples. It checks strict
+parser-field differences and conservative context recovery without changing canonical
+forms. This is **not a human comprehension benchmark** and supplies no observed speech
+or listener results. See [communication benchmark design](docs/communication_benchmark_v07.md).
+
+```sh
+python -m veka communication-audit
+python -m veka communication-audit --profile toneless
+```
 
 ## Veka 0.6 — empirical listening-study preparation
 
