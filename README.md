@@ -29,6 +29,18 @@ python3 -m veka conversation-score  # header-only trial template: no observed re
 See [cross-language transfer and conversation study protocol](docs/language_transfer_v01.md).
 No source-word verification, participant trial, or human communication gain is claimed.
 
+## Familiar vocabulary pilot
+
+A separate, usable Core-grammar profile replaces five nouns with familiar-looking
+forms and converts their existing compounds in both directions. It is an
+experimental first step, not a validated or complete vocabulary reform.
+See [the pilot and its limitations](docs/familiar_vocabulary_pilot.md).
+
+```sh
+python3 -m veka.familiar parse 'Mi sen mu-si-ka.'
+python3 -m veka.familiar convert to-familiar 'Mi sen woi.'
+```
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing
