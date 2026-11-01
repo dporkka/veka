@@ -142,6 +142,16 @@ def _token_info(token: str, lex: Lexicon) -> tuple[str,str]:
     form = token.lower()
     if form in lex: return form, lex[form].pos
     if _is_proper_name(token):
+        # At sentence start, capitalized research morphology otherwise looks
+        # like a foreign proper name. Reserve only *complete*, valid extension
+        # forms so Core cannot silently reinterpret content questions as names.
+        if form.count('-') == 1:
+            from .extended import DERIVATIONS, DOMAINS, SERIES
+            left, right = form.split('-')
+            if ((left in SERIES and right in DOMAINS)
+                    or (left in lex and lex[left].pos == 'verb'
+                        and lex[left].kind == 'root' and right in DERIVATIONS)):
+                raise VekaError(f'experimental form requires research grammar: {token}')
         return token,'proper'
     raise VekaError(f'unknown Veka word: {token}')
 

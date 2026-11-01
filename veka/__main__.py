@@ -42,6 +42,7 @@ from .cognate_session import read_blind_manifest, write_blind_session, prepare_j
 from .cognate_review import read_cognate_leads, audit_cognate_leads
 
 from .everyday import audit_dialogues, get_lesson
+from .dialogue_eval import evaluate_attempts, load_attempts
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -201,6 +202,10 @@ def main(argv=None):
     t.add_argument('--output')
     t=sub.add_parser('everyday-audit',help='summarize 100 untranslated everyday dialogue requirements')
     t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
+    t=sub.add_parser('dialogue-check',help='screen proposed dialogue translations; no meaning or human validation')
+    t.add_argument('--attempts',required=True)
+    t.add_argument('--max-register',choices=REGISTERS,default='core')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('learn',help='view canonical parser-checked beginner examples')
     t.add_argument('--level',required=True,type=int)
     t=sub.add_parser('lexical-readiness',help='next research actions, never automatic vocabulary adoption')
@@ -210,7 +215,10 @@ def main(argv=None):
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='everyday-audit':
+        if args.command=='dialogue-check':
+            result=evaluate_attempts(load_attempts(args.attempts),
+                                     max_register=args.max_register,profile=args.profile)
+        elif args.command=='everyday-audit':
             result=audit_dialogues(domain=args.domain,include_items=args.include_items)
         elif args.command=='learn':
             result=get_lesson(args.level)
