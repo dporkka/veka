@@ -67,6 +67,26 @@ class TrilingualBeginnerTests(unittest.TestCase):
             with self.subTest(unsupported=unsupported), self.assertRaises(VekaError):
                 guide_sentence("Mi pa dak mel.", self.lex, CANDIDATES, language=unsupported)
 
+    def test_multilingual_glosses_combine_with_families_and_readings(self):
+        guide = guide_sentence(
+            "Mi pa dak mel.", self.lex, CANDIDATES,
+            language="pt-BR", include_families=True, include_readings=True,
+        )
+        self.assertIn("dak [enviar]", guide["interlinear"])
+        self.assertIn("dak", guide["word_families"])
+        self.assertEqual(guide["gloss_coverage"]["english_fallback"], 0)
+        self.assertEqual(guide["editorial_reading"]["status"], "unverified_editorial_example")
+        self.assertFalse(guide["editorial_reading"]["human_comprehension_validated"])
+        args = [sys.executable, "-m", "veka", "beginner", "Mi pa dak mel.",
+                "--lang", "zh", "--families", "--readings", "--format", "json"]
+        result = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertIn("dak", payload["word_families"])
+        self.assertIn("dak [发送]", payload["interlinear"])
+        self.assertEqual(payload["language_of_glosses"], "zh")
+        self.assertFalse(payload["canonical_vocabulary_changed"])
+
     def test_cli_json_and_text(self):
         for lang, value in [("zh", "我"), ("pt-BR", "eu/mim")]:
             args = [sys.executable, "-m", "veka", "beginner", "Mi pa dak mel.", "--lang", lang]

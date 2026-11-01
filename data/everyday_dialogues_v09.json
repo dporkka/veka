@@ -1,0 +1,2007 @@
+{
+  "schema_version": "veka.everyday-requirements.v09",
+  "language": "en",
+  "translation_policy": "English communicative requirements only; no Veka translation inferred",
+  "items": [
+    {
+      "id": "ED-001",
+      "domain": "introductions",
+      "scenario": "introductions_name_exchange",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What should I call you?"
+        },
+        {
+          "speaker": "B",
+          "text": "You can call me Mina."
+        }
+      ],
+      "required_features": [
+        "identity",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-002",
+      "domain": "introductions",
+      "scenario": "introductions_origin_exchange",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Where are you from?"
+        },
+        {
+          "speaker": "B",
+          "text": "I grew up in another country."
+        }
+      ],
+      "required_features": [
+        "origin",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-003",
+      "domain": "introductions",
+      "scenario": "introductions_language_preference",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Which language do you prefer?"
+        },
+        {
+          "speaker": "B",
+          "text": "Please use the language we both know."
+        }
+      ],
+      "required_features": [
+        "preference",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-004",
+      "domain": "introductions",
+      "scenario": "introductions_new_colleague",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is this your first day here?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I started this morning."
+        }
+      ],
+      "required_features": [
+        "time",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-005",
+      "domain": "introductions",
+      "scenario": "introductions_pronunciation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How do I pronounce your name?"
+        },
+        {
+          "speaker": "B",
+          "text": "The second syllable has the stress."
+        }
+      ],
+      "required_features": [
+        "pronunciation",
+        "clarification"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-006",
+      "domain": "introductions",
+      "scenario": "introductions_relationship",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Have we met before?"
+        },
+        {
+          "speaker": "B",
+          "text": "We spoke at the meeting yesterday."
+        }
+      ],
+      "required_features": [
+        "memory",
+        "time"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-007",
+      "domain": "introductions",
+      "scenario": "introductions_occupation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What kind of work do you do?"
+        },
+        {
+          "speaker": "B",
+          "text": "I design software for small businesses."
+        }
+      ],
+      "required_features": [
+        "occupation",
+        "description"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-008",
+      "domain": "introductions",
+      "scenario": "introductions_family",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Who came with you?"
+        },
+        {
+          "speaker": "B",
+          "text": "My sibling traveled with me."
+        }
+      ],
+      "required_features": [
+        "kinship",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-009",
+      "domain": "introductions",
+      "scenario": "introductions_welcome",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "May I introduce my friend?"
+        },
+        {
+          "speaker": "B",
+          "text": "Of course, I would like to meet them."
+        }
+      ],
+      "required_features": [
+        "permission",
+        "politeness"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-010",
+      "domain": "introductions",
+      "scenario": "introductions_farewell",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "When will we meet again?"
+        },
+        {
+          "speaker": "B",
+          "text": "Next week, if our schedules match."
+        }
+      ],
+      "required_features": [
+        "future",
+        "condition"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-011",
+      "domain": "essentials",
+      "scenario": "essentials_water_request",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Could you bring me water?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I will bring a glass."
+        }
+      ],
+      "required_features": [
+        "request",
+        "quantity"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-012",
+      "domain": "essentials",
+      "scenario": "essentials_food_restriction",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Does this meal contain nuts?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, please choose another dish."
+        }
+      ],
+      "required_features": [
+        "ingredient",
+        "warning"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-013",
+      "domain": "essentials",
+      "scenario": "essentials_rest_request",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "May I sit here for a moment?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, this seat is free."
+        }
+      ],
+      "required_features": [
+        "permission",
+        "location"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-014",
+      "domain": "essentials",
+      "scenario": "essentials_temperature",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is this room too cold for you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, please close the window."
+        }
+      ],
+      "required_features": [
+        "degree",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-015",
+      "domain": "essentials",
+      "scenario": "essentials_lost_object",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I cannot find my bag."
+        },
+        {
+          "speaker": "B",
+          "text": "I saw it beside the door."
+        }
+      ],
+      "required_features": [
+        "negation",
+        "location"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-016",
+      "domain": "essentials",
+      "scenario": "essentials_pain_report",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "My shoulder hurts when I move."
+        },
+        {
+          "speaker": "B",
+          "text": "Do you want me to call for help?"
+        }
+      ],
+      "required_features": [
+        "body",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-017",
+      "domain": "essentials",
+      "scenario": "essentials_urgency",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I need help immediately."
+        },
+        {
+          "speaker": "B",
+          "text": "I am coming now."
+        }
+      ],
+      "required_features": [
+        "urgency",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-018",
+      "domain": "essentials",
+      "scenario": "essentials_charging",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can I charge my phone here?"
+        },
+        {
+          "speaker": "B",
+          "text": "The socket is behind the chair."
+        }
+      ],
+      "required_features": [
+        "permission",
+        "location"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-019",
+      "domain": "essentials",
+      "scenario": "essentials_restroom",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Where is the nearest restroom?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is past the stairs on the left."
+        }
+      ],
+      "required_features": [
+        "navigation",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-020",
+      "domain": "essentials",
+      "scenario": "essentials_discomfort",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "This noise makes it hard to concentrate."
+        },
+        {
+          "speaker": "B",
+          "text": "I can turn the volume down."
+        }
+      ],
+      "required_features": [
+        "causation",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-021",
+      "domain": "navigation",
+      "scenario": "navigation_street_turn",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Should I turn left at the next street?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, continue straight for one block."
+        }
+      ],
+      "required_features": [
+        "direction",
+        "negation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-022",
+      "domain": "navigation",
+      "scenario": "navigation_bus_stop",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Which bus stops near the library?"
+        },
+        {
+          "speaker": "B",
+          "text": "The blue route stops there."
+        }
+      ],
+      "required_features": [
+        "transport",
+        "reference"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-023",
+      "domain": "navigation",
+      "scenario": "navigation_distance",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How far is the station from here?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is roughly two kilometers away."
+        }
+      ],
+      "required_features": [
+        "distance",
+        "approximation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-024",
+      "domain": "navigation",
+      "scenario": "navigation_building_entry",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is the entrance on this side?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, use the door around the corner."
+        }
+      ],
+      "required_features": [
+        "direction",
+        "negation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-025",
+      "domain": "navigation",
+      "scenario": "navigation_landmark",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can you see the tall tower?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, we should walk toward it."
+        }
+      ],
+      "required_features": [
+        "reference",
+        "direction"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-026",
+      "domain": "navigation",
+      "scenario": "navigation_wrong_train",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I think we boarded the wrong train."
+        },
+        {
+          "speaker": "B",
+          "text": "We should get off at the next stop."
+        }
+      ],
+      "required_features": [
+        "uncertainty",
+        "planning"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-027",
+      "domain": "navigation",
+      "scenario": "navigation_accessibility",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is there a step-free route?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, the elevator is around the back."
+        }
+      ],
+      "required_features": [
+        "accessibility",
+        "location"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-028",
+      "domain": "navigation",
+      "scenario": "navigation_map_disagreement",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "My map shows a different road."
+        },
+        {
+          "speaker": "B",
+          "text": "Maybe the road has been closed."
+        }
+      ],
+      "required_features": [
+        "uncertainty",
+        "contrast"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-029",
+      "domain": "navigation",
+      "scenario": "navigation_meeting_point",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Where should we wait for you?"
+        },
+        {
+          "speaker": "B",
+          "text": "Please wait outside the main gate."
+        }
+      ],
+      "required_features": [
+        "location",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-030",
+      "domain": "navigation",
+      "scenario": "navigation_arrival_confirmation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Have you reached the hotel?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not yet, I will arrive soon."
+        }
+      ],
+      "required_features": [
+        "completion",
+        "time"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-031",
+      "domain": "commerce",
+      "scenario": "commerce_price_inquiry",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How much does this cost?"
+        },
+        {
+          "speaker": "B",
+          "text": "It costs forty-five units of currency."
+        }
+      ],
+      "required_features": [
+        "price",
+        "quantity"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-032",
+      "domain": "commerce",
+      "scenario": "commerce_stock_check",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Do you have this in a larger size?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, the larger size is sold out."
+        }
+      ],
+      "required_features": [
+        "availability",
+        "comparison"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-033",
+      "domain": "commerce",
+      "scenario": "commerce_payment_method",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can I pay by card?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but cash is also accepted."
+        }
+      ],
+      "required_features": [
+        "permission",
+        "alternatives"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-034",
+      "domain": "commerce",
+      "scenario": "commerce_refund",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I would like to return this item."
+        },
+        {
+          "speaker": "B",
+          "text": "Please show your receipt."
+        }
+      ],
+      "required_features": [
+        "request",
+        "condition"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-035",
+      "domain": "commerce",
+      "scenario": "commerce_discount",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is there a discount for buying two?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, the second one costs less."
+        }
+      ],
+      "required_features": [
+        "condition",
+        "comparison"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-036",
+      "domain": "commerce",
+      "scenario": "commerce_wrong_order",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I ordered tea, but received coffee."
+        },
+        {
+          "speaker": "B",
+          "text": "I will correct your order now."
+        }
+      ],
+      "required_features": [
+        "contrast",
+        "repair"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-037",
+      "domain": "commerce",
+      "scenario": "commerce_delivery",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Will the package arrive tomorrow?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is expected after the weekend."
+        }
+      ],
+      "required_features": [
+        "forecast",
+        "time"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-038",
+      "domain": "commerce",
+      "scenario": "commerce_currency",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Does this price include tax?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, tax is added at checkout."
+        }
+      ],
+      "required_features": [
+        "inclusion",
+        "negation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-039",
+      "domain": "commerce",
+      "scenario": "commerce_reservation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can you reserve one for me?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, until the end of the day."
+        }
+      ],
+      "required_features": [
+        "request",
+        "deadline"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-040",
+      "domain": "commerce",
+      "scenario": "commerce_quality",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "This product has a broken part."
+        },
+        {
+          "speaker": "B",
+          "text": "We can replace it with a new one."
+        }
+      ],
+      "required_features": [
+        "problem",
+        "offer"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-041",
+      "domain": "scheduling",
+      "scenario": "scheduling_appointment",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Are you free tomorrow afternoon?"
+        },
+        {
+          "speaker": "B",
+          "text": "I am available after three."
+        }
+      ],
+      "required_features": [
+        "time",
+        "availability"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-042",
+      "domain": "scheduling",
+      "scenario": "scheduling_reschedule",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can we move the call to Friday?"
+        },
+        {
+          "speaker": "B",
+          "text": "Friday is difficult; Monday works."
+        }
+      ],
+      "required_features": [
+        "request",
+        "alternative"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-043",
+      "domain": "scheduling",
+      "scenario": "scheduling_timezone",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is that time in your local zone?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, I meant the other city's time."
+        }
+      ],
+      "required_features": [
+        "timezone",
+        "clarification"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-044",
+      "domain": "scheduling",
+      "scenario": "scheduling_deadline",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "When must the draft be finished?"
+        },
+        {
+          "speaker": "B",
+          "text": "Please complete it before noon."
+        }
+      ],
+      "required_features": [
+        "deadline",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-045",
+      "domain": "scheduling",
+      "scenario": "scheduling_duration",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How long will the meeting last?"
+        },
+        {
+          "speaker": "B",
+          "text": "Approximately forty minutes."
+        }
+      ],
+      "required_features": [
+        "duration",
+        "approximation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-046",
+      "domain": "scheduling",
+      "scenario": "scheduling_sequence",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Should we eat before the presentation?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, the presentation starts afterward."
+        }
+      ],
+      "required_features": [
+        "temporal_order",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-047",
+      "domain": "scheduling",
+      "scenario": "scheduling_recurrence",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Do you exercise every morning?"
+        },
+        {
+          "speaker": "B",
+          "text": "Usually, except on Sundays."
+        }
+      ],
+      "required_features": [
+        "recurrence",
+        "exception"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-048",
+      "domain": "scheduling",
+      "scenario": "scheduling_delay",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Why are you late?"
+        },
+        {
+          "speaker": "B",
+          "text": "The train was delayed by twenty minutes."
+        }
+      ],
+      "required_features": [
+        "cause",
+        "duration"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-049",
+      "domain": "scheduling",
+      "scenario": "scheduling_availability_change",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I can no longer attend tonight."
+        },
+        {
+          "speaker": "B",
+          "text": "Thanks for telling me early."
+        }
+      ],
+      "required_features": [
+        "availability",
+        "change"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-050",
+      "domain": "scheduling",
+      "scenario": "scheduling_reminder",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Will you remind me tomorrow?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I will send a message in the morning."
+        }
+      ],
+      "required_features": [
+        "future",
+        "request"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-051",
+      "domain": "social",
+      "scenario": "social_gratitude",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Thank you for helping me."
+        },
+        {
+          "speaker": "B",
+          "text": "I am happy I could help."
+        }
+      ],
+      "required_features": [
+        "gratitude",
+        "emotion"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-052",
+      "domain": "social",
+      "scenario": "social_apology",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I misunderstood what you said."
+        },
+        {
+          "speaker": "B",
+          "text": "That is okay; let me explain again."
+        }
+      ],
+      "required_features": [
+        "apology",
+        "repair"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-053",
+      "domain": "social",
+      "scenario": "social_invitation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Would you like to join us for lunch?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, if there is enough time."
+        }
+      ],
+      "required_features": [
+        "invitation",
+        "condition"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-054",
+      "domain": "social",
+      "scenario": "social_decline",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Do you want to come to the party?"
+        },
+        {
+          "speaker": "B",
+          "text": "No thanks, I need to rest."
+        }
+      ],
+      "required_features": [
+        "refusal",
+        "politeness"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-055",
+      "domain": "social",
+      "scenario": "social_emotion",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "You seem worried about something."
+        },
+        {
+          "speaker": "B",
+          "text": "I am nervous about tomorrow."
+        }
+      ],
+      "required_features": [
+        "emotion",
+        "time"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-056",
+      "domain": "social",
+      "scenario": "social_sympathy",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "My friend is very sick."
+        },
+        {
+          "speaker": "B",
+          "text": "I am sorry to hear that."
+        }
+      ],
+      "required_features": [
+        "sympathy",
+        "emotion"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-057",
+      "domain": "social",
+      "scenario": "social_compliment",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Your explanation was very clear."
+        },
+        {
+          "speaker": "B",
+          "text": "Thank you, I practiced it."
+        }
+      ],
+      "required_features": [
+        "evaluation",
+        "gratitude"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-058",
+      "domain": "social",
+      "scenario": "social_disagreement",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I think that plan will fail."
+        },
+        {
+          "speaker": "B",
+          "text": "I disagree because the risk is small."
+        }
+      ],
+      "required_features": [
+        "disagreement",
+        "cause"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-059",
+      "domain": "social",
+      "scenario": "social_preference",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Would you rather walk or cycle?"
+        },
+        {
+          "speaker": "B",
+          "text": "I prefer to walk today."
+        }
+      ],
+      "required_features": [
+        "preference",
+        "alternatives"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-060",
+      "domain": "social",
+      "scenario": "social_uncertainty",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Are you sure this is correct?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, I need to check the details."
+        }
+      ],
+      "required_features": [
+        "uncertainty",
+        "verification"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-061",
+      "domain": "clarification",
+      "scenario": "clarification_repeat",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Could you repeat the last sentence?"
+        },
+        {
+          "speaker": "B",
+          "text": "Of course, I will say it again."
+        }
+      ],
+      "required_features": [
+        "request",
+        "repair"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-062",
+      "domain": "clarification",
+      "scenario": "clarification_slower",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can you speak more slowly?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I will slow down."
+        }
+      ],
+      "required_features": [
+        "request",
+        "speech"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-063",
+      "domain": "clarification",
+      "scenario": "clarification_unknown_word",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What does that word mean?"
+        },
+        {
+          "speaker": "B",
+          "text": "It refers to a place where people wait."
+        }
+      ],
+      "required_features": [
+        "definition",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-064",
+      "domain": "clarification",
+      "scenario": "clarification_referent",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "When you said they, whom did you mean?"
+        },
+        {
+          "speaker": "B",
+          "text": "I meant the two engineers."
+        }
+      ],
+      "required_features": [
+        "reference",
+        "clarification"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-065",
+      "domain": "clarification",
+      "scenario": "clarification_number_confirmation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Did you say fifteen or fifty?"
+        },
+        {
+          "speaker": "B",
+          "text": "I said fifty, not fifteen."
+        }
+      ],
+      "required_features": [
+        "number",
+        "contrast"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-066",
+      "domain": "clarification",
+      "scenario": "clarification_scope",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Do you mean all of them or only some?"
+        },
+        {
+          "speaker": "B",
+          "text": "Only the people in this room."
+        }
+      ],
+      "required_features": [
+        "quantifier",
+        "scope"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-067",
+      "domain": "clarification",
+      "scenario": "clarification_negation",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Are you saying we should not go?"
+        },
+        {
+          "speaker": "B",
+          "text": "Correct, we should remain here."
+        }
+      ],
+      "required_features": [
+        "negation",
+        "confirmation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-068",
+      "domain": "clarification",
+      "scenario": "clarification_paraphrase",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Let me check that I understood you."
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, please explain it in your words."
+        }
+      ],
+      "required_features": [
+        "repair",
+        "paraphrase"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-069",
+      "domain": "clarification",
+      "scenario": "clarification_correction",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I meant Tuesday, not Thursday."
+        },
+        {
+          "speaker": "B",
+          "text": "Thanks, I have corrected the date."
+        }
+      ],
+      "required_features": [
+        "correction",
+        "time"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-070",
+      "domain": "clarification",
+      "scenario": "clarification_unclear_instructions",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "I do not understand the second step."
+        },
+        {
+          "speaker": "B",
+          "text": "I will demonstrate it once more."
+        }
+      ],
+      "required_features": [
+        "uncertainty",
+        "sequence"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-071",
+      "domain": "planning",
+      "scenario": "planning_goal",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What are we trying to accomplish?"
+        },
+        {
+          "speaker": "B",
+          "text": "We need to finish the report today."
+        }
+      ],
+      "required_features": [
+        "goal",
+        "deadline"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-072",
+      "domain": "planning",
+      "scenario": "planning_priority",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Which task matters most?"
+        },
+        {
+          "speaker": "B",
+          "text": "Fix the dangerous problem first."
+        }
+      ],
+      "required_features": [
+        "priority",
+        "safety"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-073",
+      "domain": "planning",
+      "scenario": "planning_dependency",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can we start before the data arrives?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, the data must arrive first."
+        }
+      ],
+      "required_features": [
+        "dependency",
+        "temporal_order"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-074",
+      "domain": "planning",
+      "scenario": "planning_options",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Should we build or buy the tool?"
+        },
+        {
+          "speaker": "B",
+          "text": "Let's compare cost and reliability."
+        }
+      ],
+      "required_features": [
+        "alternatives",
+        "comparison"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-075",
+      "domain": "planning",
+      "scenario": "planning_risk",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What happens if the server fails?"
+        },
+        {
+          "speaker": "B",
+          "text": "Users will temporarily lose access."
+        }
+      ],
+      "required_features": [
+        "condition",
+        "risk"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-076",
+      "domain": "planning",
+      "scenario": "planning_resources",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Do we have enough people for the job?"
+        },
+        {
+          "speaker": "B",
+          "text": "We need one more person."
+        }
+      ],
+      "required_features": [
+        "quantity",
+        "need"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-077",
+      "domain": "planning",
+      "scenario": "planning_delegate",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Could you review this section?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I will send feedback tomorrow."
+        }
+      ],
+      "required_features": [
+        "request",
+        "commitment"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-078",
+      "domain": "planning",
+      "scenario": "planning_progress",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How much of the plan is complete?"
+        },
+        {
+          "speaker": "B",
+          "text": "About half of the work is finished."
+        }
+      ],
+      "required_features": [
+        "proportion",
+        "progress"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-079",
+      "domain": "planning",
+      "scenario": "planning_change",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "The requirements changed this morning."
+        },
+        {
+          "speaker": "B",
+          "text": "Then we should revise the plan."
+        }
+      ],
+      "required_features": [
+        "change",
+        "inference"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-080",
+      "domain": "planning",
+      "scenario": "planning_fallback",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What should we do if the first plan fails?"
+        },
+        {
+          "speaker": "B",
+          "text": "Use the simpler backup plan."
+        }
+      ],
+      "required_features": [
+        "condition",
+        "alternatives"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-081",
+      "domain": "teamwork",
+      "scenario": "teamwork_bug_report",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "The login button does not respond."
+        },
+        {
+          "speaker": "B",
+          "text": "I will reproduce the problem locally."
+        }
+      ],
+      "required_features": [
+        "software",
+        "problem"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-082",
+      "domain": "teamwork",
+      "scenario": "teamwork_steps_to_reproduce",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What did you do before the error?"
+        },
+        {
+          "speaker": "B",
+          "text": "I opened the page and submitted the form."
+        }
+      ],
+      "required_features": [
+        "sequence",
+        "software"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-083",
+      "domain": "teamwork",
+      "scenario": "teamwork_evidence",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Does the log confirm the failure?"
+        },
+        {
+          "speaker": "B",
+          "text": "Not yet, the log is incomplete."
+        }
+      ],
+      "required_features": [
+        "evidence",
+        "uncertainty"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-084",
+      "domain": "teamwork",
+      "scenario": "teamwork_ownership",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Who is responsible for this change?"
+        },
+        {
+          "speaker": "B",
+          "text": "The platform team owns it."
+        }
+      ],
+      "required_features": [
+        "responsibility",
+        "question"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-085",
+      "domain": "teamwork",
+      "scenario": "teamwork_review",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can you check my latest patch?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, but I need the test results."
+        }
+      ],
+      "required_features": [
+        "request",
+        "dependency"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-086",
+      "domain": "teamwork",
+      "scenario": "teamwork_release",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Should we deploy this version now?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, the security checks are still failing."
+        }
+      ],
+      "required_features": [
+        "software",
+        "safety"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-087",
+      "domain": "teamwork",
+      "scenario": "teamwork_incident",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Customers cannot access their accounts."
+        },
+        {
+          "speaker": "B",
+          "text": "We should restore service before adding features."
+        }
+      ],
+      "required_features": [
+        "priority",
+        "temporal_order"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-088",
+      "domain": "teamwork",
+      "scenario": "teamwork_interfaces",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Does this endpoint return the same schema?"
+        },
+        {
+          "speaker": "B",
+          "text": "No, one field is missing."
+        }
+      ],
+      "required_features": [
+        "software",
+        "contrast"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-089",
+      "domain": "teamwork",
+      "scenario": "teamwork_decision",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Why did you choose this database?"
+        },
+        {
+          "speaker": "B",
+          "text": "It requires less maintenance for our workload."
+        }
+      ],
+      "required_features": [
+        "cause",
+        "comparison"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-090",
+      "domain": "teamwork",
+      "scenario": "teamwork_handoff",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Can another engineer continue this task?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, the remaining steps are documented."
+        }
+      ],
+      "required_features": [
+        "handoff",
+        "capability"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-091",
+      "domain": "numeracy",
+      "scenario": "numeracy_count",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How many chairs do we need?"
+        },
+        {
+          "speaker": "B",
+          "text": "We need exactly twelve chairs."
+        }
+      ],
+      "required_features": [
+        "quantity",
+        "exactness"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-092",
+      "domain": "numeracy",
+      "scenario": "numeracy_measurement",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How much water is in the bottle?"
+        },
+        {
+          "speaker": "B",
+          "text": "It holds one and a half liters."
+        }
+      ],
+      "required_features": [
+        "measurement",
+        "decimal"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-093",
+      "domain": "numeracy",
+      "scenario": "numeracy_temperature",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What is the temperature outside?"
+        },
+        {
+          "speaker": "B",
+          "text": "It is about twenty degrees."
+        }
+      ],
+      "required_features": [
+        "measurement",
+        "approximation"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-094",
+      "domain": "numeracy",
+      "scenario": "numeracy_fraction",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How much of the cake remains?"
+        },
+        {
+          "speaker": "B",
+          "text": "One quarter is left."
+        }
+      ],
+      "required_features": [
+        "fraction",
+        "quantity"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-095",
+      "domain": "numeracy",
+      "scenario": "numeracy_comparison",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "Is this box heavier than that one?"
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, by three kilograms."
+        }
+      ],
+      "required_features": [
+        "comparison",
+        "measurement"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-096",
+      "domain": "numeracy",
+      "scenario": "numeracy_range",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How many participants are expected?"
+        },
+        {
+          "speaker": "B",
+          "text": "Between twenty and thirty."
+        }
+      ],
+      "required_features": [
+        "range",
+        "quantity"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-097",
+      "domain": "numeracy",
+      "scenario": "numeracy_negative_value",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "What was the change in balance?"
+        },
+        {
+          "speaker": "B",
+          "text": "It decreased by fourteen point five units."
+        }
+      ],
+      "required_features": [
+        "signed_number",
+        "decimal"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-098",
+      "domain": "numeracy",
+      "scenario": "numeracy_rate",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How fast is the train traveling?"
+        },
+        {
+          "speaker": "B",
+          "text": "Approximately eighty kilometers per hour."
+        }
+      ],
+      "required_features": [
+        "rate",
+        "measurement"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-099",
+      "domain": "numeracy",
+      "scenario": "numeracy_probability",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How likely is the flight to be late?"
+        },
+        {
+          "speaker": "B",
+          "text": "The risk is low but not zero."
+        }
+      ],
+      "required_features": [
+        "probability",
+        "uncertainty"
+      ],
+      "translation_status": "not_attempted"
+    },
+    {
+      "id": "ED-100",
+      "domain": "numeracy",
+      "scenario": "numeracy_unit_conversion",
+      "turns": [
+        {
+          "speaker": "A",
+          "text": "How many centimeters are in two meters?"
+        },
+        {
+          "speaker": "B",
+          "text": "There are two hundred centimeters."
+        }
+      ],
+      "required_features": [
+        "unit_conversion",
+        "quantity"
+      ],
+      "translation_status": "not_attempted"
+    }
+  ]
+}

@@ -31,6 +31,62 @@ python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register r
 **Parser acceptance is not human comprehension or safety validation.** See
 [register semantics and limitations](docs/registers_v08.md).
 
+## Lojban-inspired semantic scope (opt-in; no language changes)
+
+The new `semantic` CLI projects **already-valid canonical** Veka into an
+inspectable predicate/argument tree. It shows why `ne` inside a quantified
+clause differs from a fully scoped `na ... yu`, labels a few reviewed
+predicate places (other verbs retain subject/object labels), and expands
+existing transparent noun compounds into their component tokens. There are
+**no** new particles, dictionary entries, or mandatory spoken constructions.
+
+```sh
+python3 -m veka semantic 'Al ren ne gos.'
+python3 -m veka semantic 'Na al ren gos yu.'
+python3 -m veka semantic 'Mi dak mel to ti en pas sun.'
+```
+
+This is structural annotation, not real-world truth evaluation or evidence of
+improved listener comprehension. Multiple quantified participants and
+quantified possessors fail closed. Read the [semantic scope specification](docs/semantic_scope_v01.md).
+
+## Interlingua-inspired learning aids (opt-in; no language changes)
+
+The `family` command exposes *existing* canonical noun-modifier compounds
+and separately labeled experimental v0.5 event derivations. The optional
+`beginner --families` flag explains related forms without registering
+any new word. `--readings` adds **exact-match**, unverified editorial
+examples in English and Brazilian Portuguese (not machine translation);
+unlisted sentences receive no translation.
+
+```sh
+python3 -m veka family dak
+python3 -m veka family kun --limit 5 --format json
+python3 -m veka beginner 'Mi pa dak mel.' --families --readings
+```
+
+Canonical forms and grammar remain frozen, and comprehension benefits have
+**not** been measured. See [semantic family learning study and limits](docs/semantic_family_learning_v09.md).
+
+## Everyday-language learning and requirements (v0.9, noncanonical)
+
+A **four-level beginner lesson set** checks 16 starter examples against strict
+canonical Veka. A separate **100-scenario, two-turn English dialogue inventory**
+maps common communication requirements without inventing Veka translations or
+claiming missing grammar. Neither tool provides human comprehension evidence.
+
+```sh
+python3 -m veka learn --level 1
+python3 -m veka learn --level 4
+python3 -m veka everyday-audit
+python3 -m veka everyday-audit --domain clarification --include-items
+```
+
+See [the v0.9 everyday learnability protocol](docs/everyday_learning_v09.md).
+Canonical vocabulary and grammar remain frozen; extensions are still opt-in.
+
+**International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before
@@ -92,6 +148,28 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka audio-quality preflight (research-only)
+
+After collecting **real, independently produced** ABX WAV files, run an
+additional read-only screening step before an authorized researcher listens to
+the recordings. It uses only Python's standard library and does **not** alter
+the canonical language, convert audio, mark clips as recorded, or fabricate
+human observations.
+
+```sh
+python -m veka listening-preflight \
+  --recording-csv /secure/recording_jobs.csv \
+  --audio-root /secure/actual-wavs > /secure/preflight.json
+```
+
+The preflight requires a complete confirmed recording bank. It rejects
+malformed ABX manifests, missing/truncated WAV files, byte-identical files,
+and repeated decoded PCM even if WAV container bytes differ. It reports
+per-clip RMS, clipping fraction, DC offset and advisory review warnings.
+A clean report **never** certifies human speech, independent takes,
+correct pronunciation, +5 dB SNR, or listener comprehension. See
+[recording preflight protocol](docs/audio_preflight_v09.md).
+
 ## Veka 0.6 — blinded meaning-recovery study packet
 
 The new `meaning-plan` command prepares a condition-blinded **participant
@@ -138,6 +216,18 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
 ```
 
 See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
+
+## Cross-family lexical readiness (experimental, no canonical change)
+
+`python3 -m veka lexical-readiness` produces an evidence-first research backlog
+for Veka's 100 international-vocabulary concepts. It joins existing structural
+word checks, independently labeled language-family attestations and descriptive
+human-trial conditions. A two-family coverage prefilter is a research heuristic,
+**not proof of comprehension or grounds for replacing vocabulary**. With the
+bundled header-only evidence and trial files, eight experimental forms need
+source review and 92 concepts still need proposals. There are no measured
+learner outcomes, no automatically approved words and no canonical lexicon
+changes. See [research readiness and language comparisons](docs/lexical_readiness_v09.md).
 
 ## Veka 0.7 global-comprehension research (opt-in; no canonical changes)
 

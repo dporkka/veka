@@ -9,6 +9,7 @@ from .core import (Lexicon,Discourse,VekaError,validate_word,syllabify,parse,
                    render_svg,read_svg,evaluate_stimuli,score_human_trials)
 from .numbers import spell_number,read_number
 from .logic import parse_logic
+from .semantic_scope import analyze_scope
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
 from .compound_semantics import audit_compound_semantics, load_compound_reviews
@@ -17,6 +18,7 @@ from .meaning_v06 import make_meaning_packet, write_meaning_packet
 from .communication_v07 import generate_cases, audit_communication
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
+from .audio_preflight import audit_recordings
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
@@ -27,8 +29,10 @@ from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
 from .lessons import build_lessons, format_lessons
+from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
+from .lexical_readiness import build_lexical_readiness
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -36,6 +40,8 @@ from .international import (read_candidates, read_evidence, audit_candidates,
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
 from .cognate_session import read_blind_manifest, write_blind_session, prepare_judge_sheet
 from .cognate_review import read_cognate_leads, audit_cognate_leads
+
+from .everyday import audit_dialogues, get_lesson
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -57,6 +63,13 @@ def main(argv=None):
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--lang',choices=LANGUAGES,default='en',help='language of teaching glosses')
     t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
+    t.add_argument('--families',action='store_true',help='add structural families without registering new words')
+    t.add_argument('--readings',action='store_true',help='show exact-match unverified English/Portuguese editorial readings')
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('family',help='inspect canonical compounds and opt-in derived word families')
+    t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--limit',type=int,default=12)
+    t.add_argument('--no-cues',action='store_true')
     t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lessons',help='progressive first-sight lessons in English, Mandarin or Brazilian Portuguese')
     t.add_argument('--lang',choices=LANGUAGES,default='en')
@@ -110,6 +123,9 @@ def main(argv=None):
     t.add_argument('--participant-csv',required=True)
     t.add_argument('--key-csv',required=True)
     t.add_argument('--recording-csv',required=True)
+    t=sub.add_parser('listening-preflight',help='audit real ABX WAV PCM before manual speech review')
+    t.add_argument('--recording-csv',required=True)
+    t.add_argument('--audio-root',required=True)
     t=sub.add_parser('listening-score',help='score complete responses with recorded WAV verification')
     t.add_argument('--key-csv',required=True)
     t.add_argument('--responses-csv',required=True)
@@ -159,6 +175,8 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('semantic',help='project canonical Veka into an explicit semantic scope tree')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('register-check',help='check canonical Core/Precise versus opt-in Research syntax')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--max-register',choices=REGISTERS,default='core')
@@ -181,9 +199,22 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('everyday-audit',help='summarize 100 untranslated everyday dialogue requirements')
+    t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
+    t=sub.add_parser('learn',help='view canonical parser-checked beginner examples')
+    t.add_argument('--level',required=True,type=int)
+    t=sub.add_parser('lexical-readiness',help='next research actions, never automatic vocabulary adoption')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
+    t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='communication-audit':
+        if args.command=='everyday-audit':
+            result=audit_dialogues(domain=args.domain,include_items=args.include_items)
+        elif args.command=='learn':
+            result=get_lesson(args.level)
+        elif args.command=='communication-audit':
             seeds=json.loads(Path(args.domains).read_text(encoding='utf-8'))
             lex=load_profile(args.profile)
             result=audit_communication(generate_cases(seeds,lex),lex,profile=args.profile)
@@ -241,14 +272,30 @@ def main(argv=None):
         elif args.command=='beginner':
             result=guide_sentence(args.sentence,load_profile(args.profile),
                                   read_candidates(DATA/'international_candidates_v04.csv'),
-                                  profile=args.profile,include_cues=not args.no_cues,language=args.lang)
+                                  profile=args.profile,include_cues=not args.no_cues,
+                                  language=args.lang,include_families=args.families,
+                                  include_readings=args.readings)
             if args.format=='text':
                 print(format_beginner_guide(result))
+                return 0
+        elif args.command=='family':
+            result=describe_family(args.word,load_profile(args.profile),
+                                   read_candidates(DATA/'international_candidates_v04.csv'),
+                                   limit=args.limit,include_cues=not args.no_cues)
+            if args.format=='text':
+                print(format_semantic_family(result))
                 return 0
         elif args.command=='global-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_global_candidates(read_candidates(args.candidates),lex,
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='lexical-readiness':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=build_lexical_readiness(read_candidates(args.candidates), lex,
+                        read_global_csv(args.evidence,EVIDENCE_FIELDS),
+                        read_global_csv(args.trials,TRIAL_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='global-score':
@@ -273,6 +320,8 @@ def main(argv=None):
                     'recording_csv':args.recording_csv,
                     'human_results_collected':False,'audio_recorded':False,
                     'warning':'Restricted answer key and recording manifest must not be shared with participants.'}
+        elif args.command=='listening-preflight':
+            result=audit_recordings(read_csv(args.recording_csv),args.audio_root)
         elif args.command=='listening-score':
             result=score_packet(read_csv(args.key_csv),read_csv(args.responses_csv),
                                 read_csv(args.recording_csv),args.audio_root)
@@ -303,6 +352,8 @@ def main(argv=None):
                 Path(args.output).write_text(json.dumps(full,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='discourse':
             result=parse_discourse(args.sentence,load_profile(args.profile))
+        elif args.command=='semantic':
+            result=analyze_scope(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
             result=parse_extended(args.sentence,load_profile(args.profile),strict=True)
         elif args.command=='derive':
