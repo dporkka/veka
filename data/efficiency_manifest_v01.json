@@ -1,0 +1,306 @@
+{
+  "schema_version": "veka.efficiency-manifest.v01",
+  "provenance": "Veka beginner lessons; editorial translations, not independently reviewed",
+  "items": [
+    {
+      "id": "L01",
+      "veka": "Ti sen kun.",
+      "variants": {
+        "en": {
+          "text": "You understand information.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "你理解信息。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Você entende informações.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L02",
+      "veka": "Mi lin za.",
+      "variants": {
+        "en": {
+          "text": "I see a computer.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我看到一台计算机。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu vejo um computador.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L03",
+      "veka": "Mi pa dak mel.",
+      "variants": {
+        "en": {
+          "text": "I sent a message.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我发送了一条消息。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu enviei uma mensagem.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L04",
+      "veka": "Mi pa ne dak mel.",
+      "variants": {
+        "en": {
+          "text": "I did not send a message.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我没有发送消息。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu não enviei uma mensagem.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L05",
+      "veka": "Mi rok sau.",
+      "variants": {
+        "en": {
+          "text": "I read a book.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我读书。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu leio um livro.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L06",
+      "veka": "Al ren pa gos.",
+      "variants": {
+        "en": {
+          "text": "Every person went.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "每个人都走了。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Todas as pessoas foram.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L07",
+      "veka": "Mi sus woi.",
+      "variants": {
+        "en": {
+          "text": "I listen to music.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我听音乐。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu escuto música.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L08",
+      "veka": "Mi sen nol.",
+      "variants": {
+        "en": {
+          "text": "I understand a language.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我理解一种语言。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu entendo uma língua.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L09",
+      "veka": "Mi rin sil wen ran dis gel su wok.",
+      "variants": {
+        "en": {
+          "text": "I need 1.5 liters of water.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "我需要1.5升水。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Eu preciso de 1,5 litro de água.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    },
+    {
+      "id": "L10",
+      "veka": "Ren-sak pa gos.",
+      "variants": {
+        "en": {
+          "text": "A knowledgeable person went.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "zh": {
+          "text": "一位有知识的人走了。",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        },
+        "pt-BR": {
+          "text": "Uma pessoa com conhecimento foi.",
+          "status": "editorial_unverified",
+          "review_id": null,
+          "spoken_syllables": null,
+          "morphemes": null,
+          "ambiguity_risk": null
+        }
+      }
+    }
+  ]
+}

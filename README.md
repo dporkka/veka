@@ -291,6 +291,67 @@ None of the six draft operator forms is accepted as canonical Veka, and
 the mechanical checks are not empirical pronunciation or comprehension
 evidence. See [modal scope and comparison design](docs/modality_comparison_v01.md).
 
+## Cross-language efficiency comparison (research-only)
+
+A new reproducible instrument reuses ten existing canonical Veka lessons and
+unverified English, Mandarin, and Brazilian Portuguese editorial readings.
+It checks Veka syllables, morphemes, and strict grammar without pretending that
+orthographic length determines cross-script information efficiency. Optional
+reviewed annotations can be added for Indonesian, Turkish, Esperanto,
+Interlingua, and other supported languages. Human outcome scoring requires
+separate actual trial observations and reviewed comparator translations;
+no learner result or language ranking is claimed.
+
+```sh
+python3 -m veka efficiency-audit
+python3 -m veka efficiency-template --output /tmp/veka-efficiency-input.json
+python3 -m veka efficiency-score  # empty trial template; no observations
+```
+
+See [cross-language efficiency protocol](docs/efficiency_comparison_v01.md)
+for the annotation schema, the comprehension/repair-time measure, and
+independent translation-review and human-study prerequisites.
+
+### Two-reviewer translation gates (research-only)
+
+Each of Indonesian, Turkish, Esperanto, and Interlingua can now be reviewed
+by **its own pair** of bilingual reviewers. Blank source-locked CSV packets
+include ten examples per language, but **no independently verified new
+translations exist** in the repository. Only matching affirmative reviews
+unlock a new, noncanonical comparison manifest; no human communication result
+or grammatical/vocabulary change is inferred.
+
+```sh
+python3 -m veka efficiency-review-plan --language id --reviewer reviewerA --output /private/id-A.csv
+python3 -m veka efficiency-review-plan --language id --reviewer reviewerB --output /private/id-B.csv
+python3 -m veka efficiency-review-check --review-a /private/id-A.csv --review-b /private/id-B.csv
+# --output /private/reviewed-id.json is rejected until both reviewers agree on all ten.
+```
+
+See [the dual-review workflow](docs/efficiency_review_v02.md) for
+per-language reviewer assignment, source integrity, bounded CSV validation,
+and the requirements before any authentic participant study.
+
+**Preferred v0.3 candidate-bound workflow:** a qualified author supplies one
+fixed target-language translation, then two separate reviewers assess the
+*same* candidate independently. This avoids the unrealistic requirement that
+two independent authors spontaneously produce identical wording. A source-locked
+candidate sheet is mandatory at the acceptance check; negative/uncertain
+verdicts or changed candidate text fail closed. All evidence remains
+self-attested, and no real reviews have been collected.
+
+```sh
+python3 -m veka efficiency-review-plan --language tr --reviewer tr_author --output /private/tr-candidate.csv
+# A qualified human fills target_text, leaves all verdict columns blank.
+python3 -m veka efficiency-review-bind --candidates /private/tr-candidate.csv --reviewer tr_judge_A --output /private/tr-A.csv
+python3 -m veka efficiency-review-bind --candidates /private/tr-candidate.csv --reviewer tr_judge_B --output /private/tr-B.csv
+python3 -m veka efficiency-review-check --candidates /private/tr-candidate.csv --review-a /private/tr-A.csv --review-b /private/tr-B.csv
+```
+
+See [candidate-bound independent review protocol](docs/efficiency_candidate_review_v03.md)
+for source freezing, protections against overwritten verdicts, and the exact
+limits of what this instrument can verify.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
