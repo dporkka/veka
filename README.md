@@ -108,6 +108,23 @@ Read the [offline conversation-study protocol](docs/conversation_session_v01.md)
 for the exact input schema, independent translation-review prerequisite,
 consent requirements, response export, and manual adjudication boundary.
 
+## Familiar vocabulary pilot (experimental; opt-in)
+
+A separate, usable Core-grammar profile replaces seven nouns with familiar-looking
+forms and converts their existing compounds in both directions. It is an
+experimental first step, not a validated or complete vocabulary reform.
+See [the pilot and its limitations](docs/familiar_vocabulary_pilot.md).
+
+```sh
+python3 -m veka.familiar parse 'Mi sen mu-si-ka.'
+python3 -m veka.familiar convert to-familiar 'Mi sen woi.'
+```
+
+The noncanonical [seven-root study protocol](docs/familiar_root_study_v14.md)
+can evaluate these draft forms without accepting them into standard Veka.
+No human recognition, retention, semantic or spoken intelligibility benefit
+has been established.
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing
