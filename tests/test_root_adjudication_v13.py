@@ -17,7 +17,7 @@ from veka.root_adjudication import (build_root_review, read_root_review,
 ROOT = Path(__file__).resolve().parents[1]
 KEY_FIELDS = ('participant_id', 'trial_id', 'concept_id', 'target_gloss',
               'condition', 'presented_form', 'background_stratum')
-REVIEW_FIELDS = ('participant_id', 'trial_id', 'target_gloss', 'response_gloss',
+REVIEW_FIELDS = ('trial_id', 'target_gloss', 'response_gloss',
                  'correct', 'critical_error', 'reviewer_id', 'review_note')
 
 
@@ -65,6 +65,17 @@ class RootAdjudicationTests(unittest.TestCase):
             with self.assertRaises(VekaError):
                 write_root_review(packet, output)
 
+    def test_reviewer_export_does_not_disclose_language_coded_participant_ids(self):
+        # A pseudonym such as English1 must never reveal language strata.
+        with tempfile.TemporaryDirectory() as tmp:
+            plan, participants, _ = self.make_study(tmp)
+            packet = build_root_review(plan['researcher_keys'], participants,
+                                       self.candidates, self.lex)
+            self.assertNotIn('participant_id', packet[0])
+            self.assertNotIn('English1', json.dumps(packet))
+            self.assertNotIn('Mandarin1', json.dumps(packet))
+            self.assertTrue(all(row['trial_id'].startswith('V12-') for row in packet))
+
     def test_exact_keyed_report_only_descriptive_by_background(self):
         with tempfile.TemporaryDirectory() as tmp:
             plan, participants, _ = self.make_study(tmp)
@@ -90,6 +101,7 @@ class RootAdjudicationTests(unittest.TestCase):
             review = build_root_review(plan['researcher_keys'], participants, self.candidates, self.lex)
             good = self.approved(review)
             bads = (good[:-1], good + [good[0]],
+                    [dict(good[0], trial_id='V12-0000000000000000')] + good[1:],
                     [dict(good[0], target_gloss='wrong')] + good[1:],
                     [dict(good[0], response_gloss='altered')] + good[1:],
                     [dict(good[0], correct='1', critical_error='1')] + good[1:],

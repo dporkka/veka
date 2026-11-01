@@ -20,7 +20,7 @@ KEY_FIELDS = ('participant_id', 'trial_id', 'concept_id', 'target_gloss',
 PARTICIPANT_FIELDS = ('participant_id', 'trial_id', 'presented_form',
                       'response_gloss', 'response_ms', 'prior_exposure',
                       'presentation_modality')
-REVIEW_FIELDS = ('participant_id', 'trial_id', 'target_gloss', 'response_gloss',
+REVIEW_FIELDS = ('trial_id', 'target_gloss', 'response_gloss',
                  'correct', 'critical_error', 'reviewer_id', 'review_note')
 TRIAL_ID = re.compile(r'V12-[0-9a-f]{16}\Z', re.ASCII)
 
@@ -125,7 +125,6 @@ def build_root_review(keys: list[dict], responses_dir: str | Path,
     """Create manual reviewer input with target/response, never the form/condition."""
     observations = _observations(keys, responses_dir, candidates, lex)
     return [{
-        'participant_id': key['participant_id'],
         'trial_id': key['trial_id'],
         'target_gloss': key['target_gloss'],
         'response_gloss': observations[key['trial_id']]['response_gloss'],
@@ -163,7 +162,7 @@ def _stats(rows: list[dict]) -> dict:
 def score_root_review(keys: list[dict], responses_dir: str | Path,
                       reviews: list[dict], candidates: list[dict], lex: Lexicon) -> dict:
     """Descriptive, fully linked claims, not an inference or approval engine."""
-    expected = {tuple(row[k] for k in ('participant_id', 'trial_id')): row
+    expected = {row['trial_id']: row
                 for row in build_root_review(keys, responses_dir, candidates, lex)}
     observations = _observations(keys, responses_dir, candidates, lex)
     by_trial = {row['trial_id']: row for row in keys}
@@ -174,12 +173,12 @@ def score_root_review(keys: list[dict], responses_dir: str | Path,
         if (not isinstance(row, dict) or tuple(row) != REVIEW_FIELDS
                 or any(not isinstance(row[k], str) for k in REVIEW_FIELDS)):
             raise VekaError('invalid manual judgment columns')
-        identity = (row['participant_id'], row['trial_id'])
+        identity = row['trial_id']
         if identity not in expected or identity in seen:
             raise VekaError('unknown or repeated root judgment')
         seen.add(identity)
         if any(row[k] != expected[identity][k] for k in
-               ('participant_id', 'trial_id', 'target_gloss', 'response_gloss')):
+               ('trial_id', 'target_gloss', 'response_gloss')):
             raise VekaError('manual judgment does not match the original response')
         if (row['correct'] not in ('0', '1') or row['critical_error'] not in ('0', '1')
                 or (row['correct'], row['critical_error']) == ('1', '1')

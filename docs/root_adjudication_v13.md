@@ -24,10 +24,9 @@ root-selection or word-recognition model.
    ```
 
 4. Give reviewers only the review CSV, **not** the key or participant sheets.
-   It contains `participant_id,trial_id,target_gloss,response_gloss,correct,
-   critical_error,reviewer_id,review_note`; it deliberately hides the displayed
-   form, experimental condition, language-background field and response time.
-   Use opaque participant IDs that do not encode the language stratum. Decide
+   It contains `trial_id,target_gloss,response_gloss,correct,critical_error,reviewer_id,review_note`; it deliberately hides the displayed
+   form, participant IDs, experimental condition, language-background field
+   and response time. Opaque trial IDs are the only review-to-key join. Decide
    acceptable senses and critical errors in a preregistered rubric. Reviewers
    manually enter `0`/`1` judgments and an identifier and rationale in each row.
    For contested meanings, resolve disagreements with a separate documented
