@@ -38,6 +38,7 @@ from .root_research import build_root_inventory, compare_scenarios, read_scenari
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
+from .conversation_session import read_conversation_manifest, write_conversation_session
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -255,6 +256,9 @@ def main(argv=None):
     t=sub.add_parser('borrowing-audit',help='audit opt-in language-design contrasts; no Veka words registered')
     t.add_argument('--catalog',default=str(DATA/'language_transfer_v01.json'))
     t.add_argument('--output')
+    t=sub.add_parser('conversation-session',help='package researcher-authored, participant-only conversation tasks')
+    t.add_argument('--manifest',required=True)
+    t.add_argument('--output',required=True)
     t=sub.add_parser('conversation-score',help='descriptive multilingual dialogue outcomes; never a winner')
     t.add_argument('--trials',default=str(DATA/'conversation_trials_v01.csv'))
     t.add_argument('--output')
@@ -380,6 +384,8 @@ def main(argv=None):
             result=audit_proposals(load_proposals(args.catalog))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='conversation-session':
+            result=write_conversation_session(read_conversation_manifest(args.manifest),args.output)
         elif args.command=='conversation-score':
             result=score_conversations(read_conversation_trials(args.trials))
             if args.output:
