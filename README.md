@@ -34,6 +34,24 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka 0.6 — blinded meaning-recovery study packet
+
+The new `meaning-plan` command prepares a condition-blinded **participant
+sheet**, separate researcher answer key, and recording job sheet for the
+existing 32 constructed meaning pairs. It rejects structurally mismatched
+pairings, ensures one presentation per meaning, and does **not** generate
+audio or participant outcomes. The older `study-assign` output contains
+the target meanings and should only be handled by researchers.
+
+```sh
+python -m veka meaning-plan --participant P001 --arm 0 \
+  --participant-csv /tmp/participant.csv --key-csv /tmp/researcher.csv \
+  --recording-csv /tmp/recordings.csv
+```
+
+See [meaning-recovery pilot protocol](docs/meaning_pilot_v06.md) for
+blinding, recording, consent, adjudication and measurement limits.
+
 ## Veka 0.6 — empirical listening-study preparation
 
 New blinded ABX pilot tools test phonetic contrasts without changing the Veka language. The system creates a participant-only trial schedule, a separate answer key and a human recording job manifest; it fails closed when asked to score missing WAV files or incomplete responses. Experimental audio is **not generated**, and **no human results are collected** in this release. Current tonal pilot: 13 contrasts, 104 trials for two talkers; toneless: 12 contrasts, 96 trials. Clip IDs are opaque and stable across participants assigned to the same arm and frozen stimulus bank.

@@ -12,6 +12,7 @@ from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
 from .study import write_manifest
+from .meaning_v06 import make_meaning_packet, write_meaning_packet
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
@@ -52,7 +53,14 @@ def main(argv=None):
     t=sub.add_parser('audit',help='lexical structural confusion audit (not speech testing)')
     t.add_argument('--top',type=int,default=20);t.add_argument('--output')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
-    t=sub.add_parser('study-assign',help='create a balanced study manifest without audio/data')
+    t=sub.add_parser('meaning-plan',help='blinded meaning-recovery participant/key/recording packet')
+    t.add_argument('--participant',required=True)
+    t.add_argument('--arm',required=True,type=int,choices=(0,1))
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--participant-csv',required=True)
+    t.add_argument('--key-csv',required=True)
+    t.add_argument('--recording-csv',required=True)
+    t=sub.add_parser('study-assign',help='legacy RESEARCHER-ONLY manifest exposing meanings and conditions (no audio)')
     t.add_argument('--participant',required=True);t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--output',required=True)
     t=sub.add_parser('profile',help='inspect a separately versioned experimental vocabulary')
@@ -114,7 +122,12 @@ def main(argv=None):
     t.add_argument('--researcher-key',required=True)
     args=ap.parse_args(argv)
     try:
-        if args.command=='listening-plan':
+        if args.command=='meaning-plan':
+            items=json.loads((DATA/'study_items_v03.json').read_text(encoding='utf-8'))
+            packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
+            result=write_meaning_packet(packet,args.participant_csv,
+                                        args.key_csv,args.recording_csv)
+        elif args.command=='listening-plan':
             lex=load_profile(args.profile)
             pairs=load_contrasts(args.contrasts,lex,args.profile)
             packet=make_packet(pairs,args.participant,tuple(args.talker or ('S01','S02')),
