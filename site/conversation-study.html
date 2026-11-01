@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veka — offline dialogue comprehension study</title>
+<style>
+:root{color-scheme:light;--ink:#19313f;--accent:#10645e}
+*{box-sizing:border-box}body{margin:0;background:#f4f8f7;color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+header{background:#153c42;color:white;padding:1.8rem max(1rem,calc((100vw - 780px)/2))}
+main{max-width:780px;margin:1.5rem auto;padding:0 1rem}
+section{background:#fff;border:1px solid #cbded9;border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+label{display:block;margin:.8rem 0 .3rem;font-weight:600}
+input[type=file],input[type=text],textarea{display:block;width:100%;border:1px solid #86a5a0;border-radius:7px;padding:.7rem;font:inherit}
+textarea{min-height:7rem}button{background:var(--accent);color:white;font:inherit;font-weight:700;padding:.7rem 1.1rem;border:0;border-radius:7px;margin-top:1rem;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}:focus-visible{outline:3px solid #b77727;outline-offset:2px}
+.dialogue{background:#edf6f3;padding:1rem;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+[hidden]{display:none!important}.small{font-size:.91rem;color:#51626a}#status{min-height:1.5em}
+</style>
+</head>
+<body>
+<header><h1>Dialogue comprehension research</h1><p>Unscored, voluntary, offline response collection. Not a language proficiency test.</p></header>
+<main>
+<section id="setup">
+<h2>Participant setup</h2>
+<p>Use only the participant session JSON supplied by the researcher. It should contain no answer key. Nothing is uploaded or automatically saved; the browser keeps your entries only until you close or refresh this page.</p>
+<label for="session-file">Participant session JSON</label>
+<input id="session-file" type="file" accept="application/json,.json">
+<label for="family">Researcher-provided language-background family label</label>
+<input id="family" type="text" maxlength="64" autocomplete="off" placeholder="e.g. Austronesian">
+<p class="small">Ask your researcher if the label is unknown. Do not infer a linguistic family from nationality.</p>
+<label><input id="consent" type="checkbox"> I voluntarily consent to this session, and understand that exporting or sharing my responses is optional.</label>
+<button type="button" id="begin" disabled>Begin study</button>
+<p id="status" role="status" aria-live="polite"></p>
+</section>
+<section id="trial" hidden>
+<p id="progress" aria-live="polite"></p>
+<p class="small" id="language"></p>
+<h2>Read the conversation and explain what the second speaker means.</h2>
+<h3>Context / speaker A</h3><div id="context" class="dialogue"></div>
+<h3>Speaker B</h3><div id="utterance" class="dialogue"></div>
+<form id="response-form">
+<label for="response">Meaning in your own words, or “I don't know”</label>
+<textarea id="response" maxlength="800" required></textarea>
+<button type="submit">Submit response</button>
+</form>
+<p class="small">Please do not use dictionaries or AI assistance. Time measurements are approximate; interruptions are flagged for researchers.</p>
+</section>
+<section id="done" hidden>
+<h2>Completed</h2><p id="count"></p>
+<p>Nothing was uploaded. You may download your own unscored responses and share them privately with the researcher if you wish.</p>
+<button id="export-responses" type="button">Download response CSV</button>
+<p class="small">The CSV contains your pseudonym, researcher-provided family label, responses and approximate elapsed times. It contains no target meanings or correctness scores.</p>
+</section>
+</main>
+<script>
+"use strict";
+(() => {
+  const $ = id => document.getElementById(id);
+  let session = null, index = 0, started = false, shownAt = 0, interrupted = false;
+  const responses = [];
+  const languages = new Set(["veka","globasa","esperanto","interlingua","indonesian"]);
+  const pseudo = /^[A-Za-z0-9_-]{2,64}$/;
+  const trialId = /^D01-[0-9a-f]{16}$/;
+  const family = /^[A-Za-z][A-Za-z -]{1,63}$/;
+  function message(text){$("status").textContent = text;}
+  function validSession(s) {
+    if (!s || Array.isArray(s) || typeof s !== "object" ||
+        Object.keys(s).sort().join(",") !== "participant_id,schema_version,trials" ||
+        s.schema_version !== "veka.conversation-session.v01" ||
+        !pseudo.test(s.participant_id) || !Array.isArray(s.trials) ||
+        s.trials.length < 2 || s.trials.length > 40) return false;
+    const ids = new Set();
+    return s.trials.every(row => {
+      if (!row || Array.isArray(row) || typeof row !== "object" ||
+          Object.keys(row).sort().join(",") !== "context,language,trial_id,utterance" ||
+          !trialId.test(row.trial_id) || ids.has(row.trial_id) ||
+          !languages.has(row.language)) return false;
+      for (const key of ["context","utterance"]) {
+        const text = row[key];
+        if (typeof text !== "string" || !text.length || Array.from(text).length > 2000 ||
+            text.trim() !== text || /^[=+@-]/.test(text) || /[\u0000-\u001f\u007f]/.test(text)) return false;
+      }
+      ids.add(row.trial_id);
+      return true;
+    });
+  }
+  function ready(){ $("begin").disabled = !(session && !started && $("consent").checked && family.test($("family").value)); }
+  $("family").addEventListener("input", ready);
+  $("consent").addEventListener("change", ready);
+  $("session-file").addEventListener("change", async event => {
+    session = null; ready(); message("");
+    const file = event.target.files[0]; if(!file) return;
+    try {
+      if(file.size > 1048576) throw new Error("Session file is too large");
+      const data = JSON.parse(await file.text());
+      if(!validSession(data)) throw new Error("Invalid participant-only session");
+      session = data;
+      message("Session validated: " + data.trials.length + " prompts. This does not verify translation quality.");
+    } catch(error) { message(error.message); }
+    ready();
+  });
+  function show(){
+    const row = session.trials[index];
+    $("progress").textContent = `Prompt ${index + 1} of ${session.trials.length}`;
+    $("language").textContent = "Study language: " + row.language;
+    $("context").textContent = row.context;
+    $("utterance").textContent = row.utterance;
+    $("response").value = "";
+    $("response").focus();
+    interrupted = false;
+    shownAt = performance.now();
+  }
+  $("begin").addEventListener("click", () => {
+    if($("begin").disabled || started) return;
+    started = true; $("setup").hidden = true; $("trial").hidden = false; show();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if(started && !$("trial").hidden && document.hidden) interrupted = true;
+  });
+  window.addEventListener("blur", () => {
+    if(started && !$("trial").hidden) interrupted = true;
+  });
+  $("response-form").addEventListener("submit", event => {
+    event.preventDefault();
+    if(!started || index >= session.trials.length) return;
+    const answer = $("response").value.trim(); if(!answer) return;
+    const row = session.trials[index];
+    responses.push({participant_id:session.participant_id, trial_id:row.trial_id,
+      language:row.language, response_text:answer,
+      response_ms:String(Math.max(0, Math.round(performance.now() - shownAt))),
+      timing_interrupted:interrupted ? "yes" : "no", background_family:$("family").value});
+    index++;
+    if(index < session.trials.length) show();
+    else {
+      $("trial").hidden = true; $("done").hidden = false;
+      $("count").textContent = `${responses.length} unscored responses collected locally.`;
+    }
+  });
+  const columns = ["participant_id","trial_id","language","response_text","response_ms","timing_interrupted","background_family"];
+  const quote = value => {
+    const raw = String(value);
+    const safe = /^[\t\r\n ]*[=+@-]/.test(raw) ? "'" + raw : raw;
+    return '"' + safe.replaceAll('"', '""') + '"';
+  };
+  $("export-responses").addEventListener("click", () => {
+    if(!started || responses.length !== session.trials.length) return;
+    const csv = [columns.join(","), ...responses.map(row => columns.map(c => quote(row[c])).join(","))].join("\r\n") + "\r\n";
+    const url = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+    const link = document.createElement("a"); link.href = url;
+    link.download = `veka-conversation-${session.participant_id}.csv`;
+    document.body.append(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+})();
+</script>
+</body>
+</html>

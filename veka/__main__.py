@@ -34,9 +34,15 @@ from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
+from .root_research import build_root_inventory, compare_scenarios, read_scenarios
+from .root_sources import audit_root_sources, read_root_sources
+from .root_study import plan_root_cohorts
+from .root_adjudication import (build_root_review, write_root_review, read_root_review,
+                                score_root_review, KEY_FIELDS)
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
+from .conversation_session import read_conversation_manifest, write_conversation_session
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -247,9 +253,36 @@ def main(argv=None):
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('root-study-plan',help='prepare blinded language-stratified international-root study packets')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--roster',required=True)
+    t.add_argument('--participants-dir',required=True)
+    t.add_argument('--researcher-dir',required=True)
+    t.add_argument('--seed',type=int,default=20261101)
+    t=sub.add_parser('root-study-review',help='export an unscored, condition-blind private root-response reviewer sheet')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses-dir',required=True)
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('root-study-score',help='score exact study-keyed manual verdicts descriptively (never adoption)')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses-dir',required=True)
+    t.add_argument('--reviews',required=True)
+    t=sub.add_parser('root-sources',help='audit source-linked multilingual leads with independent review pending')
+    t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'))
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--output')
+    t=sub.add_parser('root-research',help='audit all atomic roots and optional hypothetical international forms')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--scenarios',help='optional hypothetical researcher ratings CSV, NOT human trial data')
+    t.add_argument('--output')
     t=sub.add_parser('borrowing-audit',help='audit opt-in language-design contrasts; no Veka words registered')
     t.add_argument('--catalog',default=str(DATA/'language_transfer_v01.json'))
     t.add_argument('--output')
+    t=sub.add_parser('conversation-session',help='package researcher-authored, participant-only conversation tasks')
+    t.add_argument('--manifest',required=True)
+    t.add_argument('--output',required=True)
     t=sub.add_parser('conversation-score',help='descriptive multilingual dialogue outcomes; never a winner')
     t.add_argument('--trials',default=str(DATA/'conversation_trials_v01.csv'))
     t.add_argument('--output')
@@ -363,10 +396,45 @@ def main(argv=None):
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='root-study-plan':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            plan=plan_root_cohorts(read_candidates(args.candidates),lex,
+                        read_cohort_roster(args.roster),seed=args.seed)
+            result=write_cohort_plan(plan,args.participants_dir,args.researcher_dir)
+        elif args.command=='root-study-review':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            keys=read_global_csv(args.key,KEY_FIELDS)
+            packet=build_root_review(keys,args.responses_dir,
+                                     read_candidates(args.candidates),lex)
+            write_root_review(packet,args.output)
+            result={'schema_version':'veka.root-study-review.v13','trials':len(packet),
+                    'output':str(args.output),'condition_blinded':True,
+                    'manual_judgments_supplied':False,'adoption_authorized':False}
+        elif args.command=='root-study-score':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=score_root_review(read_global_csv(args.key,KEY_FIELDS),args.responses_dir,
+                    read_root_review(args.reviews),
+                    read_candidates(args.candidates),lex)
+        elif args.command=='root-sources':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_root_sources(read_root_sources(args.leads), lex,
+                                      read_candidates(args.candidates))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='root-research':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            candidates=read_candidates(args.candidates)
+            result={'root_inventory':build_root_inventory(lex,candidates),
+                    'scenario_comparison':compare_scenarios(
+                        read_scenarios(args.scenarios) if args.scenarios else [],lex,candidates)}
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='borrowing-audit':
             result=audit_proposals(load_proposals(args.catalog))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='conversation-session':
+            result=write_conversation_session(read_conversation_manifest(args.manifest),args.output)
         elif args.command=='conversation-score':
             result=score_conversations(read_conversation_trials(args.trials))
             if args.output:

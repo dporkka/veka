@@ -13,6 +13,68 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Source-backed international root review and study packets (v1.2, noncanonical)
+
+An explicitly **unreviewed** research packet tracks 13 sourced lexical leads
+for data, music, and school across unrelated learner backgrounds, including
+negative controls and Portuguese `data` as a likely false friend. The
+`root-sources` command validates candidate mappings, source provenance fields,
+and reviewer status without pretending a URL constitutes independent verification.
+
+```bash
+python3 -m veka root-sources
+# From a real PRIVATE pseudonymous enrollment roster; creates private files only
+python3 -m veka root-study-plan --roster /private/roster.csv \
+  --participants-dir /private/participant-packets \
+  --researcher-dir /private/researcher-keys
+```
+
+`root-study-plan` reuses the existing protected cohort file writer to prepare
+blinded, language-background-balanced participant materials comparing the eight
+experimental international root proposals to canonical Veka. It does not
+recruit participants, create responses, establish efficacy, or change any words.
+See [source review and study instructions](docs/root_sources_and_study_v12.md).
+
+### Manually judged root recognition (v1.3, noncanonical)
+
+Once the original blinded participant CSVs have been completed, use
+`root-study-review` to export a private, unscored review sheet that shows
+only the target meaning and response, **not** which word form was tested.
+After independent manual semantic rating, `root-study-score` strictly joins
+all judgments to the original 8-root randomized assignment and reports
+written first-sight outcomes by background and concept. It never interprets
+an observed advantage as permission to replace canonical Veka words.
+See [v1.3 reviewer workflow](docs/root_adjudication_v13.md).
+
+### Seven familiar-root experimental evaluation (v1.4)
+
+The seven proposed loanwords from draft PR #46 can now use the exact same
+blinded study and manual scoring tools with
+`--candidates data/familiar_candidates_v14.csv` for **all three** commands
+(`root-study-plan`, `root-study-review`, `root-study-score`). This supports
+odd-size candidate sets while balancing each concept within paired background
+strata, without silently modifying any canonical vocabulary. See
+[the v1.4 protocol and evidence limitations](docs/familiar_root_study_v14.md).
+
+## International-root selection research (v1.1 tooling, noncanonical)
+
+The read-only `root-research` command now audits **all 317 atomic roots** and
+all **708 dependent compounds**, including the 217 roots not yet in the
+100-concept international research queue. Grammar, numbers, and other structural
+roots are explicitly protected from routine vocabulary-replacement proposals.
+Research drafts are never accepted into the dictionary or parser.
+
+```bash
+python3 -m veka root-research --output /tmp/veka-root-research.json
+# Optional: researcher-authored HYPOTHETICAL assumptions, never human-study evidence
+python3 -m veka root-research --scenarios /path/to/scenarios.csv
+```
+
+A strict, empty scenario CSV template lives at
+`data/root_scenarios_template_v11.csv`. Hypothetical weighted comparisons
+never constitute recognition estimates or authorize canonical changes.
+See [the root audit and research protocol](docs/root_research_v11.md).
+
 ## Cross-language borrowing research (v0.12, noncanonical)
 
 Seven evidence-gated feature hypotheses inspired by Globasa, Indonesian,
@@ -29,7 +91,24 @@ python3 -m veka conversation-score  # header-only trial template: no observed re
 See [cross-language transfer and conversation study protocol](docs/language_transfer_v01.md).
 No source-word verification, participant trial, or human communication gain is claimed.
 
-## Familiar vocabulary pilot
+### Offline participant dialogue collection (research-only)
+
+The new `conversation-session` command packages an **independently researcher-prepared**
+CSV of multilingual dialogue stimuli into a participant-only JSON without
+scenario identifiers or answer keys. Participants can optionally export
+unscored local responses using `site/conversation-study.html` (no remote
+server). Incorrect or unreconciled observations must never be passed into the
+`conversation-score` descriptive benchmark.
+
+```sh
+python3 -m veka conversation-session --manifest /secure/researcher.csv --output /secure/participant.json
+```
+
+Read the [offline conversation-study protocol](docs/conversation_session_v01.md)
+for the exact input schema, independent translation-review prerequisite,
+consent requirements, response export, and manual adjudication boundary.
+
+## Familiar vocabulary pilot (experimental; opt-in)
 
 A separate, usable Core-grammar profile replaces seven nouns with familiar-looking
 forms and converts their existing compounds in both directions. It is an
@@ -40,6 +119,11 @@ See [the pilot and its limitations](docs/familiar_vocabulary_pilot.md).
 python3 -m veka.familiar parse 'Mi sen mu-si-ka.'
 python3 -m veka.familiar convert to-familiar 'Mi sen woi.'
 ```
+
+The noncanonical [seven-root study protocol](docs/familiar_root_study_v14.md)
+can evaluate these draft forms without accepting them into standard Veka.
+No human recognition, retention, semantic or spoken intelligibility benefit
+has been established.
 
 ## Core / Precise / Research usage gate (tooling v0.8)
 
