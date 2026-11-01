@@ -36,6 +36,18 @@ python -m veka lexical-risk --profile toneless --top 10 --target mi
 
 See [the v0.5 design and falsification protocol](docs/lexical_design_v05.md). No audio recordings or listener outcomes have been collected.
 
+## Experimental 0.6 discourse and temporal grammar (opt-in)
+
+A new `python -m veka discourse` command adds in-situ topic/focus marking, explicit location-restricted quantifiers, and bounded before/after temporal clauses, with no change to the canonical vocabulary or existing parsers. It enforces single-role reference, required arguments and overt scope boundaries. This is **machine-tested syntax**, not demonstrated listener comprehension or spoken efficiency.
+
+```sh
+python -m veka discourse 'Sas mi yu pa dak kol mel yu.'
+python -m veka discourse 'Al ren gin pas yu pa gos.'
+python -m veka discourse 'Sik ti ton mel yu mi dak mel.'
+```
+
+Read [Veka 0.6 grammar and limitations](docs/grammar_v06.md) before treating these constructions as established vocabulary.
+
 ## Experimental 0.5 grammar extensions (opt-in)
 
 The reference extension now implements six regular event-derivational suffixes, a 4×6 correlative matrix, and bounded relative/propositional complements without altering the 1,025 canonical headwords. It adds `python -m veka extend`, `derive`, and `correlative` commands; the original `parse` behavior and tonal/toneless profiles remain the baseline. **No spoken-comprehension or speed advantage has been measured.**
