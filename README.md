@@ -68,6 +68,26 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
 
 See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
 
+## Veka 0.7 global-comprehension research (opt-in; no canonical changes)
+
+The experimental `global-audit` command compares reviewer-sourced candidate word
+attestations across **unrelated language families** without treating multiple
+Indo-European languages as independent genealogical evidence. `global-score`
+reports only actually recorded comprehension and repair outcomes by learner
+family, and cannot declare a winning word or automatically adopt vocabulary.
+
+```sh
+python -m veka global-audit
+python -m veka global-score
+python -m unittest discover -s tests -q
+```
+
+The bundled CSV templates have **zero** verified attestations and **zero**
+participant trials. All 1,025 canonical entries and existing parsing semantics
+are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
+for evidence fields, blinded pilot methods, candidate provenance rules, privacy,
+and empirical adoption gates.
+
 ## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
 
 The new `lexical-risk` command ranks **symbolic** near-pair risks with explicit **assumed**, not measured, exposure and consequence priorities, and generates alternative *unadopted* word forms. It also reports the 708 noun-adjective compounds whose silent hyphen produces the same spoken sequence as an ordinary noun-adjective phrase. It does **not** predict human errors or change the 1,025 canonical entries.
