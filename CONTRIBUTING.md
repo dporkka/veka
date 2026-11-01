@@ -12,3 +12,16 @@ Veka remains an **experimental** human-language research project, not a proven o
 - Keep ABX answer keys, raw recordings, private participant responses and personally identifying study files OUT of git. Only participant-agnostic templates, contrast lists, fake unit-test waveforms and protocol documentation belong here.
 - All `noise_plus5db` labels are proposed playback conditions, not calibrated evidence. Humans must record independent A/B/X takes and externally verify sound and SNR before conducting any study.
 - There is currently no explicit open-source license. Do not assume permission to redistribute third-party contributions under a particular license.
+
+## Canonical compatibility and CI
+
+- The versioned canonical contract in `data/canonical_contract_v06.json`
+  hashes the canonical lexicon and reference grammar. Review any change to
+  these files as a deliberate language migration; do not refresh the hashes
+  merely to make tests pass.
+- The 708 silent-hyphen compounds are structurally transparent noun-adjective
+  aliases; their short English glosses are **not** extra spoken semantics.
+- Run `make validate` locally. A PR is not hosted-validated until the
+  exact-head `Python contract tests` checks complete successfully.
+- No synthesized listener audio, participants, comprehension observations,
+  or unsupported claims of empirical improvement may enter fixtures.
