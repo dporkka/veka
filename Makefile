@@ -13,3 +13,4 @@ validate: test
 	$(PYTHON) -m veka conversation-score
 	$(PYTHON) -m veka root-research > /dev/null
 	$(PYTHON) -m veka root-sources > /dev/null
+	$(PYTHON) -m veka learner-core --budget 20 > /dev/null
