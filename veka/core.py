@@ -178,9 +178,14 @@ def _np_semantics(phrase: str | None) -> tuple[str|None,str|None,str|None]:
     tokens = tokens[:tokens.index('de')] if 'de' in tokens else tokens
     quantifier = {'al':'every','kis':'some'}.get(tokens[0])
     quantity=unit=None
-    if 'wen' in tokens:
+    # 'wen' also exists as a NOUN. The numeric marker is only legal after
+    # the head and its modifiers, never in the head's position.
+    head_index = 1 if quantifier is not None else 0
+    numeral_index = next((i for i in range(head_index + 1, len(tokens))
+                          if tokens[i] == 'wen'), None)
+    if numeral_index is not None:
         from .numbers import parse_number_tokens
-        quantity,pos=parse_number_tokens(tokens,tokens.index('wen'))
+        quantity,pos=parse_number_tokens(tokens,numeral_index)
         if pos<len(tokens) and tokens[pos]=='su': unit=tokens[pos+1]
     return quantifier,quantity,unit
 

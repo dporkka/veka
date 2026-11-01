@@ -1,8 +1,17 @@
-# VEKA 0.4 candidate — experimental high-reliability constructed language
+# VEKA — experimental high-reliability constructed language
 
 **Release candidate:** 1 November 2026  
 **Status:** executable, machine-tested limited language prototype — **not empirically validated**.  
 **Licensing:** No distribution license has been selected for this prototype. Third-party cited research retains its publishers' terms.
+
+**Specification status:** Canonical 0.4 lexicon and 0.3 grammar are frozen by
+`data/canonical_contract_v06.json`; 0.5 grammar, 0.6 discourse, and lexical research remain
+opt-in. See [Veka 0.6 specification and transparent-compound policy](docs/specification_status_v06.md)
+and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
+
+`make validate` runs the local contract suite and research audits. The existing
+`.github/workflows/python-contract.yml` requests exact-head hosted
+regression validation for PRs and `main`; check real run results.
 
 ## Design objective
 

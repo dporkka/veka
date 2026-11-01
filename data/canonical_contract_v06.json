@@ -1,0 +1,13 @@
+{
+  "schema_version": "veka.canonical-contract.v06",
+  "canonical_language_version": "0.4",
+  "experimental_extension_version": "0.5",
+  "headwords": 1025,
+  "roots": 317,
+  "compounds": 708,
+  "sha256": {
+    "data/lexicon.csv": "a88fda7a2f7aa057ca31b9e9a2cfb7b88ce34d03078a4bcc9c3739b6d1b5a8a5",
+    "docs/grammar_v03.md": "87403056816330c78422b3e85724b1bc76578f2d263f7727f3863a056e824c7a"
+  },
+  "policy": "Changing a locked file requires an explicit versioned compatibility review and updated manifest."
+}
