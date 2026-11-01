@@ -9,4 +9,6 @@ Veka remains an **experimental** human-language research project, not a proven o
 - Include a minimal, reproducible test for any parser or validator change.
 - Treat `data/lexical_priors_v05.csv` as declared assumptions, not observed frequency or error data. Do not adopt candidate root replacements without independently collected audio/comprehension evidence and a migration plan.
 - Existing noun–adjective compounds have a silent hyphen. Do not claim these encode audible distinctions from corresponding noun–adjective phrases without a separately specified phonological mechanism.
+- Keep ABX answer keys, raw recordings, private participant responses and personally identifying study files OUT of git. Only participant-agnostic templates, contrast lists, fake unit-test waveforms and protocol documentation belong here.
+- All `noise_plus5db` labels are proposed playback conditions, not calibrated evidence. Humans must record independent A/B/X takes and externally verify sound and SNR before conducting any study.
 - There is currently no explicit open-source license. Do not assume permission to redistribute third-party contributions under a particular license.

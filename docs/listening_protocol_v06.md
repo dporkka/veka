@@ -23,3 +23,7 @@ In these deliberately chosen examples, marking increases syllable counts for the
 
 ## Go/no-go criteria
 Before recording, declare an allowable critical-error rate and a practical minimum gain in correct meanings/minute against controls. If any manipulation raises critical errors or increases total communication time, revise or remove it regardless of parser correctness. More tests in Python cannot replace actual speaker/listener evidence.
+
+## Separate Veka 0.6 phonetic ABX protocol
+
+The [blinded ABX listening pilot](abx_protocol_v06.md) independently tests root-form discrimination, uses opaque audio IDs and fails closed on missing recordings. It does **not** measure semantic comprehension or the grammar-specific dialogue hypotheses in this document. The two protocols must not have their endpoints conflated. Neither has human results.

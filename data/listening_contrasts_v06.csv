@@ -1,0 +1,14 @@
+contrast_id,a,b,category,critical,profile
+pronoun_mi_ni,mi,ni,pronoun,yes,both
+pronoun_mi_ti,mi,ti,pronoun,yes,both
+negative_ne_no,ne,no,negation,yes,both
+time_fu_du,fu,du,aspect,yes,both
+critical_ke_ne,ke,ne,grammar,yes,both
+grammar_en_es,en,es,grammar,yes,both
+grammar_to_ton,to,ton,grammar,yes,both
+digit_ran_ren,ran,ren,number,yes,both
+digit_sok_sak,sok,sak,number,yes,both
+digit_gel_gal,gel,gal,number,yes,both
+tone_pal,pal,pál,tone,no,tonal
+coda_ba_bal,ba,bal,coda,no,both
+coda_bel_bes,bel,bes,coda,no,both
