@@ -29,6 +29,7 @@ from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
 from .lessons import build_lessons, format_lessons
+from .practice import build_practice, format_practice, grade_practice, read_practice_responses
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
@@ -78,6 +79,20 @@ def main(argv=None):
     t.add_argument('--lang',choices=LANGUAGES,default='en')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('practice',help='active recognition/recall practice using existing curated canonical lessons')
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--mode',choices=('recognition','recall'),default='recognition')
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--count',type=int,default=10)
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('practice-check',help='grade self-practice answers by taught forms, never semantic equivalence')
+    t.add_argument('--responses',required=True)
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--mode',choices=('recognition','recall'),default='recognition')
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--count',type=int,default=10)
     t=sub.add_parser('learner-audit',help='structural pronunciation screening by learner language; not human data')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
@@ -288,6 +303,16 @@ def main(argv=None):
             with open(args.annotated,encoding='utf8',newline='') as f:
                 observed=list(csv.DictReader(f))
             result=score_pilot(key,observed)
+        elif args.command=='practice':
+            result=build_practice(args.lang,mode=args.mode,profile=args.profile,
+                                  seed=args.seed,count=args.count)
+            if args.format=='text':
+                print(format_practice(result))
+                return 0
+        elif args.command=='practice-check':
+            result=grade_practice(read_practice_responses(args.responses),
+                                  args.lang,mode=args.mode,profile=args.profile,
+                                  seed=args.seed,count=args.count)
         elif args.command=='lessons':
             result=build_lessons(args.lang,profile=args.profile)
             if args.format=='text':
