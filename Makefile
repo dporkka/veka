@@ -1,11 +1,15 @@
 .PHONY: test validate
 
+PYTHON ?= python3
+
 test:
-	python -m unittest discover -s tests -v
+	$(PYTHON) -m unittest discover -s tests -v
 
 validate: test
-	python -m veka international-audit --output /tmp/veka-international-audit.json
-	python -m veka lexical-risk --target mi --target ne --top 10 --candidates 3
-	python -m veka communication-audit
-	python -m veka root-research > /dev/null
-	python -m veka root-sources > /dev/null
+	$(PYTHON) -m veka international-audit --output /tmp/veka-international-audit.json
+	$(PYTHON) -m veka lexical-risk --target mi --target ne --top 10 --candidates 3
+	$(PYTHON) -m veka communication-audit
+	$(PYTHON) -m veka borrowing-audit
+	$(PYTHON) -m veka conversation-score
+	$(PYTHON) -m veka root-research > /dev/null
+	$(PYTHON) -m veka root-sources > /dev/null

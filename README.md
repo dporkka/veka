@@ -54,6 +54,22 @@ A strict, empty scenario CSV template lives at
 never constitute recognition estimates or authorize canonical changes.
 See [the root audit and research protocol](docs/root_research_v11.md).
 
+## Cross-language borrowing research (v0.12, noncanonical)
+
+Seven evidence-gated feature hypotheses inspired by Globasa, Indonesian,
+Quechua, Tagalog/Tamil, Turkish, Japanese, creoles, and Hawaiian are linked
+to the existing everyday dialogue scenarios. The new read-only commands
+validate proposal structure and describe independently collected conversation
+outcomes without inventing example translations or promoting new grammar.
+
+```sh
+python3 -m veka borrowing-audit
+python3 -m veka conversation-score  # header-only trial template: no observed results
+```
+
+See [cross-language transfer and conversation study protocol](docs/language_transfer_v01.md).
+No source-word verification, participant trial, or human communication gain is claimed.
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing
@@ -181,6 +197,61 @@ python3 -m veka learner-audit --profile tonal
 The learner audit reports *structural pronunciation review candidates*, not
 acoustic risk scores or actual speaker errors. There are **no human study
 results**. See [multilingual first-sight learning](docs/learning_en_zh_pt_v09.md).
+
+## First-sight practice and recall (v0.11, noncanonical)
+
+The new `practice` command creates deterministic, answer-free exercises from
+the ten **existing** parser-checked editorial lessons. Use `recognition` to
+select a taught sentence meaning from three translations, or `recall` to
+reproduce the taught Veka wording. English, Mandarin and Brazilian Portuguese
+are supported; the canonical vocabulary and grammar are unchanged.
+
+```sh
+python3 -m veka practice --lang zh --mode recognition --seed 42
+python3 -m veka practice --lang pt-BR --mode recall --seed 42
+# Write a UTF-8 question_id,response CSV of your own responses, then:
+python3 -m veka practice-check --responses my-answers.csv --lang pt-BR --mode recall --seed 42
+```
+
+Matching a taught answer is **not** a test of human comprehension, spontaneous
+production, or equivalent translations. No learner outcomes have been collected.
+See [active-practice limitations and workflow](docs/active_practice_v11.md).
+
+## Experimental quotation and conversational repair (noncanonical)
+
+The opt-in `repair` reference parser introduces **four unverified research
+markers** for overt quotation, repetition requests, confirmation requests and
+corrections. Every quoted source uses the unchanged strict canonical Core
+grammar. A clarification/correction must supply an explicitly matching prior
+utterance; no arbitrary conversational referent is guessed.
+
+```sh
+python3 -m veka repair 'Ko-ta-ra Mi pa dak mel yu.'
+python3 -m veka repair 'Re-pe-ta Mi pa dak mel yu.' --prior 'Mi pa dak mel.'
+python3 -m veka repair 'Ko-re-ta Mi pa dak mel yu Mi pa ne dak mel yu.' --prior 'Mi pa dak mel.'
+```
+
+**No canonical lexicon or grammar changes.** These markers are untested in human
+conversation, and parser acceptance is not evidence of shared pragmatic meaning,
+acoustic intelligibility or truth. See [research grammar and limits](docs/repair_protocol_v01.md).
+
+## Experimental modality and numerical comparison (noncanonical)
+
+The `modal-compare` research command tests explicitly delimited **ability,
+possibility, obligation**, and **same-noun/same-unit exact comparisons**.
+Core grammar and the frozen vocabulary remain unchanged. Quantifier/modal
+interactions and real-world truth are deliberately not inferred.
+
+```sh
+python3 -m veka modal-compare 'A-bi-li Mi gos yu.'
+python3 -m veka modal-compare 'Na a-bi-li mi gos yu yu.'
+python3 -m veka modal-compare 'A-bi-li mi ne gos yu.'
+python3 -m veka modal-compare 'Ga-val sil wen ran dis gel su wok ve sil wen ran su wok yu.'
+```
+
+None of the six draft operator forms is accepted as canonical Veka, and
+the mechanical checks are not empirical pronunciation or comprehension
+evidence. See [modal scope and comparison design](docs/modality_comparison_v01.md).
 
 ## Design objective
 
