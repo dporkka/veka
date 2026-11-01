@@ -76,6 +76,71 @@ class JudgeSheetTests(unittest.TestCase):
             key,observed=self.make_files(tmp,rows+[rows[0]])
             with self.assertRaises(VekaError):prepare_judge_sheet(key,observed,tmp/"judge.csv")
 
+    def test_browser_escaped_negative_participant_id_matches_key(self):
+        lex = Lexicon.from_csv(ROOT / "data" / "lexicon.csv")
+        participant, secret = make_pilot_manifest(
+            read_pilot(ROOT / "data" / "cognate_candidates_v07.csv"),
+            lex, "-P001", arm=0)
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            key = root / "key.csv"
+            responses = root / "responses.csv"
+            output = root / "judgments.csv"
+            with key.open("w", encoding="utf-8", newline="") as stream:
+                writer = csv.DictWriter(stream, fieldnames=list(secret[0]))
+                writer.writeheader()
+                writer.writerows(secret)
+            fields = ("participant_id", "trial_id", "presented_form",
+                      "response_gloss", "response_ms", "prior_exposure",
+                      "first_language", "language_background_family",
+                      "timing_interrupted")
+            rows = [{
+                "participant_id": "'" + row["participant_id"],
+                "trial_id": row["trial_id"],
+                "presented_form": row["presented_form"],
+                "response_gloss": "unknown",
+                "response_ms": "1200", "prior_exposure": "no",
+                "first_language": "Turkish",
+                "language_background_family": "Turkic",
+                "timing_interrupted": "no",
+            } for row in participant]
+            with responses.open("w", encoding="utf-8", newline="") as stream:
+                writer = csv.DictWriter(stream, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows(rows)
+            self.assertEqual(prepare_judge_sheet(key, responses, output)["trials"], 18)
+            rows[0]["participant_id"] = "'P001"
+            tampered = root / "tampered.csv"
+            with tampered.open("w", encoding="utf-8", newline="") as stream:
+                writer = csv.DictWriter(stream, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows(rows)
+            with self.assertRaises(VekaError):
+                prepare_judge_sheet(key, tampered, root / "reject.csv")
+
+    def test_private_judge_sheet_neutralizes_spreadsheet_formulas(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            responses = [
+                dict(participant_id=row["participant_id"],
+                     trial_id=row["trial_id"],
+                     presented_form=row["presented_form"],
+                     response_gloss='=HYPERLINK("https://example.org")',
+                     response_ms="1200", prior_exposure="no",
+                     first_language="+SUM(1,1)",
+                     language_background_family="@IMPORTXML(1)",
+                     timing_interrupted="no")
+                for row in self.participant
+            ]
+            key, data = self.make_files(root, responses)
+            output = root / "judge.csv"
+            prepare_judge_sheet(key, data, output)
+            with output.open(encoding="utf-8", newline="") as stream:
+                first = next(csv.DictReader(stream))
+            for field in ("response_gloss", "first_language",
+                          "language_background_family"):
+                self.assertTrue(first[field].startswith("'"), field)
+
     def test_key_or_response_cannot_be_overwritten(self):
         with tempfile.TemporaryDirectory() as folder:
             tmp=Path(folder);key,observed=self.make_files(tmp)

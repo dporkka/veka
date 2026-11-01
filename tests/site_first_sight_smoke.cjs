@@ -100,6 +100,7 @@ async function exercise(schema, prefix, idLen, trials, participantId="VKA101") {
 
 (async () => {
   await exercise("veka.cognate-session.v07", "C07-", 16, 18);
+  await exercise("veka.cognate-session.v07", "C07-", 16, 18, "-VKA101");
   await exercise("veka.international-session.v10", "V04-", 12, 24);
   await exercise("veka.international-session.v10", "V04-", 12, 24, "-VKA101");
 })().catch(err => { console.error(err); process.exitCode=1; });
