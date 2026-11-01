@@ -39,7 +39,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <label for="language-family">Language family (optional; self-reported)</label>
 <input id="language-family" type="text" maxlength="80" autocomplete="off" placeholder="Leave blank if unsure">
 <label><input id="consent" type="checkbox"> I voluntarily agree to this research practice session. Exporting responses is optional.</label>
-<button id="begin" type="button" disabled>Begin 18 trials</button>
+<button id="begin" type="button" disabled>Begin blinded trials</button>
 <p id="status" role="status" aria-live="polite"></p>
 </section>
 <section id="trial-panel" hidden>
@@ -72,15 +72,18 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   function status(s){get("status").textContent=s}
   function validSession(s) {
     if (!s||typeof s!=="object"||Array.isArray(s)||
-        Object.keys(s).sort().join(",")!=="participant_id,schema_version,trials"||
-        s.schema_version!=="veka.cognate-session.v07"||
-        !/^[A-Za-z0-9_-]{1,64}$/.test(s.participant_id)||
-        !Array.isArray(s.trials)||s.trials.length!==18) return false;
+        Object.keys(s).sort().join(",")!=="participant_id,schema_version,trials") return false;
+    const format=s.schema_version==="veka.cognate-session.v07"
+      ? {count:18,id:/^C07-[0-9a-f]{16}$/}
+      : s.schema_version==="veka.international-session.v10"
+      ? {count:24,id:/^V04-[0-9a-f]{12}$/} : null;
+    if (!format||!/^[A-Za-z0-9_-]{1,64}$/.test(s.participant_id)||
+        !Array.isArray(s.trials)||s.trials.length!==format.count) return false;
     const ids=new Set();
     return s.trials.every(row=>{
       if (!row||typeof row!=="object"||Array.isArray(row)||
           Object.keys(row).sort().join(",")!=="presented_form,trial_id"||
-          typeof row.trial_id!=="string"||!/^[C]07-[0-9a-f]{16}$/.test(row.trial_id)||
+          typeof row.trial_id!=="string"||!format.id.test(row.trial_id)||
           ids.has(row.trial_id)||typeof row.presented_form!=="string"||
           !/^[a-záéíóú]+(?:-[a-záéíóú]+)*$/u.test(row.presented_form)||
           row.presented_form.length>64) return false;
@@ -95,7 +98,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       if(file.size>25000)throw new Error("Session file too large");
       const data=JSON.parse(await file.text());
       if(!validSession(data))throw new Error("Not a valid participant-only session");
-      session=data;status("Valid participant session: 18 blinded trials");
+      session=data;status("Valid participant session: "+session.trials.length+" blinded trials");
+      get("begin").textContent="Begin "+session.trials.length+" trials";
     }catch(error){status(error.message)}
     ready();
   });
@@ -103,7 +107,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   get("consent").addEventListener("change",ready);
   function show(){
     const row=session.trials[index];
-    get("progress").textContent="Trial "+(index+1)+" of 18";
+    get("progress").textContent="Trial "+(index+1)+" of "+session.trials.length;
     get("stimulus").textContent=row.presented_form;
     get("response").value="";get("exposure").value="";
     get("response").focus();interrupted=false;displayedAt=performance.now();
@@ -115,7 +119,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   document.addEventListener("visibilitychange",()=>{if(started&&!get("trial-panel").hidden&&document.hidden)interrupted=true});
   window.addEventListener("blur",()=>{if(started&&!get("trial-panel").hidden)interrupted=true});
   get("trial-form").addEventListener("submit",ev=>{
-    ev.preventDefault();if(!started||index>=18)return;
+    ev.preventDefault();if(!started||index>=session.trials.length)return;
     const gloss=get("response").value.trim(),prior=get("exposure").value;
     if(!gloss||!["yes","no","unsure"].includes(prior))return;
     const row=session.trials[index],elapsed=Math.max(0,Math.round(performance.now()-displayedAt));
@@ -127,10 +131,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       timing_interrupted:interrupted?"yes":"no"
     });
     index++;
-    if(index<18)show();
+    if(index<session.trials.length)show();
     else {
       get("trial-panel").hidden=true;get("complete").hidden=false;
-      get("completion-count").textContent="18 unscored responses recorded locally";
+      get("completion-count").textContent=session.trials.length+" unscored responses recorded locally";
     }
   });
   const columns=["participant_id","trial_id","presented_form","response_gloss","response_ms","prior_exposure","first_language","language_background_family","timing_interrupted"];
@@ -141,7 +145,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     return '"'+safe.replaceAll('"','""')+'"';
   };
   get("export-responses").addEventListener("click",()=>{
-    if(index!==18||responses.length!==18)return;
+    if(index!==session.trials.length||responses.length!==session.trials.length)return;
     const csv=[columns.join(","),...responses.map(r=>columns.map(c=>quote(r[c])).join(","))].join("\r\n")+"\r\n";
     const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
     const a=document.createElement("a");a.href=url;a.download="veka-responses-"+session.participant_id+".csv";

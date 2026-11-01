@@ -142,6 +142,11 @@ def _read_study_csv(path: str | Path, columns: tuple[str, ...]) -> list[dict[str
     return rows
 
 
+def _spreadsheet_safe(value: str) -> str:
+    """Neutralize a formula-looking free-text cell when exporting private CSV."""
+    return "'" + value if re.match(r"^[\t\r\n ]*[=+@-]", value) else value
+
+
 def prepare_judge_sheet(
     key_file: str | Path, responses_file: str | Path, output_file: str | Path
 ) -> dict:
@@ -161,9 +166,17 @@ def prepare_judge_sheet(
     by_id = {r["trial_id"]: r for r in key}
     if set(by_id) != {r["trial_id"] for r in observed}:
         raise VekaError("raw responses do not cover the researcher answer key")
-    participants = {r["participant_id"] for r in observed + key}
-    if len(participants) != 1 or not PARTICIPANT_ID.fullmatch(next(iter(participants))):
-        raise VekaError("key and responses must belong to one participant")
+    # Match canonical key identity against only the browser's known escaping
+    # of a leading '-' identifier. No unrestricted apostrophe stripping.
+    private_ids = {r["participant_id"] for r in key}
+    if len(private_ids) != 1 or not PARTICIPANT_ID.fullmatch(next(iter(private_ids))):
+        raise VekaError("key must belong to one valid participant")
+    private_id = next(iter(private_ids))
+    accepted_ids = {private_id}
+    if private_id.startswith("-"):
+        accepted_ids.add("'" + private_id)
+    if any(row["participant_id"] not in accepted_ids for row in observed):
+        raise VekaError("response participant ID does not match private key")
     prepared = []
     for row in observed:
         match = by_id[row["trial_id"]]
@@ -185,12 +198,12 @@ def prepare_judge_sheet(
         prepared.append({
             "trial_id": row["trial_id"],
             "presented_form": row["presented_form"],
-            "response_gloss": row["response_gloss"],
-            "target_gloss": match["target_gloss"],
+            "response_gloss": _spreadsheet_safe(row["response_gloss"]),
+            "target_gloss": _spreadsheet_safe(match["target_gloss"]),
             "response_ms": row["response_ms"],
             "prior_exposure": row["prior_exposure"],
-            "first_language": row["first_language"],
-            "language_background_family": row["language_background_family"],
+            "first_language": _spreadsheet_safe(row["first_language"]),
+            "language_background_family": _spreadsheet_safe(row["language_background_family"]),
             "timing_interrupted": row["timing_interrupted"],
             "correct": "", "repair_count": "",
         })

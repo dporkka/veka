@@ -36,6 +36,8 @@ jobs:
         run: |
           python -m veka international-audit --output /tmp/veka-international-audit.json
           python -m veka international-plan --output /tmp/veka-international-plan.json > /dev/null
+          python -m veka international-audit --candidates data/international_candidates_v10.csv --output /tmp/veka-candidate-v10-audit.json > /dev/null
+          node tests/site_first_sight_smoke.cjs
           test -s /tmp/veka-international-plan.json
           python -m veka lexical-risk --target ne --top 5 --candidates 2
           python -m veka extend "Mi sen ka ti ton mel yu."

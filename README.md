@@ -373,6 +373,13 @@ python3 -m veka international-plan --output /tmp/international-plan.json
 python3 -m veka lexical-readiness --candidates data/international_candidates_v10.csv
 ```
 
+An optional sourced-review ledger now provides 14 **unverified** leads
+across four concepts. A strict local `international-session` exporter
+creates answer-key-free 24-item JSON for the existing local study page.
+The `international-judge-sheet` tool prepares blank, private adjudication
+sheets from actual participant responses without guessing any results.
+See [source review and study procedures](docs/international_first_sight_study_v10.md).
+
 All canonical roots, the 708 compounds, and parser semantics remain frozen.
 Human comprehension and pronunciation studies have **not** been conducted.
 See [international root plan and adoption gates](docs/international_root_plan_v10.md).

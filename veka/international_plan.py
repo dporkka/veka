@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .core import Lexicon, VekaError
 from .lexical_readiness import build_lexical_readiness
+from .cognate_review import _source_url_is_valid
 
 PRIORITY_COLUMNS = ("concept_id", "exposure_tier", "review_note")
 VERSION = "veka.international-plan.v10"
@@ -52,6 +53,19 @@ def build_international_plan(candidates: list[dict], lex: Lexicon,
     if len(candidate_ids) != len(candidates) or set(priority_by_id) != candidate_ids:
         raise VekaError("review priorities must match the full unique concept queue")
 
+    # Citation links are research leads, not reviewed attestations. Require
+    # direct, syntactically safe links; never upgrade "no" to "yes" implicitly.
+    for row in evidence:
+        if (not isinstance(row, dict)
+                or not _source_url_is_valid(row.get("source_url", ""))
+                or not isinstance(row.get("notes"), str)
+                or not row["notes"].strip()):
+            raise VekaError("international source lead must have URL and review notes")
+        if row.get("attestation_verified") == "no" and (
+                row.get("semantic_equivalent") != "unknown"
+                or row.get("semantic_reviewer", "").strip()):
+            raise VekaError("unreviewed source lead cannot claim semantic validation")
+
     # Reuse existing strict canonical mappings, phonotactics, evidence and review gates.
     readiness = build_lexical_readiness(candidates, lex, evidence, [])
     compounds_by_root = Counter()
@@ -71,6 +85,17 @@ def build_international_plan(candidates: list[dict], lex: Lexicon,
         if form:
             by_surface[form.replace("-", "")].add(form)
 
+    source_leads_by_id = defaultdict(list)
+    for row in evidence:
+        if row["attestation_verified"] == "no":
+            source_leads_by_id[row["concept_id"]].append({
+                "language": row["language"], "family": row["language_family"],
+                "attested_form": row["attested_form"], "source_url": row["source_url"],
+                "review_notes": row["notes"],
+            })
+    for leads in source_leads_by_id.values():
+        leads.sort(key=lambda row: (row["family"], row["language"]))
+
     queue = []
     for item in readiness["candidates"]:
         cid = item["concept_id"]
@@ -80,6 +105,8 @@ def build_international_plan(candidates: list[dict], lex: Lexicon,
         form = item["candidate_form"]
         collisions = sorted(by_surface[form.replace("-", "")] - {form}) if form else []
         action = ("repair_spoken_surface_collision" if collisions
+                  else "review_source_leads" if (source_leads_by_id[cid]
+                   and item["next_action"] == "verify_cross_family_attestations")
                   else item["next_action"])
         # Editorial sampling ORDER only. Not a likelihood, utility or acceptance score.
         priority = tier * 100 - max(0, extra or 0) * 10 - affected * 3
@@ -95,6 +122,8 @@ def build_international_plan(candidates: list[dict], lex: Lexicon,
             "editorial_review_note": note,
             "review_priority": priority,
             "next_action": action,
+            "source_leads_pending_review": len(source_leads_by_id[cid]),
+            "source_links": source_leads_by_id[cid],
             "spoken_surface_collisions": collisions,
             "verified_families": item["verified_families"],
             "recognition_measured": False,
@@ -109,6 +138,9 @@ def build_international_plan(candidates: list[dict], lex: Lexicon,
         "rejected_drafts": sum(r["structural_status"] == "rejected" for r in queue),
         "not_proposed": sum(r["structural_status"] == "not_proposed" for r in queue),
         "next_actions": dict(sorted(Counter(r["next_action"] for r in queue).items())),
+        "source_leads_pending_review": sum(
+            row["attestation_verified"] == "no" for row in evidence),
+        "verified_attestations_claimed": readiness["verified_attestations_claimed"],
         "canonical_root_count": sum(e.kind == "root" for e in lex.values()),
         "canonical_compound_count": sum(e.kind == "compound" for e in lex.values()),
         "canonical_changes": 0, "adoption_authorized": False,
