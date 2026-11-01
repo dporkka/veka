@@ -29,6 +29,7 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
+from .cognate_review import read_cognate_leads, audit_cognate_leads
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -119,6 +120,10 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
     t.add_argument('--evidence',default=str(DATA/'cognate_evidence_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('cognate-leads',help='review sourced but unverified cognate attestations')
+    t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
+    t.add_argument('--leads',default=str(DATA/'cognate_source_leads_v07.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('cognate-manifest',help='blinded 0.7 cognate study packet')
     t.add_argument('--participant',required=True);t.add_argument('--arm',required=True,type=int,choices=(0,1))
     t.add_argument('--seed',type=int,default=20261101)
@@ -163,6 +168,12 @@ def main(argv=None):
         elif args.command=='cognate-audit':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_pilot(read_pilot(args.candidates),lex,read_evidence(args.evidence))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='cognate-leads':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_cognate_leads(read_pilot(args.candidates),
+                                      read_cognate_leads(args.leads),lex)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='cognate-manifest':

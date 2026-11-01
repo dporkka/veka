@@ -300,6 +300,16 @@ python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
 Review the candidate list, evidence requirements, exact experimental conditions,
 and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
 
+Source-linked, **unverified** attestation leads for taxi, hotel, and robot
+are available for independent multilingual review. To audit the 12 pending
+review records without claiming human validation, run:
+
+```sh
+python -m veka cognate-leads
+```
+
+See [the Veka 0.7 source-review packet](docs/cognate_source_review_v07.md).
+
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
 The optional `compound-semantics` command inventories the **708 canonical
