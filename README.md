@@ -70,6 +70,23 @@ python3 -m veka conversation-score  # header-only trial template: no observed re
 See [cross-language transfer and conversation study protocol](docs/language_transfer_v01.md).
 No source-word verification, participant trial, or human communication gain is claimed.
 
+### Offline participant dialogue collection (research-only)
+
+The new `conversation-session` command packages an **independently researcher-prepared**
+CSV of multilingual dialogue stimuli into a participant-only JSON without
+scenario identifiers or answer keys. Participants can optionally export
+unscored local responses using `site/conversation-study.html` (no remote
+server). Incorrect or unreconciled observations must never be passed into the
+`conversation-score` descriptive benchmark.
+
+```sh
+python3 -m veka conversation-session --manifest /secure/researcher.csv --output /secure/participant.json
+```
+
+Read the [offline conversation-study protocol](docs/conversation_session_v01.md)
+for the exact input schema, independent translation-review prerequisite,
+consent requirements, response export, and manual adjudication boundary.
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing

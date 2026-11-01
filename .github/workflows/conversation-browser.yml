@@ -1,0 +1,43 @@
+name: Offline conversation browser smoke
+on:
+  pull_request:
+    paths:
+      - 'site/conversation-study.html'
+      - 'tests/browser_conversation_smoke.cjs'
+      - 'veka/conversation_session.py'
+      - '.github/workflows/conversation-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/conversation-study.html'
+      - 'tests/browser_conversation_smoke.cjs'
+      - 'veka/conversation_session.py'
+      - '.github/workflows/conversation-browser.yml'
+permissions:
+  contents: read
+concurrency:
+  group: veka-browser-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser-smoke:
+    name: offline-study-chromium
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checkout
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Install isolated test-only Playwright and headless Chromium
+        run: |
+          npm install --no-audit --no-fund --no-save --no-package-lock \
+            --prefix "$RUNNER_TEMP/veka-browser-test" playwright@1.56.1
+          "$RUNNER_TEMP/veka-browser-test/node_modules/.bin/playwright" install \
+            --with-deps --only-shell chromium
+      - name: Verify max-size session and offline response export
+        env:
+          NODE_PATH: ${{ runner.temp }}/veka-browser-test/node_modules
+        run: node tests/browser_conversation_smoke.cjs
