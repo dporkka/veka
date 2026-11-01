@@ -29,12 +29,15 @@ from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
 from .lessons import build_lessons, format_lessons
+from .practice import build_practice, format_practice, grade_practice, read_practice_responses
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
 from .root_research import build_root_inventory, compare_scenarios, read_scenarios
 from .international_plan import build_international_plan, read_review_priorities
+from .language_transfer import (load_proposals, audit_proposals,
+                                read_conversation_trials, score_conversations)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -46,6 +49,8 @@ from .cognate_review import read_cognate_leads, audit_cognate_leads
 
 from .everyday import audit_dialogues, get_lesson
 from .dialogue_eval import evaluate_attempts, load_attempts
+from .repair import parse_repair
+from .modality_comparison import parse_modality_comparison
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -79,6 +84,20 @@ def main(argv=None):
     t.add_argument('--lang',choices=LANGUAGES,default='en')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('practice',help='active recognition/recall practice using existing curated canonical lessons')
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--mode',choices=('recognition','recall'),default='recognition')
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--count',type=int,default=10)
+    t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('practice-check',help='grade self-practice answers by taught forms, never semantic equivalence')
+    t.add_argument('--responses',required=True)
+    t.add_argument('--lang',choices=LANGUAGES,default='en')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--mode',choices=('recognition','recall'),default='recognition')
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--count',type=int,default=10)
     t=sub.add_parser('learner-audit',help='structural pronunciation screening by learner language; not human data')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
@@ -211,6 +230,13 @@ def main(argv=None):
     t.add_argument('--output')
     t=sub.add_parser('everyday-audit',help='summarize 100 untranslated everyday dialogue requirements')
     t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
+    t=sub.add_parser('repair',help='research-only explicit quotation, clarification and correction (requires matching --prior for repair)')
+    t.add_argument('utterance')
+    t.add_argument('--prior',help='exact canonical utterance being discussed; required except standalone quote')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('modal-compare',help='research-only explicit modality and comparable exact quantities')
+    t.add_argument('utterance')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('dialogue-check',help='screen proposed dialogue translations; no meaning or human validation')
     t.add_argument('--attempts',required=True)
     t.add_argument('--max-register',choices=REGISTERS,default='core')
@@ -226,6 +252,12 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--scenarios',help='optional hypothetical researcher ratings CSV, NOT human trial data')
     t.add_argument('--output')
+    t=sub.add_parser('borrowing-audit',help='audit opt-in language-design contrasts; no Veka words registered')
+    t.add_argument('--catalog',default=str(DATA/'language_transfer_v01.json'))
+    t.add_argument('--output')
+    t=sub.add_parser('conversation-score',help='descriptive multilingual dialogue outcomes; never a winner')
+    t.add_argument('--trials',default=str(DATA/'conversation_trials_v01.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('international-plan',help='rank unverified international root research, NEVER accepted vocabulary')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
@@ -233,7 +265,11 @@ def main(argv=None):
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='dialogue-check':
+        if args.command=='repair':
+            result=parse_repair(args.utterance,load_profile(args.profile),prior=args.prior)
+        elif args.command=='modal-compare':
+            result=parse_modality_comparison(args.utterance,load_profile(args.profile))
+        elif args.command=='dialogue-check':
             result=evaluate_attempts(load_attempts(args.attempts),
                                      max_register=args.max_register,profile=args.profile)
         elif args.command=='everyday-audit':
@@ -293,6 +329,16 @@ def main(argv=None):
             with open(args.annotated,encoding='utf8',newline='') as f:
                 observed=list(csv.DictReader(f))
             result=score_pilot(key,observed)
+        elif args.command=='practice':
+            result=build_practice(args.lang,mode=args.mode,profile=args.profile,
+                                  seed=args.seed,count=args.count)
+            if args.format=='text':
+                print(format_practice(result))
+                return 0
+        elif args.command=='practice-check':
+            result=grade_practice(read_practice_responses(args.responses),
+                                  args.lang,mode=args.mode,profile=args.profile,
+                                  seed=args.seed,count=args.count)
         elif args.command=='lessons':
             result=build_lessons(args.lang,profile=args.profile)
             if args.format=='text':
@@ -328,6 +374,14 @@ def main(argv=None):
             result={'root_inventory':build_root_inventory(lex,candidates),
                     'scenario_comparison':compare_scenarios(
                         read_scenarios(args.scenarios) if args.scenarios else [],lex,candidates)}
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='borrowing-audit':
+            result=audit_proposals(load_proposals(args.catalog))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='conversation-score':
+            result=score_conversations(read_conversation_trials(args.trials))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='international-plan':
