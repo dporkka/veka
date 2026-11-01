@@ -1,5 +1,7 @@
 """Veka 0.7 contract: sourced family evidence and observed comprehension only."""
+import csv
 import json
+import tempfile
 import subprocess
 import sys
 import unittest
@@ -86,6 +88,21 @@ class GlobalEvidenceTests(unittest.TestCase):
         with self.assertRaises(VekaError):
             audit_global_candidates(self.candidates, self.lex,
                                     [known, dict(known, language="spanish")])
+
+    def test_unterminated_quoted_notes_rejects_truncated_family_evidence(self):
+        """Fail closed: a broken first quote must not consume a second family."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "malformed.csv"
+            with path.open("w", encoding="utf-8", newline="") as stream:
+                writer = csv.DictWriter(stream, fieldnames=EVIDENCE_FIELDS)
+                writer.writeheader()
+                spanish = self.sample("Spanish", "Indo-European", "Romance")
+                swahili = self.sample("Swahili", "Niger-Congo", "Bantu")
+                stream.write(",".join(spanish[name] for name in EVIDENCE_FIELDS[:-1])
+                             + ',"unterminated research note\n')
+                writer.writerow(swahili)
+            with self.assertRaisesRegex(VekaError, "cannot read global study CSV"):
+                read_global_csv(path, EVIDENCE_FIELDS)
 
     def test_strict_csv_schema_has_no_silent_extra_fields(self):
         path = ROOT / "data/global_evidence_v07.csv"

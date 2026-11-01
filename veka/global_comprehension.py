@@ -28,7 +28,7 @@ def read_global_csv(path: str | Path, fields: tuple[str, ...]) -> list[dict[str,
     """Reject schema drift, malformed rows, and silently truncated records."""
     try:
         with open(path, newline="", encoding="utf-8-sig") as handle:
-            reader = csv.DictReader(handle)
+            reader = csv.DictReader(handle, strict=True)
             if tuple(reader.fieldnames or ()) != fields:
                 raise VekaError(f"incorrect CSV schema: {path}")
             rows = list(reader)
@@ -91,6 +91,23 @@ def audit_global_candidates(candidates: list[dict], lex: Lexicon,
         if row["attestation_verified"] == "yes" and row["semantic_equivalent"] == "yes":
             by_candidate[cid].append(row)
 
+    # A public source link is a research lead, not independent verification.
+    # Keep unreviewed rows actionable without falsely counting them as cognates.
+    review_queue = [
+        {
+            "concept_id": row["concept_id"],
+            "candidate_form": row["candidate_form"],
+            "language": row["language"],
+            "language_family": row["language_family"],
+            "attested_form": row["attested_form"],
+            "source_url": row["source_url"],
+            "attestation_verified": row["attestation_verified"],
+            "semantic_equivalent": row["semantic_equivalent"],
+            "notes": row["notes"],
+        }
+        for row in evidence if row["attestation_verified"] == "no"
+    ]
+    review_queue.sort(key=lambda r: (r["concept_id"], r["language"].casefold()))
     detail = {}
     for cid, candidate in sorted(usable.items()):
         matched = by_candidate[cid]
@@ -115,6 +132,8 @@ def audit_global_candidates(candidates: list[dict], lex: Lexicon,
         "candidate_count": len(usable),
         "evidence_records": len(evidence),
         "verified_attestations": sum(len(v) for v in by_candidate.values()),
+        "pending_review_records": len(review_queue),
+        "review_queue": review_queue,
         "candidates": detail,
         "recognition_measured": False,
         "eligible_for_adoption": False,

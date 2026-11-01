@@ -28,6 +28,24 @@ Run a zero-dependency local web learner from the repository root:
 Visit http://127.0.0.1:8765/site/. The [25 four-turn exchanges](data/beginner_dialogues_v01.json) contain 100 strict-grammar-checked Veka sentences with editorial English interpretations. The [browser learner](site/index.html) offers reading and multiple-choice practice. These are **controlled exercises, not evidence of natural fluency or human comprehension**. No locked grammar or vocabulary is changed.
 
 **Licensing decision still required:** [distribution licensing action items](docs/licensing_decision.md). No license is implicitly granted by the learner application.
+## Veka at first sight (beginner reading guide)
+
+Use the **read-only interlinear guide** to understand canonical Veka before
+memorizing its vocabulary. It shows English word glosses, strict grammatical
+roles, and separate **unverified** international-looking associations where
+available. It never substitutes experimental drafts into canonical text.
+
+```sh
+python3 -m veka beginner 'Mi pa dak mel.'
+python3 -m veka beginner 'Mi sen kun.'
+python3 -m veka beginner 'Mi sen kun.' --format json
+python3 -m veka beginner 'Mi sen kun.' --no-cues
+```
+
+See [the beginner guide](docs/first_sight_guide.md) for a short lesson and
+practice sentences. This is a presentation improvement, **not** evidence
+that Veka is as immediately recognizable as Interlingua or that new word
+forms are accepted into its grammar.
 
 ## Design objective
 
@@ -98,9 +116,12 @@ python -m veka global-score
 python -m unittest discover -s tests -q
 ```
 
-The bundled CSV templates have **zero** verified attestations and **zero**
-participant trials. All 1,025 canonical entries and existing parsing semantics
-are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
+The bundled default CSV templates have **zero** verified attestations and **zero**
+participant trials. A separate [source-linked music loanword case study](docs/music_loanword_case_study_v07.md)
+contains five explicitly **unverified** leads. Audit with
+`python -m veka global-audit --evidence data/global_music_leads_v07.csv`
+without counting unreviewed items as verified cognates. All 1,025 canonical entries and existing
+parsing semantics are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
 for evidence fields, blinded pilot methods, candidate provenance rules, privacy,
 and empirical adoption gates.
 
@@ -273,6 +294,26 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 ```
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
+
+## Opt-in international cognate pilot (0.7 research)
+
+A separate, **noncanonical** pilot now tests 10 new internationalisms against
+matched-syllable invented forms and eight replacement candidates against current
+Veka roots. Participants see one rendition per meaning with balanced randomized
+arms; the researcher key stays separate. It changes **no** dictionary entries,
+accepted vocabulary, parser semantics, or versioned profiles. No human outcomes,
+verified donor attestations, or speech recordings exist.
+
+```sh
+python -m veka cognate-audit
+python -m veka cognate-manifest --participant P001 --arm 0 \
+  --output p001.csv --answer-key p001_key.csv
+# Score only collected and independently annotated human responses:
+python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
+```
+
+Review the candidate list, evidence requirements, exact experimental conditions,
+and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
 
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
