@@ -12,7 +12,7 @@ class FamiliarProfileTests(unittest.TestCase):
         old = load_profile('tonal')
         new, mapping = familiar_lexicon()
         self.assertEqual(len(old), len(new))
-        self.assertEqual(len(mapping), 30)
+        self.assertEqual(len(mapping), 43)
         for original, entry in old.items():
             updated = new[mapping.get(original, original)]
             self.assertEqual((entry.gloss, entry.pos, entry.kind, entry.valency),
@@ -27,17 +27,27 @@ class FamiliarProfileTests(unittest.TestCase):
             self.assertEqual(surfaces[word.replace('-', '')], [word])
 
     def test_parser_and_roundtrip(self):
+        _, mapping = familiar_lexicon()
         for word in REPLACEMENTS:
-            for old in (word, word + '-val'):
+            forms = [word] + [old for old in mapping if old.startswith(word + '-')]
+            for old in forms:
                 source = 'Mi sen ' + old + '.'
                 updated = convert(source, 'to-familiar')
                 self.assertEqual(convert(updated, 'to-core'), source)
                 a, b = parse(source, load_profile('tonal'), strict=True), parse_familiar(updated)
-                self.assertEqual(b.pop('object'), REPLACEMENTS[word] + ('-val' if old.endswith('-val') else ''))
+                self.assertEqual(b.pop('object'), mapping[old])
                 a.pop('object')
                 self.assertEqual(a, b)
                 with self.assertRaises(VekaError): parse_familiar(source)
         self.assertEqual(convert('Woi, woi-val!', 'to-familiar'), 'Mu-si-ka, mu-si-ka-val!')
+
+    def test_teaching_examples_parse_and_reject_mixed_profile(self):
+        for sentence in ('Mi rin dok-ta.', 'Mi lin ka-me-ra.', 'Mi pa vo bu-ku.'):
+            self.assertFalse(parse_familiar(sentence)['compressed'])
+        with self.assertRaises(VekaError):
+            parse_familiar('Mi rin hek.')
+        with self.assertRaises(VekaError):
+            parse_familiar('Mi rin Hek.')
 
     def test_collision_fails_closed(self):
         with patch.dict(REPLACEMENTS, {'woi': 'vik'}):
