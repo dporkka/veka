@@ -95,3 +95,30 @@ Important: this scope discipline does **not** imply that the entire meaning is f
 - All new constructions are deliberately tested under opt-in `extend`; the original AST remains unchanged for ordinary single clauses.
 - Run `python3 -m unittest discover -s tests -q` for regression coverage. Tests establish parser consistency, **not measured human throughput or intelligibility**.
 - Future milestones: domain-restricted quantifier semantics, clearer relative-complement licensing, lexical collision screening on growth, and actual recordings / comprehension trials before claiming efficiency gains.
+
+## Opt-in concise coordination (single-operator conversational register)
+
+For two **complete, assertive atomic statements only**, Veka 0.5 permits the existing
+logical operators in a shorter infix construction:
+
+```ebnf
+concise_conjunction = atomic_statement, "zi", atomic_statement ;
+concise_disjunction = atomic_statement, "oi", atomic_statement ;
+```
+
+- `Mi gos zi ti gos.` means *I go and you go*. Its AST is **identical** to
+  `Zi mi gos ve ti gos yu.` in the fully scoped `logic` parser.
+- `Mi gos oi ti gos.` means *I go or you go, inclusive*. The AST is **identical**
+  to `Oi mi gos ve ti gos yu.`.
+
+No new particle, precedence convention, or implicit role resolution is introduced.
+The interpreter calls the existing formal logic parser after inserting the two
+required scope delimiters. Two or more connectives, subordinate clauses,
+commands, questions, missing mandatory objects, and shorthand for `fi` (material
+implication) are **rejected**, not interpreted heuristically. A single connective
+does not assert causation, sequence, or shared context. Use fully scoped `logic`
+for nested or mixed propositional structures. The original `parse` command
+continues to reject this syntax; it is available only via `extend`.
+
+This is a usability hypothesis. It saves two scope words per binary expression,
+but has **not** demonstrated better listening accuracy or spoken throughput.
