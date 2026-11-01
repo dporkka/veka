@@ -30,6 +30,7 @@ from .learner_locales import LANGUAGES
 from .learner_audit import audit_learner_forms
 from .lessons import build_lessons, format_lessons
 from .contrast_drills import make_contrast_drills, format_contrast_drills
+from .contrast_review import write_review_template, check_review_sheets
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
@@ -83,6 +84,14 @@ def main(argv=None):
     t.add_argument('--lang',choices=LANGUAGES,default='en')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t.add_argument('--format',choices=('text','json'),default='text')
+    t=sub.add_parser('contrast-review-export',help='create blank trilingual editorial review sheet for a pseudonymous reviewer')
+    t.add_argument('--lang',choices=LANGUAGES,required=True)
+    t.add_argument('--reviewer',required=True)
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('contrast-review-check',help='audit two independently completed editorial review sheets')
+    t.add_argument('--lang',choices=LANGUAGES,required=True)
+    t.add_argument('--first',required=True)
+    t.add_argument('--second',required=True)
     t=sub.add_parser('learner-audit',help='structural pronunciation screening by learner language; not human data')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
@@ -303,6 +312,10 @@ def main(argv=None):
             if args.format=='text':
                 print(format_contrast_drills(result))
                 return 0
+        elif args.command=='contrast-review-export':
+            result=write_review_template(args.lang,args.reviewer,args.output)
+        elif args.command=='contrast-review-check':
+            result=check_review_sheets(args.lang,args.first,args.second)
         elif args.command=='learner-audit':
             result=audit_learner_forms(load_profile(args.profile),profile=args.profile)
         elif args.command=='beginner':

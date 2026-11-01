@@ -65,6 +65,10 @@ English simple present in every context.
   performance data has been collected and this tool does not establish Veka
   as globally easier, more efficient, or more neutral.
 
+For the **separate human editorial review gate**, two-reviewer CSV workflow,
+blinded held-out comprehension preparation, and reuse of existing tonal vs.
+toneless listening tooling, see `docs/contrast_human_study_v10.md`.
+
 See `docs/esperanto_interlingua_design_review_v06.md`,
 `docs/international_root_plan_v10.md` and
 `docs/everyday_learning_v09.md` for experimental priorities.

@@ -136,6 +136,20 @@ python3 -m veka contrast-drills --lang pt-BR --format json
 See [the contrast-drill contract](docs/contrast_drills_v10.md) for limits,
 phonology caveats, and the English/Esperanto design rationale.
 
+Before calling these translations independently reviewed, export **separate**
+blank editorial sheets for two reviewers per language and audit their
+responses without inventing review outcomes:
+
+```sh
+python3 -m veka contrast-review-export --lang zh --reviewer Z01 --output /tmp/veka-zh-review-a.csv
+python3 -m veka contrast-review-export --lang zh --reviewer Z02 --output /tmp/veka-zh-review-b.csv
+python3 -m veka contrast-review-check --lang zh --first /tmp/veka-zh-review-a.csv --second /tmp/veka-zh-review-b.csv
+```
+
+Blank sheets report **pending**, not passed. Actual bilingual review and
+human listening/reading comprehension trials must be conducted externally.
+See [the review and human-study readiness protocol](docs/contrast_human_study_v10.md).
+
 ## English / Mandarin / Brazilian Portuguese learning aids
 
 First-sight teaching is available in three languages, without changing Veka
