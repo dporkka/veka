@@ -25,6 +25,22 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka 0.6 — empirical listening-study preparation
+
+New blinded ABX pilot tools test phonetic contrasts without changing the Veka language. The system creates a participant-only trial schedule, a separate answer key and a human recording job manifest; it fails closed when asked to score missing WAV files or incomplete responses. Experimental audio is **not generated**, and **no human results are collected** in this release. Current tonal pilot: 13 contrasts, 104 trials for two talkers; toneless: 12 contrasts, 96 trials. Clip IDs are opaque and stable across participants assigned to the same arm and frozen stimulus bank.
+
+```sh
+python -m veka listening-plan --participant P001 --arm 0 --talker S01 --talker S02 \
+  --participant-csv /tmp/participant.csv --key-csv /tmp/researcher-key.csv \
+  --recording-csv /tmp/recording-jobs.csv
+# After recording independent human WAVs and collecting real responses:
+python -m veka listening-score --key-csv /tmp/researcher-key.csv \
+  --responses-csv /path/to/completed.csv --recording-csv /tmp/recording-jobs.csv \
+  --audio-root /path/to/actual-wavs
+```
+
+See [Veka 0.6 listening pilot protocol](docs/listening_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
+
 ## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
 
 The new `lexical-risk` command ranks **symbolic** near-pair risks with explicit **assumed**, not measured, exposure and consequence priorities, and generates alternative *unadopted* word forms. It also reports the 708 noun-adjective compounds whose silent hyphen produces the same spoken sequence as an ordinary noun-adjective phrase. It does **not** predict human errors or change the 1,025 canonical entries.

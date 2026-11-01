@@ -12,6 +12,8 @@ from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
 from .study import write_manifest
+from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
+                             write_packet, read_csv, score_packet)
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -59,6 +61,21 @@ def main(argv=None):
     t.add_argument('--top',type=int,default=10)
     t.add_argument('--candidates',type=int,default=5)
     t.add_argument('--output')
+    t=sub.add_parser('listening-plan',help='create blinded ABX participant/key/recording study packet')
+    t.add_argument('--participant',required=True)
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--talker',action='append',default=[])
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--arm',type=int,choices=(0,1),required=True)
+    t.add_argument('--contrasts',default=str(DEFAULT_CONTRASTS))
+    t.add_argument('--participant-csv',required=True)
+    t.add_argument('--key-csv',required=True)
+    t.add_argument('--recording-csv',required=True)
+    t=sub.add_parser('listening-score',help='score complete responses with recorded WAV verification')
+    t.add_argument('--key-csv',required=True)
+    t.add_argument('--responses-csv',required=True)
+    t.add_argument('--recording-csv',required=True)
+    t.add_argument('--audio-root',required=True)
     t=sub.add_parser('international-audit',help='audit noncanonical loanword candidates and donor evidence')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--evidence',default=str(DATA/'international_evidence_v04.csv'))
@@ -79,7 +96,23 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     args=ap.parse_args(argv)
     try:
-        if args.command=='lexical-risk':
+        if args.command=='listening-plan':
+            lex=load_profile(args.profile)
+            pairs=load_contrasts(args.contrasts,lex,args.profile)
+            packet=make_packet(pairs,args.participant,tuple(args.talker or ('S01','S02')),
+                               args.profile,seed=args.seed,arm=args.arm)
+            write_packet(packet,args.participant_csv,args.key_csv,args.recording_csv)
+            result={'schema_version':'veka.abx-plan.v06',
+                    'participant':args.participant,'profile':args.profile,
+                    'trials':len(packet[0]),'recording_jobs':len(packet[2]),
+                    'participant_csv':args.participant_csv,'key_csv':args.key_csv,
+                    'recording_csv':args.recording_csv,
+                    'human_results_collected':False,'audio_recorded':False,
+                    'warning':'Restricted answer key and recording manifest must not be shared with participants.'}
+        elif args.command=='listening-score':
+            result=score_packet(read_csv(args.key_csv),read_csv(args.responses_csv),
+                                read_csv(args.recording_csv),args.audio_root)
+        elif args.command=='lexical-risk':
             lex=load_profile(args.profile)
             priorities=load_priorities(args.priorities,lex)
             result=audit_lexical_risk(lex,priorities,targets=args.target,top=args.top,
