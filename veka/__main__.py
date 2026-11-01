@@ -21,6 +21,8 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .global_comprehension import (read_global_csv, audit_global_candidates,
+                                   summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -126,6 +128,14 @@ def main(argv=None):
     t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--output',required=True)
     t.add_argument('--researcher-key',required=True)
+    t=sub.add_parser('global-audit',help='review sourced multilingual evidence without promoting any vocabulary')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--output')
+    t=sub.add_parser('global-score',help='describe real first-sight comprehension trials by language family')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
+    t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
         if args.command=='meaning-plan':
@@ -133,6 +143,21 @@ def main(argv=None):
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
             result=write_meaning_packet(packet,args.participant_csv,
                                         args.key_csv,args.recording_csv)
+        elif args.command=='global-audit':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_global_candidates(read_candidates(args.candidates),lex,
+                                           read_global_csv(args.evidence,EVIDENCE_FIELDS))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='global-score':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            rows=read_candidates(args.candidates)
+            structural=audit_candidates(rows,lex)
+            mapping={r['concept_id']:r['candidate_form'] for r in structural['candidates']
+                     if r['status']=='structurally_testable'}
+            result=summarize_global_trials(read_global_csv(args.trials,TRIAL_FIELDS),mapping)
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='listening-plan':
             lex=load_profile(args.profile)
             pairs=load_contrasts(args.contrasts,lex,args.profile)
