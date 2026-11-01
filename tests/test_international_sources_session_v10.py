@@ -149,6 +149,41 @@ class InternationalSessionTests(unittest.TestCase):
             with self.assertRaises(VekaError):
                 prepare_international_judge_sheet(key_file, tampered, base / "bad_judge.csv")
 
+    def test_negative_prefixed_participant_id_roundtrips_browser_csv(self):
+        # Browser neutralizes leading '-' as apostrophe+ID on CSV export.
+        visible, key = generate_recognition_manifest(
+            self.candidates, self.lex, "-VKA101")
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            key_file, responses_file, judge_file = (
+                base / "private-key.csv", base / "browser-responses.csv",
+                base / "review.csv")
+            write_csv(key_file, key)
+            responses = [{
+                "participant_id": "'" + row["participant_id"],
+                "trial_id": row["trial_id"],
+                "presented_form": row["presented_form"],
+                "response_gloss": "unsure",
+                "response_ms": "1200",
+                "prior_exposure": "no",
+                "first_language": "English",
+                "language_background_family": "Indo-European",
+                "timing_interrupted": "no",
+            } for row in visible]
+            write_csv(responses_file, responses)
+            report = prepare_international_judge_sheet(
+                key_file, responses_file, judge_file)
+            self.assertEqual(report["trials"], 24)
+            self.assertEqual(report["manually_scored"], 0)
+
+            # No permissive apostrophe stripping from arbitrary IDs.
+            responses[0]["participant_id"] = "'VKA101"
+            tampered = base / "tampered.csv"
+            write_csv(tampered, responses)
+            with self.assertRaises(VekaError):
+                prepare_international_judge_sheet(
+                    key_file, tampered, base / "rejected.csv")
+
     def test_judgment_sheet_neutralizes_spreadsheet_formulas(self):
         visible, key = generate_recognition_manifest(self.candidates, self.lex, "VKA101")
         with tempfile.TemporaryDirectory() as directory:

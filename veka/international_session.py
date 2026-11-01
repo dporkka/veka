@@ -139,9 +139,18 @@ def prepare_international_judge_sheet(
         raise VekaError("duplicate trial ID")
     if set(by_trial) != {r["trial_id"] for r in responses}:
         raise VekaError("participant responses do not cover the answer key")
-    participants = {r["participant_id"] for r in key + responses}
-    if len(participants) != 1 or not PARTICIPANT_PATTERN.fullmatch(next(iter(participants))):
-        raise VekaError("mixed or invalid participant identifiers")
+    # Browser CSV export prefixes an apostrophe only when a valid participant
+    # ID starts with '-' (spreadsheet formula neutralization). Compare with
+    # the canonical private-key ID; do not strip arbitrary apostrophes.
+    private_ids = {row["participant_id"] for row in key}
+    if len(private_ids) != 1 or not PARTICIPANT_PATTERN.fullmatch(next(iter(private_ids))):
+        raise VekaError("mixed or invalid private-key participant identifiers")
+    participant = next(iter(private_ids))
+    accepted_export_ids = {participant}
+    if participant.startswith("-"):
+        accepted_export_ids.add("'" + participant)
+    if any(row["participant_id"] not in accepted_export_ids for row in responses):
+        raise VekaError("response participant ID does not match private key")
 
     reviewed = []
     for row in responses:
