@@ -13,6 +13,24 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Core / Precise / Research usage gate (tooling v0.8)
+
+New `register-check` classifies **machine-accepted syntax** without changing
+canonical vocabulary or grammar. `Core` is strict canonical single clauses;
+`Precise` additionally permits explicitly scoped canonical propositional logic;
+`Research` explicitly permits opt-in v0.5/v0.6 syntax and the experimental
+toneless profile. Broader input never silently becomes canonical.
+
+```sh
+python3 -m veka register-check 'Mi pa dak mel.'
+python3 -m veka register-check 'Zi mi gos ve ti gos yu.' --max-register precise
+python3 -m veka register-check 'Mi gos zi ti gos.' --max-register research
+python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register research
+```
+
+**Parser acceptance is not human comprehension or safety validation.** See
+[register semantics and limitations](docs/registers_v08.md).
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before
