@@ -1,0 +1,6 @@
+concept_id,candidate_form,language,language_family,language_branch,attested_form,source_url,semantic_reviewer,attestation_verified,semantic_equivalent,notes
+C002,mu-si-ka,Modern Greek,Indo-European,Hellenic,μουσική,https://en.wiktionary.org/wiki/%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CE%AE,,no,unknown,Source indicates Greek historical lineage; no independent human semantic or phonetic review
+C002,mu-si-ka,Arabic,Afroasiatic,Semitic,مُوسِيقَى,https://en.wiktionary.org/wiki/%D9%85%D9%88%D8%B3%D9%8A%D9%82%D9%89,,no,unknown,Source traces borrowing from Ancient Greek; not an independently inherited cognate
+C002,mu-si-ka,Turkish,Turkic,Common Turkic,müzik,https://en.wiktionary.org/wiki/m%C3%BCzik,,no,unknown,Source reports borrowing from French; not evidence of shared Proto-Turkic roots
+C002,mu-si-ka,Swahili,Niger-Congo,Bantu,muziki,https://swahili-dictionary.com/swahili-english/muziki_muziki,,no,unknown,TUKI University of Dar es Salaam dictionary records meaning; borrowed status reported separately in published lexicography
+C002,mu-si-ka,Malay,Austronesian,Malayic,muzik,https://en.wiktionary.org/wiki/muzik,,no,unknown,Source reports borrowing from English or Dutch; modern recognition requires participant testing

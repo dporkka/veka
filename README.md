@@ -13,6 +13,25 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Veka at first sight (beginner reading guide)
+
+Use the **read-only interlinear guide** to understand canonical Veka before
+memorizing its vocabulary. It shows English word glosses, strict grammatical
+roles, and separate **unverified** international-looking associations where
+available. It never substitutes experimental drafts into canonical text.
+
+```sh
+python3 -m veka beginner 'Mi pa dak mel.'
+python3 -m veka beginner 'Mi sen kun.'
+python3 -m veka beginner 'Mi sen kun.' --format json
+python3 -m veka beginner 'Mi sen kun.' --no-cues
+```
+
+See [the beginner guide](docs/first_sight_guide.md) for a short lesson and
+practice sentences. This is a presentation improvement, **not** evidence
+that Veka is as immediately recognizable as Interlingua or that new word
+forms are accepted into its grammar.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
@@ -67,6 +86,29 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
 ```
 
 See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
+
+## Veka 0.7 global-comprehension research (opt-in; no canonical changes)
+
+The experimental `global-audit` command compares reviewer-sourced candidate word
+attestations across **unrelated language families** without treating multiple
+Indo-European languages as independent genealogical evidence. `global-score`
+reports only actually recorded comprehension and repair outcomes by learner
+family, and cannot declare a winning word or automatically adopt vocabulary.
+
+```sh
+python -m veka global-audit
+python -m veka global-score
+python -m unittest discover -s tests -q
+```
+
+The bundled default CSV templates have **zero** verified attestations and **zero**
+participant trials. A separate [source-linked music loanword case study](docs/music_loanword_case_study_v07.md)
+contains five explicitly **unverified** leads. Audit with
+`python -m veka global-audit --evidence data/global_music_leads_v07.csv`
+without counting unreviewed items as verified cognates. All 1,025 canonical entries and existing
+parsing semantics are unchanged. See [the Veka 0.7 research protocol](docs/global_comprehension_v07.md)
+for evidence fields, blinded pilot methods, candidate provenance rules, privacy,
+and empirical adoption gates.
 
 ## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
 
@@ -257,6 +299,31 @@ python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
 
 Review the candidate list, evidence requirements, exact experimental conditions,
 and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
+
+## Veka 0.6 experimental compound semantics and typed derivation metadata
+
+The optional `compound-semantics` command inventories the **708 canonical
+noun-adjective compounds** and their identical specified spoken word sequences.
+All 708 are already **canonical compositional aliases** under the Veka 0.6
+specification; their *possible specialized pragmatic uses* remain unreviewed.
+An optional editorial CSV can flag a proposed *compositional alias* or
+*potential lexicalization* without changing
+canonical vocabulary, adding audible hyphen markers or claiming listening results.
+
+```sh
+python3 -m veka compound-semantics --top 5
+python3 -m veka compound-semantics --review-file my_compound_review.csv --top 5
+python3 -m veka derive dak-nes
+python3 -m veka derive dak-mol
+python3 -m veka derive gos-vuk
+```
+
+The existing experimental `derive` output now includes a backward-compatible
+`semantic_contract` describing input and output argument roles, while retaining
+its previous `semantics` dictionary and all existing 0.4/0.5/0.6 parser behavior.
+See [Veka 0.6 compound and derivation semantics](docs/compound_semantics_v06.md)
+and the [blank editorial CSV template](data/compound_review_template_v06.csv).
+No human learning, meaning-discrimination or speech advantage is established.
 
 ## Concise statements and experimental reversible script metadata (0.5)
 

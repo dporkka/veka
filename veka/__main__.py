@@ -11,6 +11,7 @@ from .numbers import spell_number,read_number
 from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
+from .compound_semantics import audit_compound_semantics, load_compound_reviews
 from .study import write_manifest
 from .meaning_v06 import make_meaning_packet, write_meaning_packet
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
@@ -20,6 +21,9 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .beginner import guide_sentence, format_beginner_guide
+from .global_comprehension import (read_global_csv, audit_global_candidates,
+                                   summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -42,6 +46,10 @@ def main(argv=None):
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('number',help='convert between decimal numbers and canonical spoken Veka')
     t.add_argument('mode',choices=['spell','read']);t.add_argument('value')
+    t=sub.add_parser('beginner',help='first-sight word-by-word English guide; international draft cues are NOT Veka')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--no-cues',action='store_true',help='hide unverified international associations')
+    t.add_argument('--format',choices=('text','json'),default='text')
     t=sub.add_parser('lookup',help='search headwords by Veka form or English gloss')
     t.add_argument('query');t.add_argument('--limit',type=int,default=20)
     t.add_argument('--profile',choices=PROFILES,default='tonal')
@@ -90,6 +98,11 @@ def main(argv=None):
     t.add_argument('--responses-csv',required=True)
     t.add_argument('--recording-csv',required=True)
     t.add_argument('--audio-root',required=True)
+    t=sub.add_parser('compound-semantics',help='editorial surface/meaning review; no listener evidence')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--review-file',help='optional CSV of explicit editorial classifications')
+    t.add_argument('--top',type=int,default=10)
+    t.add_argument('--output',help='write the complete JSON report to file')
     t=sub.add_parser('international-audit',help='audit noncanonical loanword candidates and donor evidence')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--evidence',default=str(DATA/'international_evidence_v04.csv'))
@@ -132,6 +145,14 @@ def main(argv=None):
     t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--output',required=True)
     t.add_argument('--researcher-key',required=True)
+    t=sub.add_parser('global-audit',help='review sourced multilingual evidence without promoting any vocabulary')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--output')
+    t=sub.add_parser('global-score',help='describe real first-sight comprehension trials by language family')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
+    t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
         if args.command=='meaning-plan':
@@ -164,6 +185,28 @@ def main(argv=None):
             with open(args.annotated,encoding='utf8',newline='') as f:
                 observed=list(csv.DictReader(f))
             result=score_pilot(key,observed)
+        elif args.command=='beginner':
+            result=guide_sentence(args.sentence,load_profile(args.profile),
+                                  read_candidates(DATA/'international_candidates_v04.csv'),
+                                  profile=args.profile,include_cues=not args.no_cues)
+            if args.format=='text':
+                print(format_beginner_guide(result))
+                return 0
+        elif args.command=='global-audit':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_global_candidates(read_candidates(args.candidates),lex,
+                                           read_global_csv(args.evidence,EVIDENCE_FIELDS))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='global-score':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            rows=read_candidates(args.candidates)
+            structural=audit_candidates(rows,lex)
+            mapping={r['concept_id']:r['candidate_form'] for r in structural['candidates']
+                     if r['status']=='structurally_testable'}
+            result=summarize_global_trials(read_global_csv(args.trials,TRIAL_FIELDS),mapping)
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='listening-plan':
             lex=load_profile(args.profile)
             pairs=load_contrasts(args.contrasts,lex,args.profile)
@@ -198,6 +241,13 @@ def main(argv=None):
                                       candidates=args.candidates,profile=args.profile)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='compound-semantics':
+            lex=load_profile(args.profile)
+            reviews=(load_compound_reviews(args.review_file,lex) if args.review_file else {})
+            result=audit_compound_semantics(lex,reviews,top=args.top)
+            if args.output:
+                full=audit_compound_semantics(lex,reviews)
+                Path(args.output).write_text(json.dumps(full,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='discourse':
             result=parse_discourse(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
