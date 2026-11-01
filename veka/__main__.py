@@ -39,6 +39,7 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
+from .cohort_plan import read_cohort_roster, plan_cognate_cohorts, write_cohort_plan
 from .cognate_session import read_blind_manifest, write_blind_session, prepare_judge_sheet
 from .cognate_review import read_cognate_leads, audit_cognate_leads
 
@@ -158,6 +159,12 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
     t.add_argument('--leads',default=str(DATA/'cognate_source_leads_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('cohort-plan',help='blocked first-sight study packets from real pseudonymous roster; no results')
+    t.add_argument('--roster',required=True)
+    t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
+    t.add_argument('--participants-dir',required=True)
+    t.add_argument('--researcher-dir',required=True)
+    t.add_argument('--seed',type=int,default=20261101)
     t=sub.add_parser('cognate-manifest',help='blinded 0.7 cognate study packet')
     t.add_argument('--participant',required=True);t.add_argument('--arm',required=True,type=int,choices=(0,1))
     t.add_argument('--seed',type=int,default=20261101)
@@ -250,6 +257,11 @@ def main(argv=None):
                                       read_cognate_leads(args.leads),lex)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='cohort-plan':
+            plan=plan_cognate_cohorts(read_pilot(args.candidates),
+                Lexicon.from_csv(DATA/'lexicon.csv'), read_cohort_roster(args.roster),
+                seed=args.seed)
+            result=write_cohort_plan(plan,args.participants_dir,args.researcher_dir)
         elif args.command=='cognate-manifest':
             if Path(args.output).resolve()==Path(args.answer_key).resolve():
                 raise VekaError('participant sheet and researcher key must be separate files')

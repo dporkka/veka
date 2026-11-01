@@ -231,6 +231,18 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
 
 See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
 
+## Cross-family source screening and blocked comprehension pilot (research only)
+
+`python3 -m veka cohort-plan --roster /secure/roster.csv --participants-dir /secure/participant-files --researcher-dir /secure/researcher-files`
+prepares stratified, counterbalanced first-sight research materials for researcher-
+supplied pseudonymous study participants. Separate owner-only folders prevent
+sharing condition keys with participant sheets; outputs never overwrite existing
+runs. A small source-screening record documents music words in English,
+Portuguese, Swahili, Indonesian and Mandarin, including the Mandarin negative
+lexical match. **No human trials have been conducted, no word has been approved,
+and no canonical Veka words have changed.** See
+[the research protocol](docs/crossfamily_study_v10.md).
+
 ## Cross-family lexical readiness (experimental, no canonical change)
 
 `python3 -m veka lexical-readiness` produces an evidence-first research backlog
