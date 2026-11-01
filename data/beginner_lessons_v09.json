@@ -1,0 +1,98 @@
+{
+  "schema_version": "veka.beginner-lessons.v09",
+  "status": "editorial translations of parser-accepted canonical sample sentences; not human learning validation",
+  "lessons": [
+    {
+      "level": 1,
+      "title": "People, movement, and time",
+      "objective": "Learn two pronouns and simple time particles",
+      "examples": [
+        {
+          "veka": "Mi gos.",
+          "english": "I go."
+        },
+        {
+          "veka": "Ti gos.",
+          "english": "You go."
+        },
+        {
+          "veka": "Mi pa gos.",
+          "english": "I went."
+        },
+        {
+          "veka": "Mi fu gos.",
+          "english": "I will go."
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "title": "Messages and negation",
+      "objective": "Learn transitive verbs, objects, and not",
+      "examples": [
+        {
+          "veka": "Mi dak mel.",
+          "english": "I send a message."
+        },
+        {
+          "veka": "Mi pa dak mel.",
+          "english": "I sent a message."
+        },
+        {
+          "veka": "Mi pa ne dak mel.",
+          "english": "I did not send a message."
+        },
+        {
+          "veka": "Ti ton mel.",
+          "english": "You receive a message."
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "title": "Everyday actions",
+      "objective": "Practice frequent canonical noun and verb roots",
+      "examples": [
+        {
+          "veka": "Mi sen kun.",
+          "english": "I understand information."
+        },
+        {
+          "veka": "Mi rok sau.",
+          "english": "I read a book."
+        },
+        {
+          "veka": "Mi sus woi.",
+          "english": "I listen to music."
+        },
+        {
+          "veka": "Mi rin sil.",
+          "english": "I need water."
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "title": "Quantities and people",
+      "objective": "Quantifiers and exact measured quantities",
+      "examples": [
+        {
+          "veka": "Al ren pa gos.",
+          "english": "Every person went."
+        },
+        {
+          "veka": "Kis ren pa gos.",
+          "english": "Some person went."
+        },
+        {
+          "veka": "Mi lin za.",
+          "english": "I see a computer."
+        },
+        {
+          "veka": "Mi rin sil wen ran dis gel su wok.",
+          "english": "I need 1.5 liters of water."
+        }
+      ]
+    }
+  ]
+}
