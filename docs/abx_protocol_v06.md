@@ -44,6 +44,18 @@ Use trained human speakers from more than one language background, with explicit
 
 Capture additional external metadata: consent, the trained speech category, recording date, talker's background, accent, volume normalization, noise calibration, and exclusions. Do not place identifiable speaker or listener data in version control.
 
+### Optional PCM preflight before manual review
+
+After all WAVs exist and recording-job flags have been marked `yes` by an
+authorized researcher, run `python -m veka listening-preflight
+--recording-csv /secure/recording_jobs.csv --audio-root /secure/actual-wavs`
+to find candidate silence/clipping/DC-offset issues, truncated data, and
+identical PCM hidden by different container bytes. This command does not
+modify WAVs or classify a recording as genuine speech. Even a warning-free
+report requires manual audition, independent-take provenance, pronunciation
+checks and external SNR calibration; see
+[audio preflight protocol](audio_preflight_v09.md).
+
 ## 3. Present the trials and capture real responses
 
 Pre-register recruitment criteria, learning-to-criterion requirements, number of listeners, power/sample-size rationale, time cap per trial, critical-error policy, subgroup plan, randomized allocation, and the exact comparison tests **before seeing outcomes**. Enroll multiple independent speakers and listeners; keep the researcher key inaccessible to the person running the participant interface.

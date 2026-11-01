@@ -17,6 +17,7 @@ from .meaning_v06 import make_meaning_packet, write_meaning_packet
 from .communication_v07 import generate_cases, audit_communication
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
+from .audio_preflight import audit_recordings
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
@@ -108,6 +109,9 @@ def main(argv=None):
     t.add_argument('--participant-csv',required=True)
     t.add_argument('--key-csv',required=True)
     t.add_argument('--recording-csv',required=True)
+    t=sub.add_parser('listening-preflight',help='audit real ABX WAV PCM before manual speech review')
+    t.add_argument('--recording-csv',required=True)
+    t.add_argument('--audio-root',required=True)
     t=sub.add_parser('listening-score',help='score complete responses with recorded WAV verification')
     t.add_argument('--key-csv',required=True)
     t.add_argument('--responses-csv',required=True)
@@ -272,6 +276,8 @@ def main(argv=None):
                     'recording_csv':args.recording_csv,
                     'human_results_collected':False,'audio_recorded':False,
                     'warning':'Restricted answer key and recording manifest must not be shared with participants.'}
+        elif args.command=='listening-preflight':
+            result=audit_recordings(read_csv(args.recording_csv),args.audio_root)
         elif args.command=='listening-score':
             result=score_packet(read_csv(args.key_csv),read_csv(args.responses_csv),
                                 read_csv(args.recording_csv),args.audio_root)

@@ -91,6 +91,28 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Veka audio-quality preflight (research-only)
+
+After collecting **real, independently produced** ABX WAV files, run an
+additional read-only screening step before an authorized researcher listens to
+the recordings. It uses only Python's standard library and does **not** alter
+the canonical language, convert audio, mark clips as recorded, or fabricate
+human observations.
+
+```sh
+python -m veka listening-preflight \
+  --recording-csv /secure/recording_jobs.csv \
+  --audio-root /secure/actual-wavs > /secure/preflight.json
+```
+
+The preflight requires a complete confirmed recording bank. It rejects
+malformed ABX manifests, missing/truncated WAV files, byte-identical files,
+and repeated decoded PCM even if WAV container bytes differ. It reports
+per-clip RMS, clipping fraction, DC offset and advisory review warnings.
+A clean report **never** certifies human speech, independent takes,
+correct pronunciation, +5 dB SNR, or listener comprehension. See
+[recording preflight protocol](docs/audio_preflight_v09.md).
+
 ## Veka 0.6 — blinded meaning-recovery study packet
 
 The new `meaning-plan` command prepares a condition-blinded **participant
