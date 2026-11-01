@@ -87,6 +87,20 @@ Canonical vocabulary and grammar remain frozen; extensions are still opt-in.
 
 **International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
 
+## Dialogue translation readiness screen (noncanonical)
+
+`dialogue-check` screens independently prepared candidate Veka utterances for
+the existing 100 English dialogue requirements. It detects invalid canonical
+or experimental grammar, and mismatched *structural* speech acts. It **never
+certifies translation equivalence, completeness, or human comprehension**.
+
+```sh
+python3 -m veka dialogue-check --attempts attempts.json --max-register research
+```
+
+See [dialogue screening protocol and JSON format](docs/dialogue_screening_v01.md).
+The frozen English requirement corpus and canonical Veka grammar are unchanged.
+
 ## Veka at first sight (beginner reading guide)
 
 Use the **read-only interlinear guide** to understand canonical Veka before

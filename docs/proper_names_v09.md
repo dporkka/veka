@@ -29,6 +29,22 @@ in the AST and are never translated or added to the canonical lexicon.
 * Empty segments, numbers, controls, bidi formatting characters, emoji and
   arbitrary punctuation are rejected. Names are bounded to 128 code points.
 
+## Experimental morphology takes precedence
+
+Case is not a semantic escape hatch: a capitalized string matching a complete
+experimental correlative or valid root–derivation combination is **not**
+accepted as a Core proper name. For example, `Hon-ren pa gos.` is a Research
+content question, not a Core declarative sentence whose subject is a foreign
+name. Likewise, `Dak-nes` requires the experimental morphological parser.
+This reservation applies regardless of letter casing. Unrelated hyphenated
+names such as `Anne-Marie` still parse as names.
+
+This is a deliberate compatibility limitation: people whose actual names
+coincide with experimental morphology cannot express that name unambiguously
+using the current undelimited Core form. Do not silently coerce a question
+into a statement, or silently guess that the name was intended. A future
+versioned, explicitly delimited name syntax would address that collision.
+
 ## Limitations and future work
 
 Names containing spaces (`São Paulo`) and names written exclusively in
