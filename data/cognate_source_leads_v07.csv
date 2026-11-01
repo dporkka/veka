@@ -1,0 +1,13 @@
+concept_id,candidate_form,language,language_family,language_branch,attested_form,source_url,semantic_reviewer,attestation_verified,semantic_equivalent,notes
+N01,tak-si,South Levantine Arabic,Afroasiatic,Semitic,تكسي,https://en.wiktionary.org/wiki/%D8%AA%D9%83%D8%B3%D9%8A,,no,unknown,Regional synonym; source documents French borrowing; do not generalize all Arabic
+N01,tak-si,Japanese,Japonic,Japanese,タクシー,https://en.wiktionary.org/wiki/%E3%82%BF%E3%82%AF%E3%82%B7%E3%83%BC,,no,unknown,Source identifies English borrowing; Veka syllables differ from Japanese pronunciation
+N01,tak-si,Swahili,Niger-Congo,Bantu,teksi,https://en.wiktionary.org/wiki/teksi,,no,unknown,Source lists alternative taksi; independent spoken and semantic check pending
+N01,tak-si,Malay,Austronesian,Malayic,téksi,https://en.wiktionary.org/wiki/teksi,,no,unknown,Regional pronunciation teksi; not identical to Veka tak-si
+N02,ho-tel,South Levantine Arabic,Afroasiatic,Semitic,أوتيل,https://en.wiktionary.org/wiki/%D8%A3%D9%88%D8%AA%D9%8A%D9%84,,no,unknown,Regional borrowed word; funduq is also common; do not generalize pan-Arabic
+N02,ho-tel,Japanese,Japonic,Japanese,ホテル,https://en.wiktionary.org/wiki/hotel,,no,unknown,Dictionary translation lead; Japanese realization hoteru differs
+N02,ho-tel,Swahili,Niger-Congo,Bantu,hoteli,https://en.wiktionary.org/wiki/hoteli,,no,unknown,English loan with final vowel; sourced lexical entry only
+N02,ho-tel,Indonesian,Austronesian,Malayic,hotel,https://en.wiktionary.org/wiki/hotel,,no,unknown,Source documents Dutch borrowing and pronunciation; needs speaker validation
+N03,ro-bo,Hindi,Indo-European,Indo-Aryan,रोबोट,https://en.wiktionary.org/wiki/%E0%A4%B0%E0%A5%8B%E0%A4%AC%E0%A5%8B%E0%A4%9F,,no,unknown,English borrowing with final consonant absent from Veka form
+N03,ro-bo,Japanese,Japonic,Japanese,ロボット,https://en.wiktionary.org/wiki/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88,,no,unknown,Borrowed Japanese form robotto differs in consonant timing
+N03,ro-bo,Swahili,Niger-Congo,Bantu,roboti,https://en.wiktionary.org/wiki/roboti,,no,unknown,English borrowing with final vowel; Veka form truncates
+N03,ro-bo,Indonesian,Austronesian,Malayic,robot,https://en.wiktionary.org/wiki/robot,,no,unknown,Borrowed form includes final consonant not in Veka form
