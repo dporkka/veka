@@ -21,6 +21,20 @@ class CognatePilotTests(unittest.TestCase):
         cls.lex = Lexicon.from_csv(DATA / "lexicon.csv")
         cls.rows = read_pilot(DATA / "cognate_candidates_v07.csv")
 
+    def test_import_rejects_unterminated_quotes_and_extra_columns(self):
+        header = ",".join(("concept_id", "gloss", "pos", "category", "core_form",
+                           "candidate_form", "control_form", "priority", "status", "note"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "damaged.csv"
+            path.write_text(header + "\nN01,taxi,noun,addition,,tak-si,yik-be,1,unverified_draft,\"unfinished\n",
+                            encoding="utf-8")
+            with self.assertRaises(VekaError):
+                read_pilot(path)
+            path.write_text(header + "\nN01,taxi,noun,addition,,tak-si,yik-be,1,unverified_draft,ok,extra\n",
+                            encoding="utf-8")
+            with self.assertRaises(VekaError):
+                read_pilot(path)
+
     def test_pilot_has_ten_additions_and_eight_replacements_without_adoption(self):
         report = audit_pilot(self.rows, self.lex)
         self.assertEqual(report["candidate_count"], 18)

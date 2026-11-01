@@ -20,11 +20,20 @@ CATEGORIES = {"addition", "replacement"}
 
 
 def read_pilot(path: str | Path) -> list[dict[str, str]]:
-    with open(path, encoding="utf-8", newline="") as file:
-        reader = csv.DictReader(file)
-        if tuple(reader.fieldnames or ()) != FIELDS:
-            raise VekaError("invalid cognate pilot CSV headers")
-        return list(reader)
+    """Fail closed on malformed CSV rather than silently accepting study drift."""
+    try:
+        with open(path, encoding="utf-8-sig", newline="") as file:
+            reader = csv.DictReader(file, strict=True)
+            if tuple(reader.fieldnames or ()) != FIELDS:
+                raise VekaError("invalid cognate pilot CSV headers")
+            rows = list(reader)
+    except (OSError, UnicodeError, csv.Error) as exc:
+        raise VekaError("cannot read cognate pilot CSV") from exc
+    if any(set(row) != set(FIELDS) or
+           any(not isinstance(row[field], str) for field in FIELDS)
+           for row in rows):
+        raise VekaError("malformed cognate pilot CSV row")
+    return rows
 
 
 def audit_pilot(rows: list[dict], lex: Lexicon,
