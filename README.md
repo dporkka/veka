@@ -238,6 +238,31 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
 
+## Veka 0.6 experimental compound semantics and typed derivation metadata
+
+The optional `compound-semantics` command inventories the **708 canonical
+noun-adjective compounds** and their identical specified spoken word sequences.
+All 708 are already **canonical compositional aliases** under the Veka 0.6
+specification; their *possible specialized pragmatic uses* remain unreviewed.
+An optional editorial CSV can flag a proposed *compositional alias* or
+*potential lexicalization* without changing
+canonical vocabulary, adding audible hyphen markers or claiming listening results.
+
+```sh
+python3 -m veka compound-semantics --top 5
+python3 -m veka compound-semantics --review-file my_compound_review.csv --top 5
+python3 -m veka derive dak-nes
+python3 -m veka derive dak-mol
+python3 -m veka derive gos-vuk
+```
+
+The existing experimental `derive` output now includes a backward-compatible
+`semantic_contract` describing input and output argument roles, while retaining
+its previous `semantics` dictionary and all existing 0.4/0.5/0.6 parser behavior.
+See [Veka 0.6 compound and derivation semantics](docs/compound_semantics_v06.md)
+and the [blank editorial CSV template](data/compound_review_template_v06.csv).
+No human learning, meaning-discrimination or speech advantage is established.
+
 ## Concise statements and experimental reversible script metadata (0.5)
 
 Use an **opt-in** two-clause conversational register when only one logical

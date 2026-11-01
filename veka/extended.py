@@ -23,6 +23,42 @@ DERIVATIONS = {
     "koin": ("repeat", "verb"),
     "vau": ("passive_able", "adjective"),
 }
+# Semantic commitments are descriptive AST metadata; no events are evaluated.
+# The existing minimal "semantics" dictionary is preserved for API compatibility.
+DENOTED_ROLES = {
+    "agent": "base_subject",
+    "patient": "base_object",
+    "instrument": "event_instrument",
+    "place": "event_location",
+    "result": "event_result",
+    "passive_able": "base_object",
+}
+EVENT_RELATIONS = {
+    "cause": "cause_base_event",
+    "repeat": "repeat_event",
+    "attempt_reverse": "attempt_to_reverse_prior_event",
+}
+
+
+def _semantic_contract(operation: str, base_valency: str, output_pos: str) -> dict:
+    """Explicit participant mapping, without asserting actual event occurrence."""
+    input_roles = ["subject"] + (["object"] if base_valency == "transitive" else [])
+    output_roles = (
+        (["subject", "object"] if operation == "cause" else list(input_roles))
+        if output_pos == "verb" else []
+    )
+    mapping = ({"subject": "causer", "object": "base_subject"} if operation == "cause"
+               else {role: f"base_{role}" for role in output_roles})
+    return {
+        "input_roles": input_roles,
+        "output_roles": output_roles,
+        "argument_map": mapping,
+        "denoted_role": DENOTED_ROLES.get(operation),
+        "event_relation": EVENT_RELATIONS.get(operation, "relation_to_base_event"),
+        "bare_form_asserts_event_occurrence": False,
+        "success_entails_reversal": False if operation == "attempt_reverse" else None,
+    }
+
 SERIES = {
     "hon": "interrogative", "hal": "demonstrative",
     "nis": "indefinite", "pan": "universal",
@@ -86,6 +122,7 @@ def derive(form: str, lex: Lexicon) -> dict:
         "form": form, "base": base, "operation": operation,
         "pos": part_of_speech, "valency": valency,
         "semantics": {"relation": operation, "event_lemma": base},
+        "semantic_contract": _semantic_contract(operation, e.valency, part_of_speech),
         "lexicalized": False,
     }
 
