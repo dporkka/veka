@@ -1,0 +1,13 @@
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Locally generated study materials
+my_*.csv
+my_*.json
+my_*.svg
+collected_trials.csv

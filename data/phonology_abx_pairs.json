@@ -1,0 +1,9 @@
+[
+  {"id":"tone-pal", "a":"pal", "b":"pál", "contrast":"tone", "priority":"high", "why":"Garden/hill legacy tone minimal pair"},
+  {"id":"pronoun-mi-ni", "a":"mi", "b":"ni", "contrast":"onset", "priority":"critical", "why":"I versus we"},
+  {"id":"pronoun-mi-ti", "a":"mi", "b":"ti", "contrast":"onset", "priority":"critical", "why":"I versus you"},
+  {"id":"aspect-fu-du", "a":"fu", "b":"du", "contrast":"onset", "priority":"critical", "why":"Future versus progressive"},
+  {"id":"negative-ne-no", "a":"ne", "b":"no", "contrast":"vowel", "priority":"critical", "why":"Negation versus negative answer"},
+  {"id":"coda-ba-bal", "a":"ba", "b":"bal", "contrast":"coda", "priority":"exploratory", "why":"Final consonant detectability"},
+  {"id":"coda-bel-bes", "a":"bel", "b":"bes", "contrast":"coda", "priority":"exploratory", "why":"Final consonant contrast"}
+]
