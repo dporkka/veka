@@ -37,6 +37,8 @@ from .lexical_readiness import build_lexical_readiness
 from .root_research import build_root_inventory, compare_scenarios, read_scenarios
 from .root_sources import audit_root_sources, read_root_sources
 from .root_study import plan_root_cohorts
+from .root_study_results import (KEY_FIELDS, RESPONSE_FIELDS, JUDGE_FIELDS,
+    read_root_study_csv, prepare_root_judge_sheet, score_root_study)
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
@@ -257,6 +259,15 @@ def main(argv=None):
     t.add_argument('--participants-dir',required=True)
     t.add_argument('--researcher-dir',required=True)
     t.add_argument('--seed',type=int,default=20261101)
+    t=sub.add_parser('root-study-judge',help='create private, condition-blind adjudication sheet from actual root responses')
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses',required=True)
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('root-study-score',help='summarize manually judged first-sight root results; never auto-adopt')
+    t.add_argument('--key',required=True)
+    t.add_argument('--responses',required=True)
+    t.add_argument('--judgments',required=True)
+    t.add_argument('--output')
     t=sub.add_parser('root-sources',help='audit source-linked multilingual leads with independent review pending')
     t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'))
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
@@ -389,6 +400,16 @@ def main(argv=None):
             plan=plan_root_cohorts(read_candidates(args.candidates),lex,
                         read_cohort_roster(args.roster),seed=args.seed)
             result=write_cohort_plan(plan,args.participants_dir,args.researcher_dir)
+        elif args.command=='root-study-judge':
+            result=prepare_root_judge_sheet(args.key,args.responses,args.output)
+        elif args.command=='root-study-score':
+            result=score_root_study(
+                read_root_study_csv(args.key,KEY_FIELDS),
+                read_root_study_csv(args.responses,RESPONSE_FIELDS),
+                read_root_study_csv(args.judgments,JUDGE_FIELDS))
+            if args.output:
+                with Path(args.output).open('x',encoding='utf-8') as file:
+                    file.write(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
         elif args.command=='root-sources':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_root_sources(read_root_sources(args.leads), lex,
