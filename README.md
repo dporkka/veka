@@ -77,6 +77,26 @@ python -m veka correlative hon-ren
 
 See [Veka 0.5 grammar specification](docs/grammar_v05.md) for restrictions, semantic interpretation, and compatibility guarantees.
 
+## Spoken aesthetics: opt-in pilot (not a change to canonical Veka)
+
+The `aesthetics` command uses transparent **text-only** heuristics to rank
+hypothetical sound shapes; candidate hyphenated compounds require a separate
+spoken segmentation review. The `prosody` command describes optional
+tone-safe sentence delivery. Neither generates audio or measures beauty.
+
+```sh
+python -m veka aesthetics ma-li da dak --profile tonal
+python -m veka prosody 'Mi pái mel.' --profile tonal
+python -m veka prosody 'Mi fok mel.' --profile toneless
+python -m veka spoken-study-assign --participant S0001 --profile tonal --arm 0 \
+  --output participant.csv --researcher-key private-researcher.csv
+```
+
+The last command produces *blank* participant response fields and a
+separate condition key, not a human study or sound recordings. See
+[the spoken aesthetics proposal](docs/spoken_aesthetics_v05.md) for the
+scoring weights, safety caveats and study protocol.
+
 ## Quick start (Python 3.10+, zero third-party dependencies)
 
 From the directory containing `README.md`:

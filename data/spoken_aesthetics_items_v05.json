@@ -1,0 +1,101 @@
+{
+  "status": "constructed experimental stimuli; no recorded audio, speaker ratings or listening data",
+  "items": [
+    {
+      "id": "remember",
+      "meaning": "I remember a message",
+      "tonal": "Mi pái mel.",
+      "toneless": "Mi fok mel.",
+      "critical": 0,
+      "category": "contrast"
+    },
+    {
+      "id": "hill",
+      "meaning": "The hill is clear",
+      "tonal": "Pál es kal.",
+      "toneless": "Lek es kal.",
+      "critical": 0,
+      "category": "contrast"
+    },
+    {
+      "id": "idea",
+      "meaning": "The idea is clear",
+      "tonal": "Lé es kal.",
+      "toneless": "Hok es kal.",
+      "critical": 0,
+      "category": "contrast"
+    },
+    {
+      "id": "trust",
+      "meaning": "I trust you",
+      "tonal": "Mi vén ti.",
+      "toneless": "Mi gon ti.",
+      "critical": 0,
+      "category": "contrast"
+    },
+    {
+      "id": "combined",
+      "meaning": "I remember the idea",
+      "tonal": "Mi pái lé.",
+      "toneless": "Mi fok hok.",
+      "critical": 0,
+      "category": "contrast"
+    },
+    {
+      "id": "negative",
+      "meaning": "I do not trust you",
+      "tonal": "Mi ne vén ti.",
+      "toneless": "Mi ne gon ti.",
+      "critical": 1,
+      "category": "contrast"
+    },
+    {
+      "id": "control-send",
+      "meaning": "I send a message",
+      "tonal": "Mi dak mel.",
+      "toneless": "Mi dak mel.",
+      "critical": 0,
+      "category": "control"
+    },
+    {
+      "id": "control-go",
+      "meaning": "I went",
+      "tonal": "Mi pa gos.",
+      "toneless": "Mi pa gos.",
+      "critical": 0,
+      "category": "control"
+    },
+    {
+      "id": "control-number",
+      "meaning": "I need 1.5 liters of water",
+      "tonal": "Mi rin sil wen ran dis gel su wok.",
+      "toneless": "Mi rin sil wen ran dis gel su wok.",
+      "critical": 1,
+      "category": "control"
+    },
+    {
+      "id": "control-quantifier",
+      "meaning": "Every person went",
+      "tonal": "Al ren pa gos.",
+      "toneless": "Al ren pa gos.",
+      "critical": 1,
+      "category": "control"
+    },
+    {
+      "id": "control-logic",
+      "meaning": "It is not the case that I go and you go",
+      "tonal": "Na zi mi gos ve ti gos yu yu.",
+      "toneless": "Na zi mi gos ve ti gos yu yu.",
+      "critical": 1,
+      "category": "control"
+    },
+    {
+      "id": "control-future",
+      "meaning": "I will send a message to you",
+      "tonal": "Mi fu dak mel to ti.",
+      "toneless": "Mi fu dak mel to ti.",
+      "critical": 1,
+      "category": "control"
+    }
+  ]
+}

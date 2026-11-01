@@ -38,3 +38,9 @@ jobs:
           python -m veka lexical-risk --target ne --top 5 --candidates 2
           python -m veka extend "Mi sen ka ti ton mel yu."
           python -m veka extend "Mi dak-koin mel."
+      - name: Validate spoken-aesthetics and no-audio listening packet
+        run: |
+          python -m veka aesthetics ma-li da dak --profile tonal > /dev/null
+          python -m veka prosody "Mi pái mel." --profile tonal > /dev/null
+          python -m veka prosody "Mi fok mel." --profile toneless > /dev/null
+          python -m veka spoken-study-assign --participant CI01 --profile tonal --arm 0 --output "$RUNNER_TEMP/participant.csv" --researcher-key "$RUNNER_TEMP/researcher.csv" > /dev/null

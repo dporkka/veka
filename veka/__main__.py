@@ -15,6 +15,8 @@ from .study import write_manifest
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
+from .aesthetics import rank_candidates, prosody_guidance
+from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
 from .international import (read_candidates, read_evidence, audit_candidates,
@@ -99,6 +101,17 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('aesthetics',help='screen proposed word forms using text-only sound-shape heuristics')
+    t.add_argument('forms',nargs='+');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('prosody',help='guidance for delivery of strictly parsed Veka without audio')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('spoken-study-assign',help='generate condition-blinded listening packet (no audio)')
+    t.add_argument('--participant',required=True)
+    t.add_argument('--profile',choices=PROFILES,required=True)
+    t.add_argument('--arm',type=int,choices=(0,1),required=True)
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--output',required=True)
+    t.add_argument('--researcher-key',required=True)
     args=ap.parse_args(argv)
     try:
         if args.command=='listening-plan':
@@ -117,6 +130,17 @@ def main(argv=None):
         elif args.command=='listening-score':
             result=score_packet(read_csv(args.key_csv),read_csv(args.responses_csv),
                                 read_csv(args.recording_csv),args.audio_root)
+        elif args.command=='aesthetics':
+            result={'profile':args.profile,
+                    'ranked_candidates':rank_candidates(args.forms,load_profile(args.profile)),
+                    'audio_generated':False,'empirically_validated':False}
+        elif args.command=='prosody':
+            result=prosody_guidance(args.sentence,load_profile(args.profile),profile=args.profile)
+        elif args.command=='spoken-study-assign':
+            items=json.loads((DATA/'spoken_aesthetics_items_v05.json').read_text(encoding='utf8'))['items']
+            result=write_spoken_manifest(
+                items,args.participant,args.profile,args.arm,
+                args.output,args.researcher_key,args.seed)
         elif args.command=='lexical-risk':
             lex=load_profile(args.profile)
             priorities=load_priorities(args.priorities,lex)
