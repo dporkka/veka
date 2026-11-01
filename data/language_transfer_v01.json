@@ -1,0 +1,82 @@
+{
+  "schema_version": "veka.language-transfer.v01",
+  "proposals": [
+    {
+      "id": "crossfamily_vocabulary",
+      "source_languages": ["Globasa", "Swahili", "Indonesian"],
+      "principle": "Choose transparent vocabulary using verified independent language-family evidence, not European cognate frequency.",
+      "hypothesis": "Cross-family attested candidates could reduce time to correctly recognized meanings for previously untaught learners.",
+      "contrasts": ["Recognize an unfamiliar canonical Veka root for a message.", "Recognize a matched-length, independently sourced international-root candidate for the same meaning."],
+      "scenario_ids": ["ED-003", "ED-063"],
+      "risks": ["Related loanwords are not independent origins.", "Cross-family attestation is not comprehension and longer forms may be slower."],
+      "decision_gate": "Verify source provenance and sense, then preregister first-sight recognition, delayed recall, and speech-in-noise trials across language families; preserve core if no demonstrated net gain.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "analytic_conversation",
+      "source_languages": ["Indonesian", "Tok Pisin", "Haitian Creole"],
+      "principle": "Prefer invariant particles and clear independent expressions for ordinary conversation.",
+      "hypothesis": "Small transparent constructions may simplify conversational repair without adding inflection.",
+      "contrasts": ["Ask a direct confirmation question.", "Ask for correction when the listener misunderstood the request."],
+      "scenario_ids": ["ED-065", "ED-070"],
+      "risks": ["Overloading a particle can create ambiguity.", "Structural brevity is not necessarily faster comprehension."],
+      "decision_gate": "Independently review semantic equivalence, compare dialogue repair times and critical misunderstandings in counterbalanced recorded conversations.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "evidence_source",
+      "source_languages": ["Quechua"],
+      "principle": "Offer optional distinctions between observation, inference and reported information.",
+      "hypothesis": "Explicit source attribution may reduce consequential misunderstandings in teamwork.",
+      "contrasts": ["I directly observed the failure.", "Someone reported the failure but I have not verified it.", "I infer the failure from indirect evidence."],
+      "scenario_ids": ["ED-083", "ED-079"],
+      "risks": ["Obligatory marking adds learning burden.", "Users may overstate certainty or misattribute provenance."],
+      "decision_gate": "Test optional source phrases against unmarked alternatives with independently adjudicated understanding and no increase in serious errors.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "inclusive_exclusive_we",
+      "source_languages": ["Tagalog", "Tamil"],
+      "principle": "Allow explicit inclusive and exclusive first-person plural reference.",
+      "hypothesis": "Optional listener-inclusion clarification could reduce coordination errors.",
+      "contrasts": ["We will attend and you are included.", "We will attend and you are not included."],
+      "scenario_ids": ["ED-071", "ED-087"],
+      "risks": ["Mandatory distinctions make ordinary utterances harder.", "The listener might still be uncertain about the actual group."],
+      "decision_gate": "Compare paraphrase accuracy and listener participation mistakes under matched contexts; default to explicit optional phrases rather than new compulsory pronouns.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "regular_derivation",
+      "source_languages": ["Turkish"],
+      "principle": "Make word derivation regular with explicit and stable argument-role semantics.",
+      "hypothesis": "Predictable derived technical terms could reduce memorization without increasing semantic confusion.",
+      "contrasts": ["Describe the action of sending.", "Describe the person who sends something."],
+      "scenario_ids": ["ED-081", "ED-086"],
+      "risks": ["Regular morphology can still encode unclear relations.", "Derivations may collide with canonical roots or silent compound boundaries."],
+      "decision_gate": "Check reversible semantic roles, collisions, delayed acquisition and human interpretation before promoting any opt-in derivation.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "topic_focus",
+      "source_languages": ["Japanese"],
+      "principle": "Distinguish the current discourse topic from newly contrasted information when necessary.",
+      "hypothesis": "Optional information structure could reduce clarification turns in complex plans.",
+      "contrasts": ["Regarding the schedule, we changed only the meeting time.", "Regarding the meeting time, we changed only the schedule."],
+      "scenario_ids": ["ED-074", "ED-067"],
+      "risks": ["Topic ambiguity can hide references.", "Additional markers increase utterance length."],
+      "decision_gate": "Review scope and reference across turns then compare correct focus recovery per total communication minute.",
+      "status": "hypothesis", "boundary": "research_only"
+    },
+    {
+      "id": "speech_segmentation",
+      "source_languages": ["Hawaiian"],
+      "principle": "Study simple syllable shapes alongside sufficient phonetic and lexical contrast.",
+      "hypothesis": "A sound profile optimized for clarity rather than minimum syllable inventory could reduce noisy-speech errors.",
+      "contrasts": ["Distinguish a numeric correction from the original number.", "Distinguish a negated statement from its affirmative counterpart."],
+      "scenario_ids": ["ED-065", "ED-067"],
+      "risks": ["Too few phonemes demand longer words.", "Current near-pair counts are not recorded listener confusions."],
+      "decision_gate": "Record independent human pronunciations and run blinded ABX and speech-in-noise tests before changing phonology.",
+      "status": "hypothesis", "boundary": "research_only"
+    }
+  ]
+}

@@ -37,6 +37,8 @@ jobs:
           python -m veka international-audit --output /tmp/veka-international-audit.json
           python -m veka international-plan --output /tmp/veka-international-plan.json > /dev/null
           test -s /tmp/veka-international-plan.json
+          python -m veka borrowing-audit --output /tmp/veka-borrowing-audit.json > /dev/null
+          python -m veka conversation-score --output /tmp/veka-conversation-score.json > /dev/null
           python -m veka lexical-risk --target ne --top 5 --candidates 2
           python -m veka extend "Mi sen ka ti ton mel yu."
           python -m veka extend "Mi dak-koin mel."
