@@ -14,6 +14,7 @@ from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIE
 from .compound_semantics import audit_compound_semantics, load_compound_reviews
 from .study import write_manifest
 from .meaning_v06 import make_meaning_packet, write_meaning_packet
+from .communication_v07 import generate_cases, audit_communication
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
@@ -52,6 +53,9 @@ def main(argv=None):
     t=sub.add_parser('read-script',help='recover romanization from rendered SVG metadata, not OCR')
     t.add_argument('--input',required=True)
     sub.add_parser('benchmark',help='deterministic parse-equivalence and syllable-count evaluation')
+    t=sub.add_parser('communication-audit',help='synthetic meaning reversals and context-safety checks (not human data)')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--domains',default=str(DATA/'communication_domains_v07.json'))
     t=sub.add_parser('score',help='score actual listener trials CSV');t.add_argument('csv_file')
     t=sub.add_parser('audit',help='lexical structural confusion audit (not speech testing)')
     t.add_argument('--top',type=int,default=20);t.add_argument('--output')
@@ -138,7 +142,11 @@ def main(argv=None):
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
-        if args.command=='meaning-plan':
+        if args.command=='communication-audit':
+            seeds=json.loads(Path(args.domains).read_text(encoding='utf-8'))
+            lex=load_profile(args.profile)
+            result=audit_communication(generate_cases(seeds,lex),lex,profile=args.profile)
+        elif args.command=='meaning-plan':
             items=json.loads((DATA/'study_items_v03.json').read_text(encoding='utf-8'))
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
             result=write_meaning_packet(packet,args.participant_csv,
