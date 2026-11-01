@@ -89,6 +89,19 @@ python -m veka meaning-plan --participant P001 --arm 0 \
 See [meaning-recovery pilot protocol](docs/meaning_pilot_v06.md) for
 blinding, recording, consent, adjudication and measurement limits.
 
+## Veka 0.7 — structural communication regression corpus (noncanonical)
+
+A new opt-in `communication-audit` command generates deterministic, curated **synthetic**
+meaning contrasts, negative controls, and ambiguous-ellipsis examples. It checks strict
+parser-field differences and conservative context recovery without changing canonical
+forms. This is **not a human comprehension benchmark** and supplies no observed speech
+or listener results. See [communication benchmark design](docs/communication_benchmark_v07.md).
+
+```sh
+python -m veka communication-audit
+python -m veka communication-audit --profile toneless
+```
+
 ## Veka 0.6 — empirical listening-study preparation
 
 New blinded ABX pilot tools test phonetic contrasts without changing the Veka language. The system creates a participant-only trial schedule, a separate answer key and a human recording job manifest; it fails closed when asked to score missing WAV files or incomplete responses. Experimental audio is **not generated**, and **no human results are collected** in this release. Current tonal pilot: 13 contrasts, 104 trials for two talkers; toneless: 12 contrasts, 96 trials. Clip IDs are opaque and stable across participants assigned to the same arm and frozen stimulus bank.
