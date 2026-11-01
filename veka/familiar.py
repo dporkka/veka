@@ -20,6 +20,8 @@ REPLACEMENTS = {
     'sau': 'bu-ku',     # book
     'noi': 'os-pi-tal', # hospital
     'dik': 'ka-me-ra',  # camera
+    'hek': 'dok-ta',     # doctor (sense requires review)
+    'ru': 'me-tal',      # metal
 }
 TOKEN = re.compile(r"[^\s.,!?;:]+")
 
