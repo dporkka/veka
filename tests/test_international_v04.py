@@ -140,4 +140,17 @@ class RecognitionStudyTests(unittest.TestCase):
         with self.assertRaises(VekaError):
             parse('Mi lin da-ta.', self.lex)
 
+class InternationalCLIRegressionTests(unittest.TestCase):
+    def test_audit_output_file_is_valid_json(self):
+        import json
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as directory:
+            output=Path(directory)/'audit.json'
+            result=subprocess.run([sys.executable,'-m','veka','international-audit','--output',str(output)],
+                                  cwd=ROOT,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            audit=json.loads(output.read_text(encoding='utf8'))
+            self.assertEqual(audit['concept_count'],100)
+
 if __name__=='__main__': unittest.main()

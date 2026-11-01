@@ -68,7 +68,7 @@ def main(argv=None):
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_candidates(read_candidates(args.candidates),lex,read_evidence(args.evidence))
             if args.output:
-                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\\n',encoding='utf8')
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='international-family':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             if bool(args.noun)!=bool(args.adjective):
