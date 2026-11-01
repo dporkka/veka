@@ -33,6 +33,7 @@ from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
+from .international_session import read_international_manifest, write_international_session, prepare_international_judge_sheet
 from .international_plan import build_international_plan, read_review_priorities
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
@@ -214,10 +215,17 @@ def main(argv=None):
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('international-judge-sheet',help='PRIVATE blank judgment sheet from 24 blinded study responses')
+    t.add_argument('--answer-key',required=True)
+    t.add_argument('--responses',required=True)
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('international-session',help='export a blinded v0.10 international study JSON from participant-only CSV')
+    t.add_argument('--manifest',required=True)
+    t.add_argument('--output',required=True)
     t=sub.add_parser('international-plan',help='rank unverified international root research, NEVER accepted vocabulary')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
-    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--evidence',default=str(DATA/'international_source_leads_v10.csv'))
     t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
@@ -305,6 +313,13 @@ def main(argv=None):
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='international-judge-sheet':
+            result=prepare_international_judge_sheet(
+                args.answer_key,args.responses,args.output)
+        elif args.command=='international-session':
+            if Path(args.manifest).resolve() == Path(args.output).resolve():
+                raise VekaError('participant CSV and exported session must be separate files')
+            result=write_international_session(read_international_manifest(args.manifest),args.output)
         elif args.command=='international-plan':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=build_international_plan(read_candidates(args.candidates), lex,
