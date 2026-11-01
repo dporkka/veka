@@ -74,8 +74,11 @@ root-selection or word-recognition model.
   pronunciation, listening in noise, or delayed recall. Even manually scored
   observations cannot establish a causal gain without sufficient sample size,
   balanced, prespecified comparisons and uncertainty analysis.
-- The CLI uses the existing 8-form `international_candidates_v04.csv` packet;
-  the separate familiar-vocabulary profile is not silently substituted.
+- By default the CLI uses the existing 8-form `international_candidates_v04.csv`
+  packet. Use the **same explicit `--candidates` manifest** for planning,
+  review and scoring to compare alternative research proposals. The 7-form
+  familiar-vocabulary snapshot is separate, opt-in and unverified: see
+  [v1.4 familiar-root study](familiar_root_study_v14.md).
 - `adoption_authorized` and `comparative_benefit_established` are always
   `false`. Further cross-family evidence, speaking/listening and retention
   outcomes, and explicit versioned migration review are required before any

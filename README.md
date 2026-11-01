@@ -46,6 +46,16 @@ written first-sight outcomes by background and concept. It never interprets
 an observed advantage as permission to replace canonical Veka words.
 See [v1.3 reviewer workflow](docs/root_adjudication_v13.md).
 
+### Seven familiar-root experimental evaluation (v1.4)
+
+The seven proposed loanwords from draft PR #46 can now use the exact same
+blinded study and manual scoring tools with
+`--candidates data/familiar_candidates_v14.csv` for **all three** commands
+(`root-study-plan`, `root-study-review`, `root-study-score`). This supports
+odd-size candidate sets while balancing each concept within paired background
+strata, without silently modifying any canonical vocabulary. See
+[the v1.4 protocol and evidence limitations](docs/familiar_root_study_v14.md).
+
 ## International-root selection research (v1.1 tooling, noncanonical)
 
 The read-only `root-research` command now audits **all 317 atomic roots** and

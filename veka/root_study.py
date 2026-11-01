@@ -16,14 +16,14 @@ from .international import audit_candidates
 
 def plan_root_cohorts(candidates: list[dict], lex: Lexicon,
                       roster: list[dict], *, seed: int = 20261101) -> dict:
-    """Prepare 8-word cross-language randomized comparison; no responses."""
+    """Prepare a seven- or eight-word balanced comparison; no responses."""
     if not isinstance(seed, int) or isinstance(seed, bool):
         raise VekaError("study seed must be an integer")
     audited = audit_candidates(candidates, lex)
     valid = [row for row in audited["candidates"]
              if row["status"] == "structurally_testable"]
-    if not valid or audited["rejected_forms"] or len(valid) % 2:
-        raise VekaError("study needs an even number of valid experimental words")
+    if len(valid) < 2 or audited["rejected_forms"]:
+        raise VekaError("study needs at least two valid experimental words")
     if not roster:
         raise VekaError("a researcher-supplied pseudonymous roster is required")
 
