@@ -19,6 +19,9 @@ DERIVATIONS = {
     "dil": ("result", "noun"),
     "vuk": ("cause", "verb"),
     "kas": ("attempt_reverse", "verb"),
+    "mol": ("patient", "noun"),
+    "koin": ("repeat", "verb"),
+    "vau": ("passive_able", "adjective"),
 }
 SERIES = {
     "hon": "interrogative", "hal": "demonstrative",
@@ -75,6 +78,8 @@ def derive(form: str, lex: Lexicon) -> dict:
         raise VekaError("causative of transitive verb requires unimplemented third role")
     if operation == "attempt_reverse" and e.valency != "transitive":
         raise VekaError("reverse-event operator currently accepts transitive verbs only")
+    if operation in ("patient", "passive_able") and e.valency != "transitive":
+        raise VekaError(f"{operation} requires a direct-object transitive verb")
     valency = ("transitive" if operation == "cause" else
                e.valency if part_of_speech == "verb" else "")
     return {
