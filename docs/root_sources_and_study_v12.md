@@ -34,13 +34,14 @@ branch, the original word, a URL, a scope note, and one of three relation types:
   denotes information/data. This is a blocker *hypothesis* for comprehension
   study, not automatic invalidation for all Portuguese speakers.
 
-Sources include Cambridge's [Portuguese data entry](https://dictionary.cambridge.org/dictionary/portuguese-english/data),
-[Indonesian data entry](https://en.wiktionary.org/wiki/data),
+Sources include directly linked [Portuguese data](https://en.wiktionary.org/wiki/data),
+[Mandarin shuju](https://en.wiktionary.org/wiki/%E6%95%B0%E6%8D%AE),
 [Swahili muziki](https://en.wiktionary.org/wiki/muziki),
 [Indonesian sekolah](https://en.wiktionary.org/wiki/sekolah),
+[Portuguese escola](https://en.wiktionary.org/wiki/escola),
 [Mandarin xuexiao](https://en.wiktionary.org/wiki/%E5%AD%B8%E6%A0%A1),
 [Japanese gakko](https://en.wiktionary.org/wiki/%E5%AD%A6%E6%A0%A1),
-and [Swahili shule](https://swahili-dictionary.com/english-swahili/school_school).
+and [Swahili shule](https://en.wiktionary.org/wiki/shule).
 These are short lexical leads; follow any respective content licenses for
 reuse. The World Loanword Database (https://wold.clld.org/) provides
 methodology for distinguishing attested loanwords from independently inherited

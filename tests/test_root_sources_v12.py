@@ -71,6 +71,19 @@ class RootSourceTests(unittest.TestCase):
             with self.subTest(row=broken), self.assertRaises(VekaError):
                 audit_root_sources(broken, self.lex, self.queue)
 
+    def test_review_packet_links_to_direct_headwords_for_screened_contrasts(self):
+        from urllib.parse import urlsplit, unquote
+        by_language = {(r['concept_id'], r['language']): r for r in self.rows}
+        for concept, language, word in (
+            ('C001', 'Mandarin', '数据'),
+            ('C001', 'Portuguese', 'data'),
+            ('C008', 'Portuguese', 'escola'),
+            ('C008', 'Swahili', 'shule'),
+        ):
+            with self.subTest(concept=concept, language=language):
+                url = by_language[(concept, language)]['source_url']
+                self.assertEqual(unquote(urlsplit(url).path).rsplit('/', 1)[-1], word)
+
     def test_source_review_supports_country_code_dictionary_hosts(self):
         row = dict(self.rows[0], source_url="https://dictionnaire.fr/terme")
         self.assertEqual(audit_root_sources([row], self.lex, self.queue)["source_leads"], 1)
