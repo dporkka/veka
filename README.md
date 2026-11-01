@@ -13,6 +13,22 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Cross-language borrowing research (v0.12, noncanonical)
+
+Seven evidence-gated feature hypotheses inspired by Globasa, Indonesian,
+Quechua, Tagalog/Tamil, Turkish, Japanese, creoles, and Hawaiian are linked
+to the existing everyday dialogue scenarios. The new read-only commands
+validate proposal structure and describe independently collected conversation
+outcomes without inventing example translations or promoting new grammar.
+
+```sh
+python3 -m veka borrowing-audit
+python3 -m veka conversation-score  # header-only trial template: no observed results
+```
+
+See [cross-language transfer and conversation study protocol](docs/language_transfer_v01.md).
+No source-word verification, participant trial, or human communication gain is claimed.
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing

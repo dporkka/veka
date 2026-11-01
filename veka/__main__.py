@@ -35,6 +35,8 @@ from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
 from .international_plan import build_international_plan, read_review_priorities
+from .language_transfer import (load_proposals, audit_proposals,
+                                read_conversation_trials, score_conversations)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -245,6 +247,12 @@ def main(argv=None):
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('borrowing-audit',help='audit opt-in language-design contrasts; no Veka words registered')
+    t.add_argument('--catalog',default=str(DATA/'language_transfer_v01.json'))
+    t.add_argument('--output')
+    t=sub.add_parser('conversation-score',help='descriptive multilingual dialogue outcomes; never a winner')
+    t.add_argument('--trials',default=str(DATA/'conversation_trials_v01.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('international-plan',help='rank unverified international root research, NEVER accepted vocabulary')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
@@ -355,6 +363,14 @@ def main(argv=None):
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='borrowing-audit':
+            result=audit_proposals(load_proposals(args.catalog))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='conversation-score':
+            result=score_conversations(read_conversation_trials(args.trials))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='international-plan':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=build_international_plan(read_candidates(args.candidates), lex,
