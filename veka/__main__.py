@@ -47,6 +47,7 @@ from .cognate_review import read_cognate_leads, audit_cognate_leads
 from .everyday import audit_dialogues, get_lesson
 from .dialogue_eval import evaluate_attempts, load_attempts
 from .repair import parse_repair
+from .modality_comparison import parse_modality_comparison
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -230,6 +231,9 @@ def main(argv=None):
     t.add_argument('utterance')
     t.add_argument('--prior',help='exact canonical utterance being discussed; required except standalone quote')
     t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('modal-compare',help='research-only explicit modality and comparable exact quantities')
+    t.add_argument('utterance')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('dialogue-check',help='screen proposed dialogue translations; no meaning or human validation')
     t.add_argument('--attempts',required=True)
     t.add_argument('--max-register',choices=REGISTERS,default='core')
@@ -250,6 +254,8 @@ def main(argv=None):
     try:
         if args.command=='repair':
             result=parse_repair(args.utterance,load_profile(args.profile),prior=args.prior)
+        elif args.command=='modal-compare':
+            result=parse_modality_comparison(args.utterance,load_profile(args.profile))
         elif args.command=='dialogue-check':
             result=evaluate_attempts(load_attempts(args.attempts),
                                      max_register=args.max_register,profile=args.profile)

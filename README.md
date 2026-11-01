@@ -178,6 +178,24 @@ python3 -m veka repair 'Ko-re-ta Mi pa dak mel yu Mi pa ne dak mel yu.' --prior 
 conversation, and parser acceptance is not evidence of shared pragmatic meaning,
 acoustic intelligibility or truth. See [research grammar and limits](docs/repair_protocol_v01.md).
 
+## Experimental modality and numerical comparison (noncanonical)
+
+The `modal-compare` research command tests explicitly delimited **ability,
+possibility, obligation**, and **same-noun/same-unit exact comparisons**.
+Core grammar and the frozen vocabulary remain unchanged. Quantifier/modal
+interactions and real-world truth are deliberately not inferred.
+
+```sh
+python3 -m veka modal-compare 'A-bi-li Mi gos yu.'
+python3 -m veka modal-compare 'Na a-bi-li mi gos yu yu.'
+python3 -m veka modal-compare 'A-bi-li mi ne gos yu.'
+python3 -m veka modal-compare 'Ga-val sil wen ran dis gel su wok ve sil wen ran su wok yu.'
+```
+
+None of the six draft operator forms is accepted as canonical Veka, and
+the mechanical checks are not empirical pronunciation or comprehension
+evidence. See [modal scope and comparison design](docs/modality_comparison_v01.md).
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
