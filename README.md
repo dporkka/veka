@@ -119,3 +119,20 @@ For complete grammar and numeric digit table see **[`docs/grammar_v03.md`](docs/
 ## Boundaries
 
 No text-to-speech, native input method, voice data, human comprehension measurements, full first-order quantifier binding, language-wide semantic inference, or real-world safety validation is included. The script is scalable SVG art, not a published font or Unicode writing system. Do not use the prototype to carry actual safety-critical instructions.
+
+
+## Interlingua-inspired vocabulary research (parallel Veka 0.4 experiment)
+
+The optional `veka/international.py` tooling explores recognizable technical vocabulary
+without changing the canonical Veka 0.3 lexicon or the separate tonal/toneless profiles.
+The 100-concept queue includes eight illustrative **unverified** candidate spellings;
+none is accepted by the parser, and no human recognition benefit is claimed.
+
+```sh
+python make_international_v04.py
+python -m veka international-audit --output pilot_audit.json
+python -m veka international-family --noun ren --adjective sak
+python -m veka international-manifest --participant P001 --output blind.csv --answer-key key.csv
+```
+
+See [the international vocabulary pilot protocol](docs/international_v04.md).

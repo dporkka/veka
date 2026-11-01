@@ -1,0 +1,9 @@
+participant_id,trial_id,concept_id,target_gloss,condition,presented_form,status,judge_correct,repair_count
+P001,V04-c5a30463d0f0,C006,rice,international,ri-se,unverified_draft,,
+P001,V04-8be2d6cc447c,C005,computer,core,za,unverified_draft,,
+P001,V04-11edc3772503,C003,language,core,nol,unverified_draft,,
+P001,V04-1c3aa4703ba8,C004,information,international,in-fo-ma-si-on,unverified_draft,,
+P001,V04-4f612f3ebcd6,C002,music,international,mu-si-ka,unverified_draft,,
+P001,V04-949ca15ff9ec,C007,digital,international,di-gi-tal,unverified_draft,,
+P001,V04-e9f825c696e3,C008,school,core,vik,unverified_draft,,
+P001,V04-c33ce88bd385,C001,data,core,do,unverified_draft,,

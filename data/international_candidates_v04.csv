@@ -1,0 +1,101 @@
+concept_id,gloss,pos,core_form,domain,candidate_form,reference_spelling,status,evidence_note
+C001,data,noun,do,abstract,da-ta,data,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C002,music,noun,woi,abstract,mu-si-ka,musica,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C003,language,noun,nol,abstract,lin-gu-a,lingua,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C004,information,noun,kun,abstract,in-fo-ma-si-on,informacion,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C005,computer,noun,za,objects,ko-pu-ta,computador,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C006,rice,noun,tos,food,ri-se,rice,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C007,digital,adjective,vel,quality,di-gi-tal,digital,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C008,school,noun,vik,places,se-ko-la,escola,unverified_draft,Illustrative orthographic inspiration only; NOT verified donor attestation or recognition data.
+C009,clear,adjective,kal,,,,not_proposed,Donor evidence and proposed form not supplied.
+C010,black,adjective,run,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C011,garden,noun,pal,,,,not_proposed,Donor evidence and proposed form not supplied.
+C012,answer,noun,wo,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C013,bread,noun,ta,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C014,air,noun,sel,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C015,airplane,noun,bu,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C016,adult,noun,hil,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C017,airport,noun,roi,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C018,arrive,verb,kon,,,,not_proposed,Donor evidence and proposed form not supplied.
+C019,answer,verb,pol,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C020,fast,adjective,pes,,,,not_proposed,Donor evidence and proposed form not supplied.
+C021,blue,adjective,zos,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C022,hill,noun,pál,,,,not_proposed,Donor evidence and proposed form not supplied.
+C023,art,noun,wel,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C024,cheese,noun,wau,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C025,animal,noun,nai,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C026,bag,noun,gen,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C027,artist,noun,vis,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C028,bridge,noun,lul,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C029,do,verb,tas,,,,not_proposed,Donor evidence and proposed form not supplied.
+C030,ask,verb,fal,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C031,good,adjective,bon,,,,not_proposed,Donor evidence and proposed form not supplied.
+C032,broken,adjective,mik,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C033,house,noun,dol,,,,not_proposed,Donor evidence and proposed form not supplied.
+C034,chance,noun,nan,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C035,corn,noun,huk,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C036,earth,noun,zis,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C037,bicycle,noun,fil,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C038,child,noun,te,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C039,city,noun,pun,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C040,find,verb,fen,,,,not_proposed,Donor evidence and proposed form not supplied.
+C041,borrow,verb,hik,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C042,knowledgeable,adjective,sak,,,,not_proposed,Donor evidence and proposed form not supplied.
+C043,clean,adjective,was,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C044,idea,noun,lé,,,,not_proposed,Donor evidence and proposed form not supplied.
+C045,code,noun,yek,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C046,egg,noun,ki,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C047,fire,noun,pon,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C048,boat,noun,tul,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C049,customer,noun,len,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C050,country,noun,dus,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C051,go,verb,gos,,,,not_proposed,Donor evidence and proposed form not supplied.
+C052,build,verb,yul,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C053,large,adjective,val,,,,not_proposed,Donor evidence and proposed form not supplied.
+C054,cold,adjective,fai,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C055,message,noun,mel,,,,not_proposed,Donor evidence and proposed form not supplied.
+C056,day,noun,hel,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C057,meat,noun,tis,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C058,flower,noun,bai,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C059,book,noun,sau,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C060,doctor,noun,hek,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C061,farm,noun,wan,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C062,need,verb,rin,,,,not_proposed,Donor evidence and proposed form not supplied.
+C063,buy,verb,vo,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C064,small,adjective,min,,,,not_proposed,Donor evidence and proposed form not supplied.
+C065,complex,adjective,bul,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C066,person,noun,ren,,,,not_proposed,Donor evidence and proposed form not supplied.
+C067,duty,noun,gok,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C068,milk,noun,ros,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C069,fruit,noun,zul,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C070,bottle,noun,sos,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C071,engineer,noun,dul,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C072,forest,noun,kin,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C073,receive,verb,ton,,,,not_proposed,Donor evidence and proposed form not supplied.
+C074,choose,verb,pin,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C075,dangerous,adjective,hin,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C076,water,noun,sil,,,,not_proposed,Donor evidence and proposed form not supplied.
+C077,event,noun,wa,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C078,salad,noun,gak,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C079,leaf,noun,rak,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C080,box,noun,fun,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C081,father,noun,kai,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C082,hospital,noun,noi,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C083,remember,verb,pái,,,,not_proposed,Donor evidence and proposed form not supplied.
+C084,close,verb,fak,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C085,dirty,adjective,lan,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C086,fact,noun,fas,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C087,salt,noun,les,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C088,metal,noun,ru,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C089,bus,noun,sis,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C090,friend,noun,fan,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C091,lake,noun,gun,places,,,not_proposed,Donor evidence and proposed form not supplied.
+C092,see,verb,lin,,,,not_proposed,Donor evidence and proposed form not supplied.
+C093,create,verb,mas,action,,,not_proposed,Donor evidence and proposed form not supplied.
+C094,dry,adjective,mek,quality,,,not_proposed,Donor evidence and proposed form not supplied.
+C095,goal,noun,pek,abstract,,,not_proposed,Donor evidence and proposed form not supplied.
+C096,soup,noun,des,food,,,not_proposed,Donor evidence and proposed form not supplied.
+C097,plant,noun,yan,nature,,,not_proposed,Donor evidence and proposed form not supplied.
+C098,camera,noun,dik,objects,,,not_proposed,Donor evidence and proposed form not supplied.
+C099,lawyer,noun,fe,people,,,not_proposed,Donor evidence and proposed form not supplied.
+C100,market,noun,yel,places,,,not_proposed,Donor evidence and proposed form not supplied.

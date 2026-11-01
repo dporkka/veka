@@ -12,6 +12,10 @@ from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .study import write_manifest
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
+from .international import (read_candidates, read_evidence, audit_candidates,
+                            compound_family_report, derive_noun_modifier,
+                            generate_recognition_manifest, summarize_recognition_scores,
+                            write_csv)
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -46,9 +50,50 @@ def main(argv=None):
     t.add_argument('name',choices=PROFILES)
     t=sub.add_parser('convert',help='convert tonal root tokens in text without grammatical inference')
     t.add_argument('utterance');t.add_argument('--target',choices=PROFILES,required=True)
+    t=sub.add_parser('international-audit',help='audit noncanonical loanword candidates and donor evidence')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--evidence',default=str(DATA/'international_evidence_v04.csv'))
+    t.add_argument('--output')
+    t=sub.add_parser('international-family',help='inspect existing noun-modifier compounds')
+    t.add_argument('--noun');t.add_argument('--adjective')
+    t=sub.add_parser('international-manifest',help='blind recognition manifest and researcher key')
+    t.add_argument('--participant',required=True);t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--output',required=True);t.add_argument('--answer-key',required=True)
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t=sub.add_parser('international-score',help='score manually annotated recognition trials')
+    t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     args=ap.parse_args(argv)
     try:
-        if args.command=='profile':
+        if args.command=='international-audit':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_candidates(read_candidates(args.candidates),lex,read_evidence(args.evidence))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='international-family':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            if bool(args.noun)!=bool(args.adjective):
+                raise VekaError('--noun and --adjective are required together')
+            result=(derive_noun_modifier(args.noun,args.adjective,lex)
+                    if args.noun else compound_family_report(lex))
+        elif args.command=='international-manifest':
+            if Path(args.output).resolve()==Path(args.answer_key).resolve():
+                raise VekaError('participant sheet and researcher key MUST use different files')
+            if Path(args.output).exists() or Path(args.answer_key).exists():
+                raise VekaError('refusing to overwrite an existing manifest or answer key')
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            rows=read_candidates(args.candidates)
+            participant,key=generate_recognition_manifest(rows,lex,args.participant,args.seed)
+            write_csv(args.output,participant);write_csv(args.answer_key,key)
+            result={'participant_id':args.participant,'trials':len(participant),
+                    'participant_sheet':args.output,'researcher_key':args.answer_key,
+                    'human_data_collected':False,'audio_recorded':False}
+        elif args.command=='international-score':
+            with open(args.answer_key,encoding='utf8',newline='') as f:
+                key=list(csv.DictReader(f))
+            with open(args.annotated,encoding='utf8',newline='') as f:
+                actual=list(csv.DictReader(f))
+            result=summarize_recognition_scores(key,actual)
+        elif args.command=='profile':
             result=profile_summary(args.name)
         elif args.command=='convert':
             result={'source':args.utterance,'target_profile':args.target,
