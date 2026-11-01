@@ -280,6 +280,26 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
 
+## Opt-in international cognate pilot (0.7 research)
+
+A separate, **noncanonical** pilot now tests 10 new internationalisms against
+matched-syllable invented forms and eight replacement candidates against current
+Veka roots. Participants see one rendition per meaning with balanced randomized
+arms; the researcher key stays separate. It changes **no** dictionary entries,
+accepted vocabulary, parser semantics, or versioned profiles. No human outcomes,
+verified donor attestations, or speech recordings exist.
+
+```sh
+python -m veka cognate-audit
+python -m veka cognate-manifest --participant P001 --arm 0 \
+  --output p001.csv --answer-key p001_key.csv
+# Score only collected and independently annotated human responses:
+python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
+```
+
+Review the candidate list, evidence requirements, exact experimental conditions,
+and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
+
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
 The optional `compound-semantics` command inventories the **708 canonical

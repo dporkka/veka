@@ -28,6 +28,7 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
+from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
 
 DATA=Path(__file__).resolve().parents[1]/'data'
 
@@ -114,6 +115,17 @@ def main(argv=None):
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t=sub.add_parser('international-score',help='score manually annotated recognition trials')
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
+    t=sub.add_parser('cognate-audit',help='audit 0.7 noncanonical cognate pilot and evidence')
+    t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
+    t.add_argument('--evidence',default=str(DATA/'cognate_evidence_v07.csv'))
+    t.add_argument('--output')
+    t=sub.add_parser('cognate-manifest',help='blinded 0.7 cognate study packet')
+    t.add_argument('--participant',required=True);t.add_argument('--arm',required=True,type=int,choices=(0,1))
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
+    t.add_argument('--output',required=True);t.add_argument('--answer-key',required=True)
+    t=sub.add_parser('cognate-score',help='score manually judged 0.7 cognate trials')
+    t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     t=sub.add_parser('extend',help='experimental Veka 0.5 typed morphology and bounded embedding')
     t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('derive',help='inspect compositional event-derived vocabulary')
@@ -148,6 +160,31 @@ def main(argv=None):
             packet=make_meaning_packet(items,args.participant,arm=args.arm,seed=args.seed)
             result=write_meaning_packet(packet,args.participant_csv,
                                         args.key_csv,args.recording_csv)
+        elif args.command=='cognate-audit':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_pilot(read_pilot(args.candidates),lex,read_evidence(args.evidence))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='cognate-manifest':
+            if Path(args.output).resolve()==Path(args.answer_key).resolve():
+                raise VekaError('participant sheet and researcher key must be separate files')
+            if Path(args.output).exists() or Path(args.answer_key).exists():
+                raise VekaError('refusing to overwrite existing study files')
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            participants,key=make_pilot_manifest(read_pilot(args.candidates),lex,
+                                                  args.participant,seed=args.seed,arm=args.arm)
+            write_csv(args.output,participants)
+            write_csv(args.answer_key,key)
+            result={'schema_version':'veka.cognate-manifest.v07',
+                    'trials':len(participants),'participant_sheet':args.output,
+                    'researcher_key':args.answer_key,
+                    'human_data_collected':False,'audio_recorded':False}
+        elif args.command=='cognate-score':
+            with open(args.answer_key,encoding='utf8',newline='') as f:
+                key=list(csv.DictReader(f))
+            with open(args.annotated,encoding='utf8',newline='') as f:
+                observed=list(csv.DictReader(f))
+            result=score_pilot(key,observed)
         elif args.command=='beginner':
             result=guide_sentence(args.sentence,load_profile(args.profile),
                                   read_candidates(DATA/'international_candidates_v04.csv'),
