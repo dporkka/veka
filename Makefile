@@ -11,3 +11,4 @@ validate: test
 	$(PYTHON) -m veka communication-audit
 	$(PYTHON) -m veka borrowing-audit
 	$(PYTHON) -m veka conversation-score
+	$(PYTHON) -m veka root-research > /dev/null
