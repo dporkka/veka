@@ -19,6 +19,9 @@ DERIVATIONS = {
     "dil": ("result", "noun"),
     "vuk": ("cause", "verb"),
     "kas": ("attempt_reverse", "verb"),
+    "mol": ("patient", "noun"),
+    "koin": ("repeat", "verb"),
+    "vau": ("passive_able", "adjective"),
 }
 SERIES = {
     "hon": "interrogative", "hal": "demonstrative",
@@ -75,6 +78,8 @@ def derive(form: str, lex: Lexicon) -> dict:
         raise VekaError("causative of transitive verb requires unimplemented third role")
     if operation == "attempt_reverse" and e.valency != "transitive":
         raise VekaError("reverse-event operator currently accepts transitive verbs only")
+    if operation in ("patient", "passive_able") and e.valency != "transitive":
+        raise VekaError(f"{operation} requires a direct-object transitive verb")
     valency = ("transitive" if operation == "cause" else
                e.valency if part_of_speech == "verb" else "")
     return {
@@ -219,6 +224,17 @@ def parse_extended(sentence: str, lex: Lexicon, strict: bool = True) -> dict:
     if len(opens) > 1:
         raise VekaError("only one subordinate structure allowed per sentence")
     if not opens:
+        # A conversational two-atom register reuses the *same* logical
+        # connectives. Only one infix operator is allowed: no precedence,
+        # implicit grouping, commands, questions, or context-based guessing.
+        infix = [i for i, word in enumerate(lowered) if word in ("zi", "oi")]
+        if infix:
+            if len(infix) != 1 or not 0 < infix[0] < len(tokens) - 1:
+                raise VekaError("concise register requires exactly two atomic clauses")
+            from .logic import parse_logic
+            pos = infix[0]
+            explicit = " ".join([lowered[pos], *tokens[:pos], "ve", *tokens[pos + 1:], "yu"])
+            return parse_logic(explicit, lex, strict=True)
         if CLOSE in lowered or GAP in lowered:
             raise VekaError("orphaned scope boundary or relative gap")
         return _parse_atomic(tokens, lex, strict)

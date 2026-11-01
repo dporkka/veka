@@ -39,7 +39,7 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
   --audio-root /path/to/actual-wavs
 ```
 
-See [Veka 0.6 listening pilot protocol](docs/listening_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
+See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
 
 ## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
 
@@ -51,6 +51,18 @@ python -m veka lexical-risk --profile toneless --top 10 --target mi
 ```
 
 See [the v0.5 design and falsification protocol](docs/lexical_design_v05.md). No audio recordings or listener outcomes have been collected.
+
+## Experimental 0.6 discourse and temporal grammar (opt-in)
+
+A new `python -m veka discourse` command adds in-situ topic/focus marking, explicit location-restricted quantifiers, and bounded before/after temporal clauses, with no change to the canonical vocabulary or existing parsers. It enforces single-role reference, required arguments and overt scope boundaries. This is **machine-tested syntax**, not demonstrated listener comprehension or spoken efficiency.
+
+```sh
+python -m veka discourse 'Sas mi yu pa dak kol mel yu.'
+python -m veka discourse 'Al ren gin pas yu pa gos.'
+python -m veka discourse 'Sik ti ton mel yu mi dak mel.'
+```
+
+Read [Veka 0.6 grammar and limitations](docs/grammar_v06.md) before treating these constructions as established vocabulary.
 
 ## Experimental 0.5 grammar extensions (opt-in)
 
@@ -178,3 +190,30 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 ```
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
+
+## Concise statements and experimental reversible script metadata (0.5)
+
+Use an **opt-in** two-clause conversational register when only one logical
+connective is needed. Complex logic remains explicitly bracketed; the original
+`parse` command is unchanged:
+
+```sh
+python -m veka extend 'Mi gos zi ti gos.'
+python -m veka extend 'Mi gos oi ti gos.'
+python -m veka logic 'Zi mi gos ve ti gos yu.'
+```
+
+The SVG syllable-block renderer now preserves word and syllable indexes in
+machine-readable metadata. The `read-script` command reconstructs lowercase
+romanized text, including tone marks and hyphenated compounds:
+
+```sh
+python -m veka render 'Mi pái mel.' --output my_script.svg
+python -m veka read-script --input my_script.svg
+```
+
+**Limitations:** reconstruction reads embedded labels, **not the drawn shapes**.
+It is not OCR, a Unicode writing standard, or proof that two shapes are visually
+distinguishable. Case, original spaces, and sentence-final punctuation are not
+preserved. SVG metadata is checked for ordering, legal syllables, and tone-label
+consistency. See `docs/grammar_v05.md` for the concise syntax and limitations.

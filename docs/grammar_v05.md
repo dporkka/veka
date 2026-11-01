@@ -22,9 +22,9 @@ python3 -m veka extend "Fok-nes pa gos." --profile toneless
 
 The existing `parse` CLI continues to accept only the 0.4 grammar. Use `extend` to opt in. All extension clauses parse **strictly**, prohibiting implicit missing roles and unresolved `sa` pronouns. Content questions set a separate `content_question` field in the AST; yes/no questions retain `ke`.
 
-## Productive event derivation (6 bound suffixes)
+## Productive event derivation (9 bound suffixes)
 
-The six operators apply to an existing **primitive verb**, not arbitrarily to nouns or compound entries. The derivation is separated with a hyphen and remains transparently compositional. Neither the original dictionary nor the number of headwords changes.
+The nine operators apply to an existing **primitive verb**, not arbitrarily to nouns or compound entries. The derivation is separated with a hyphen and remains transparently compositional. Neither the original dictionary nor the number of headwords changes.
 
 | Suffix | Input | Output | Meaning | Example |
 |---|---|---|---|---|
@@ -34,10 +34,13 @@ The six operators apply to an existing **primitive verb**, not arbitrarily to no
 | `-dil` | verb | noun | result of event | `dak-dil` = result of sending |
 | `-vuk` | intransitive verb | transitive verb | cause event | `gos-vuk` = cause to go |
 | `-kas` | transitive verb | transitive verb | attempt to undo event | `dak-kas` = attempt to undo sending |
+| `-mol` | transitive verb | noun | participant filling the direct-object role | `dak-mol` = thing sent |
+| `-koin` | verb | verb | repeat the event, retaining valency | `dak-koin` = send again |
+| `-vau` | transitive verb | adjective | capable of undergoing the event as direct object | `dak-vau` = sendable |
 
 These are semantic relations, **not** guaranteed lexical equivalents of English occupational or object nouns. `dak-nes` does not automatically mean professional postal worker. `-kas` does not assert that the event is reversible or that an attempted reversal succeeds. A transitive verb cannot take `-vuk` until the language defines three-place predicates; this fails closed.
 
-The minimum pairwise Hamming distance between suffixes (as three-segment forms) is two. This is a structural screen, **not a perceptual study**.
+The original six three-letter suffixes were screened for a minimum pairwise Hamming distance of two. The new suffixes include the four-letter `koin` and are distinct, phonotactically valid candidates. **No structural distance guarantees audibility**; a full all-operator acoustic-confusion study is still needed. The `patient` and `passive_able` operators require transitive direct-object verbs, and `repeat` preserves the source valency. None is a canonical Veka morpheme.
 
 ## Correlatives (4 × 6)
 
@@ -95,3 +98,30 @@ Important: this scope discipline does **not** imply that the entire meaning is f
 - All new constructions are deliberately tested under opt-in `extend`; the original AST remains unchanged for ordinary single clauses.
 - Run `python3 -m unittest discover -s tests -q` for regression coverage. Tests establish parser consistency, **not measured human throughput or intelligibility**.
 - Future milestones: domain-restricted quantifier semantics, clearer relative-complement licensing, lexical collision screening on growth, and actual recordings / comprehension trials before claiming efficiency gains.
+
+## Opt-in concise coordination (single-operator conversational register)
+
+For two **complete, assertive atomic statements only**, Veka 0.5 permits the existing
+logical operators in a shorter infix construction:
+
+```ebnf
+concise_conjunction = atomic_statement, "zi", atomic_statement ;
+concise_disjunction = atomic_statement, "oi", atomic_statement ;
+```
+
+- `Mi gos zi ti gos.` means *I go and you go*. Its AST is **identical** to
+  `Zi mi gos ve ti gos yu.` in the fully scoped `logic` parser.
+- `Mi gos oi ti gos.` means *I go or you go, inclusive*. The AST is **identical**
+  to `Oi mi gos ve ti gos yu.`.
+
+No new particle, precedence convention, or implicit role resolution is introduced.
+The interpreter calls the existing formal logic parser after inserting the two
+required scope delimiters. Two or more connectives, subordinate clauses,
+commands, questions, missing mandatory objects, and shorthand for `fi` (material
+implication) are **rejected**, not interpreted heuristically. A single connective
+does not assert causation, sequence, or shared context. Use fully scoped `logic`
+for nested or mixed propositional structures. The original `parse` command
+continues to reject this syntax; it is available only via `extend`.
+
+This is a usability hypothesis. It saves two scope words per binary expression,
+but has **not** demonstrated better listening accuracy or spoken throughput.

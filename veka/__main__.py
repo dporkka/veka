@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 from .core import (Lexicon,Discourse,VekaError,validate_word,syllabify,parse,
-                   render_svg,evaluate_stimuli,score_human_trials)
+                   render_svg,read_svg,evaluate_stimuli,score_human_trials)
 from .numbers import spell_number,read_number
 from .logic import parse_logic
 from .phonology import analyze_root_confusions
@@ -16,6 +16,7 @@ from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
                              write_packet, read_csv, score_packet)
 from .profiles import load_profile, profile_summary, convert_utterance, PROFILES
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
+from .discourse import parse_discourse
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -42,6 +43,8 @@ def main(argv=None):
     t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('render',help='export native syllable blocks as SVG')
     t.add_argument('sentence');t.add_argument('--output',required=True)
+    t=sub.add_parser('read-script',help='recover romanization from rendered SVG metadata, not OCR')
+    t.add_argument('--input',required=True)
     sub.add_parser('benchmark',help='deterministic parse-equivalence and syllable-count evaluation')
     t=sub.add_parser('score',help='score actual listener trials CSV');t.add_argument('csv_file')
     t=sub.add_parser('audit',help='lexical structural confusion audit (not speech testing)')
@@ -94,6 +97,8 @@ def main(argv=None):
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
     t=sub.add_parser('correlative',help='inspect one generated reference form')
     t.add_argument('word');t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t=sub.add_parser('discourse',help='experimental Veka 0.6 topic/focus, domain and temporal scope')
+    t.add_argument('sentence');t.add_argument('--profile',choices=PROFILES,default='tonal')
     args=ap.parse_args(argv)
     try:
         if args.command=='listening-plan':
@@ -119,6 +124,8 @@ def main(argv=None):
                                       candidates=args.candidates,profile=args.profile)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='discourse':
+            result=parse_discourse(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
             result=parse_extended(args.sentence,load_profile(args.profile),strict=True)
         elif args.command=='derive':
@@ -167,6 +174,9 @@ def main(argv=None):
             data=render_svg(args.sentence)
             Path(args.output).write_text(data,encoding='utf-8')
             result={'output':str(args.output),'bytes':len(data.encode())}
+        elif args.command=='read-script':
+            result={'romanized':read_svg(Path(args.input).read_text(encoding='utf-8')),
+                    'source':'SVG syllable metadata', 'optical_recognition':False}
         elif args.command=='number':
             result={'value':args.value,'result':spell_number(args.value) if args.mode=='spell' else read_number(args.value)}
         elif args.command=='score':
