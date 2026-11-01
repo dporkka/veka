@@ -11,6 +11,7 @@ from .numbers import spell_number,read_number
 from .logic import parse_logic
 from .phonology import analyze_root_confusions
 from .lexical_risk import load_priorities, audit_lexical_risk, DEFAULT_PRIORITIES
+from .compound_semantics import audit_compound_semantics, load_compound_reviews
 from .study import write_manifest
 from .meaning_v06 import make_meaning_packet, write_meaning_packet
 from .listening_v06 import (DEFAULT_CONTRASTS, load_contrasts, make_packet,
@@ -89,6 +90,11 @@ def main(argv=None):
     t.add_argument('--responses-csv',required=True)
     t.add_argument('--recording-csv',required=True)
     t.add_argument('--audio-root',required=True)
+    t=sub.add_parser('compound-semantics',help='editorial surface/meaning review; no listener evidence')
+    t.add_argument('--profile',choices=PROFILES,default='tonal')
+    t.add_argument('--review-file',help='optional CSV of explicit editorial classifications')
+    t.add_argument('--top',type=int,default=10)
+    t.add_argument('--output',help='write the complete JSON report to file')
     t=sub.add_parser('international-audit',help='audit noncanonical loanword candidates and donor evidence')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--evidence',default=str(DATA/'international_evidence_v04.csv'))
@@ -161,6 +167,13 @@ def main(argv=None):
                                       candidates=args.candidates,profile=args.profile)
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='compound-semantics':
+            lex=load_profile(args.profile)
+            reviews=(load_compound_reviews(args.review_file,lex) if args.review_file else {})
+            result=audit_compound_semantics(lex,reviews,top=args.top)
+            if args.output:
+                full=audit_compound_semantics(lex,reviews)
+                Path(args.output).write_text(json.dumps(full,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='discourse':
             result=parse_discourse(args.sentence,load_profile(args.profile))
         elif args.command=='extend':
