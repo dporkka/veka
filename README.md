@@ -177,6 +177,18 @@ python -m veka listening-score --key-csv /tmp/researcher-key.csv \
 
 See [Veka 0.6 listening pilot protocol](docs/abx_protocol_v06.md) for blinding, recording and calibration requirements, statistical limitations and research ethics. Pilot infrastructure does **not** establish better human comprehension or speech speed.
 
+## Cross-family lexical readiness (experimental, no canonical change)
+
+`python3 -m veka lexical-readiness` produces an evidence-first research backlog
+for Veka's 100 international-vocabulary concepts. It joins existing structural
+word checks, independently labeled language-family attestations and descriptive
+human-trial conditions. A two-family coverage prefilter is a research heuristic,
+**not proof of comprehension or grounds for replacing vocabulary**. With the
+bundled header-only evidence and trial files, eight experimental forms need
+source review and 92 concepts still need proposals. There are no measured
+learner outcomes, no automatically approved words and no canonical lexicon
+changes. See [research readiness and language comparisons](docs/lexical_readiness_v09.md).
+
 ## Veka 0.7 global-comprehension research (opt-in; no canonical changes)
 
 The experimental `global-audit` command compares reviewer-sourced candidate word

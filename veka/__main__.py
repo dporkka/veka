@@ -28,6 +28,7 @@ from .beginner import guide_sentence, format_beginner_guide
 from .semantic_families import describe_family, format_semantic_family
 from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
+from .lexical_readiness import build_lexical_readiness
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -189,6 +190,11 @@ def main(argv=None):
     t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
     t=sub.add_parser('learn',help='view canonical parser-checked beginner examples')
     t.add_argument('--level',required=True,type=int)
+    t=sub.add_parser('lexical-readiness',help='next research actions, never automatic vocabulary adoption')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
+    t.add_argument('--output')
     args=ap.parse_args(argv)
     try:
         if args.command=='everyday-audit':
@@ -262,6 +268,13 @@ def main(argv=None):
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=audit_global_candidates(read_candidates(args.candidates),lex,
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='lexical-readiness':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=build_lexical_readiness(read_candidates(args.candidates), lex,
+                        read_global_csv(args.evidence,EVIDENCE_FIELDS),
+                        read_global_csv(args.trials,TRIAL_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
         elif args.command=='global-score':
