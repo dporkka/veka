@@ -328,6 +328,26 @@ python -m veka cognate-leads
 
 See [the Veka 0.7 source-review packet](docs/cognate_source_review_v07.md).
 
+### Blinded, local first-sight trial collection (research only)
+
+Prepare a participant-only JSON from the pre-generated blind manifest, then
+open `site/cognate-study.html` locally and load that JSON. The page shows
+18 unfamiliar words without translations, captures voluntary free-text guesses
+and exploratory browser durations, and exports an unscored response CSV.
+**No responses are automatically uploaded or collected by this repository.**
+
+```sh
+python -m veka cognate-session --manifest p001.csv --output p001-session.json
+# After a volunteer returns an exported CSV, separately create a PRIVATE human review sheet:
+python -m veka cognate-judge-sheet --answer-key p001_key.csv \
+  --responses /path/to/participant-responses.csv --output p001-PRIVATE-review.csv
+# After independent human adjudication, score with cognate-score as above.
+```
+
+Never provide the researcher key or judgment sheet to participants. No
+cross-language recognition advantage is demonstrated by this tooling. See
+[the first-sight pilot procedure](docs/cognate_first_sight_session_v07.md).
+
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
 The optional `compound-semantics` command inventories the **708 canonical

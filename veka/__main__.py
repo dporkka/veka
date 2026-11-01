@@ -30,6 +30,7 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
+from .cognate_session import read_blind_manifest, write_blind_session, prepare_judge_sheet
 from .cognate_review import read_cognate_leads, audit_cognate_leads
 
 DATA=Path(__file__).resolve().parents[1]/'data'
@@ -130,6 +131,10 @@ def main(argv=None):
     t.add_argument('--seed',type=int,default=20261101)
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
     t.add_argument('--output',required=True);t.add_argument('--answer-key',required=True)
+    t=sub.add_parser('cognate-session',help='export an answer-key-free JSON session from a blinded participant CSV')
+    t.add_argument('--manifest',required=True);t.add_argument('--output',required=True)
+    t=sub.add_parser('cognate-judge-sheet',help='create private, blank manual adjudication sheet from participant responses')
+    t.add_argument('--answer-key',required=True);t.add_argument('--responses',required=True);t.add_argument('--output',required=True)
     t=sub.add_parser('cognate-score',help='score manually judged 0.7 cognate trials')
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     t=sub.add_parser('extend',help='experimental Veka 0.5 typed morphology and bounded embedding')
@@ -196,6 +201,12 @@ def main(argv=None):
                     'trials':len(participants),'participant_sheet':args.output,
                     'researcher_key':args.answer_key,
                     'human_data_collected':False,'audio_recorded':False}
+        elif args.command=='cognate-session':
+            if Path(args.manifest).resolve() == Path(args.output).resolve():
+                raise VekaError('input and output must be separate files')
+            result=write_blind_session(read_blind_manifest(args.manifest),args.output)
+        elif args.command=='cognate-judge-sheet':
+            result=prepare_judge_sheet(args.answer_key,args.responses,args.output)
         elif args.command=='cognate-score':
             with open(args.answer_key,encoding='utf8',newline='') as f:
                 key=list(csv.DictReader(f))
