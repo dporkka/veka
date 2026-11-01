@@ -1,0 +1,116 @@
+{
+  "concept_count": 100,
+  "experimental_forms": 8,
+  "rejected_forms": 0,
+  "structurally_testable": 8,
+  "attested_forms": 0,
+  "evidence": {
+    "evidence_records": 0,
+    "verified_records": 0,
+    "by_concept": {},
+    "recognition_measured": false,
+    "warning": "Verification flags and family assignments are human supplied; attestation does not measure recognition."
+  },
+  "adopted_forms": 0,
+  "human_participants": 0,
+  "recognition_measured": false,
+  "candidates": [
+    {
+      "concept_id": "C001",
+      "gloss": "data",
+      "core_form": "do",
+      "candidate_form": "da-ta",
+      "syllable_count": 2,
+      "added_syllables_vs_core": 1,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C002",
+      "gloss": "music",
+      "core_form": "woi",
+      "candidate_form": "mu-si-ka",
+      "syllable_count": 3,
+      "added_syllables_vs_core": 2,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C003",
+      "gloss": "language",
+      "core_form": "nol",
+      "candidate_form": "lin-gu-a",
+      "syllable_count": 3,
+      "added_syllables_vs_core": 2,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C004",
+      "gloss": "information",
+      "core_form": "kun",
+      "candidate_form": "in-fo-ma-si-on",
+      "syllable_count": 5,
+      "added_syllables_vs_core": 4,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C005",
+      "gloss": "computer",
+      "core_form": "za",
+      "candidate_form": "ko-pu-ta",
+      "syllable_count": 3,
+      "added_syllables_vs_core": 2,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C006",
+      "gloss": "rice",
+      "core_form": "tos",
+      "candidate_form": "ri-se",
+      "syllable_count": 2,
+      "added_syllables_vs_core": 1,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C007",
+      "gloss": "digital",
+      "core_form": "vel",
+      "candidate_form": "di-gi-tal",
+      "syllable_count": 3,
+      "added_syllables_vs_core": 2,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    },
+    {
+      "concept_id": "C008",
+      "gloss": "school",
+      "core_form": "vik",
+      "candidate_form": "se-ko-la",
+      "syllable_count": 3,
+      "added_syllables_vs_core": 2,
+      "status": "structurally_testable",
+      "reasons": [],
+      "recognition_measured": false,
+      "meaning_validated": false
+    }
+  ],
+  "warning": "No multilingual donor evidence or human recognition data supplied; structural suitability is not empirical acceptance."
+}
