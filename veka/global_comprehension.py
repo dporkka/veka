@@ -28,7 +28,7 @@ def read_global_csv(path: str | Path, fields: tuple[str, ...]) -> list[dict[str,
     """Reject schema drift, malformed rows, and silently truncated records."""
     try:
         with open(path, newline="", encoding="utf-8-sig") as handle:
-            reader = csv.DictReader(handle)
+            reader = csv.DictReader(handle, strict=True)
             if tuple(reader.fieldnames or ()) != fields:
                 raise VekaError(f"incorrect CSV schema: {path}")
             rows = list(reader)
