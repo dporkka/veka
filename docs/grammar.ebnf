@@ -1,0 +1,34 @@
+(* Veka v0.3: bounded executable subset. Syntax for scope is fully explicit. *)
+utterance       = proposition | command ;
+proposition     = atomic_clause | "na", proposition, "yu"
+                | ("zi"|"oi"|"fi"), proposition, "ve", proposition, "yu" ;
+atomic_clause   = subject, [tense], [progressive], [negative], predicate, [question] ;
+command         = "ha", ["fu"], [progressive], [negative], verbal_predicate ;
+subject         = noun_phrase ;
+predicate       = verbal_predicate | property_predicate ;
+verbal_predicate= verb, [direct_object], [recipient], [location], [time_adverb] ;
+property_predicate = "es", adjective, [recipient], [location], [time_adverb] ;
+direct_object   = noun_phrase ;
+recipient       = "to", noun_phrase ;
+location        = "en", noun_phrase ;
+time_adverb     = TIME_LEXEME ;
+question        = "ke" ;
+tense           = "pa" | "fu" ;
+progressive     = "du" ;
+negative        = "ne" ;
+noun_phrase     = [quantifier], head, [plural], {adjective},
+                  [exact_quantity, [unit]], [possession] ;
+quantifier      = "al" | "kis" ;
+head            = NOUN | PRONOUN | PROPER_NAME ;
+plural          = "lu" ;
+exact_quantity  = "wen", ["sin"], DIGIT, {DIGIT}, ["dis", DIGIT, {DIGIT}] ;
+DIGIT           = "nul"|"ran"|"kuk"|"zun"|"sok"|"gel"|"tak"|"pil"|"bos"|"mus" ;
+unit            = "su", ("rel"|"sek"|"vos"|"wok") ;
+possession      = "de", noun_phrase ;
+verb            = VERB_LEXEME ;
+adjective       = ADJECTIVE_LEXEME ;
+(* Semantic constraints: questions/commands excluded from proposition logic;
+   transitive verbs require object unless uniquely inferred in noncritical mode;
+   at most 1 quantified NP per atomic clause; numerals incompatible with "al",
+   "kis", "lu" on same NP; nested propositions <=16, tokens <=256;
+   explicit scope mandatory; critical mode disallows elliptic roles and "sa". *)
