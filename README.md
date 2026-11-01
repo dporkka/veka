@@ -13,6 +13,24 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Learn Veka (beginner pilot)
+
+**Start here instead of the research CLI:** [Veka Beginner 0.1](docs/beginner_standard_v01.md) uses the stable canonical tonal vocabulary with short, tightly checked lessons.
+
+Use `learn --level 1..4` for the four introductory levels; use `practice list|show|quiz` for the separate 25-dialogue exercise corpus. The commands are intentionally distinct.
+
+    python -m veka practice list
+    python -m veka practice show B01
+    python -m veka practice quiz B01 --question 1 --seed 6
+
+Run a zero-dependency local web learner from the repository root:
+
+    python -m http.server 8765 --bind 127.0.0.1
+
+Visit http://127.0.0.1:8765/site/. The [25 four-turn exchanges](data/beginner_dialogues_v01.json) contain 100 strict-grammar-checked Veka sentences with editorial English interpretations. The [browser learner](site/index.html) offers reading, optional English/Mandarin/Portuguese **word-level hints**, and English-only multiple-choice practice; rebuild static glosses with `python3 scripts/export_site_glosses.py`. All interpretations are editorial, not verified translations. These are **controlled exercises, not evidence of natural fluency or human comprehension**. No locked grammar or vocabulary is changed.
+
+**Licensing decision still required:** [distribution licensing action items](docs/licensing_decision.md). No license is implicitly granted by the learner application.
+
 ## Core / Precise / Research usage gate (tooling v0.8)
 
 New `register-check` classifies **machine-accepted syntax** without changing
@@ -277,7 +295,7 @@ Read [Veka 0.6 grammar and limitations](docs/grammar_v06.md) before treating the
 
 ## Experimental 0.5 grammar extensions (opt-in)
 
-The reference extension now implements six regular event-derivational suffixes, a 4×6 correlative matrix, and bounded relative/propositional complements without altering the 1,025 canonical headwords. It adds `python -m veka extend`, `derive`, and `correlative` commands; the original `parse` behavior and tonal/toneless profiles remain the baseline. **No spoken-comprehension or speed advantage has been measured.**
+The reference extension now implements nine regular event-derivational suffixes, a 4×6 correlative matrix, and bounded relative/propositional complements without altering the 1,025 canonical headwords. It adds `python -m veka extend`, `derive`, and `correlative` commands; the original `parse` behavior and tonal/toneless profiles remain the baseline. **No spoken-comprehension or speed advantage has been measured.**
 
 ```sh
 python -m veka extend 'Ren ri wek dak mel yu pa gos.'

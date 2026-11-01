@@ -24,6 +24,7 @@ from .aesthetics import rank_candidates, prosody_guidance
 from .spoken_study import write_spoken_manifest
 from .extended import parse_extended, derive, correlative, SERIES, DOMAINS
 from .discourse import parse_discourse
+from .learning import load_lessons, lesson_by_id, create_question, check_answer, public_question
 from .registers import inspect_register, REGISTERS
 from .beginner import guide_sentence, format_beginner_guide
 from .learner_locales import LANGUAGES
@@ -204,6 +205,12 @@ def main(argv=None):
     t.add_argument('--domain');t.add_argument('--include-items',action='store_true')
     t=sub.add_parser('learn',help='view canonical parser-checked beginner examples')
     t.add_argument('--level',required=True,type=int)
+    t=sub.add_parser('practice',help='read canonical four-turn dialogues and answer quizzes')
+    t.add_argument('mode',choices=('list','show','quiz'))
+    t.add_argument('lesson_id',nargs='?')
+    t.add_argument('--question',type=int,default=1)
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--answer')
     t=sub.add_parser('lexical-readiness',help='next research actions, never automatic vocabulary adoption')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
@@ -220,6 +227,32 @@ def main(argv=None):
             result=audit_dialogues(domain=args.domain,include_items=args.include_items)
         elif args.command=='learn':
             result=get_lesson(args.level)
+        elif args.command=='practice':
+            lessons=load_lessons()
+            if args.mode=='list':
+                if args.lesson_id is not None or args.answer is not None:
+                    raise VekaError('practice list does not accept a lesson or answer')
+                result={'schema_version':'veka.beginner-lessons.v01',
+                        'lessons':[{'id':x['id'],'title':x['title'],'turns':len(x['turns'])}
+                                   for x in lessons],
+                        'translation_validation':'human-authored English; grammar-checked Veka only'}
+            else:
+                if args.lesson_id is None:
+                    raise VekaError('practice show/quiz requires lesson_id (for example B01)')
+                lesson=lesson_by_id(lessons,args.lesson_id)
+                if args.mode=='show':
+                    if args.answer is not None:
+                        raise VekaError('practice show does not accept --answer')
+                    result={'id':lesson['id'],'title':lesson['title'],'turns':lesson['turns'],
+                            'english_translation':'editorial, not formally validated'}
+                else:
+                    question=create_question(lesson,args.question,args.seed)
+                    result=public_question(question)
+                    if args.answer is not None:
+                        correct=check_answer(question,args.answer)
+                        result['submitted_answer']=args.answer
+                        result['correct']=correct
+                        result['correct_answer']=question['correct_choice']
         elif args.command=='communication-audit':
             seeds=json.loads(Path(args.domains).read_text(encoding='utf-8'))
             lex=load_profile(args.profile)
