@@ -312,6 +312,26 @@ See [cross-language efficiency protocol](docs/efficiency_comparison_v01.md)
 for the annotation schema, the comprehension/repair-time measure, and
 independent translation-review and human-study prerequisites.
 
+### Two-reviewer translation gates (research-only)
+
+Each of Indonesian, Turkish, Esperanto, and Interlingua can now be reviewed
+by **its own pair** of bilingual reviewers. Blank source-locked CSV packets
+include ten examples per language, but **no independently verified new
+translations exist** in the repository. Only matching affirmative reviews
+unlock a new, noncanonical comparison manifest; no human communication result
+or grammatical/vocabulary change is inferred.
+
+```sh
+python3 -m veka efficiency-review-plan --language id --reviewer reviewerA --output /private/id-A.csv
+python3 -m veka efficiency-review-plan --language id --reviewer reviewerB --output /private/id-B.csv
+python3 -m veka efficiency-review-check --review-a /private/id-A.csv --review-b /private/id-B.csv
+# --output /private/reviewed-id.json is rejected until both reviewers agree on all ten.
+```
+
+See [the dual-review workflow](docs/efficiency_review_v02.md) for
+per-language reviewer assignment, source integrity, bounded CSV validation,
+and the requirements before any authentic participant study.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.

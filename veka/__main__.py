@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -45,6 +46,8 @@ from .language_transfer import (load_proposals, audit_proposals,
 from .conversation_session import read_conversation_manifest, write_conversation_session
 from .efficiency import (default_manifest, audit_efficiency,
                          read_efficiency_trials, score_efficiency_trials)
+from .efficiency_review import (build_review_packet, write_review_packet,
+                                read_review_csv, evaluate_reviews)
 from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
@@ -302,9 +305,40 @@ def main(argv=None):
     t.add_argument('--manifest',help='aligned JSON; non-Veka observations require reviewer status')
     t.add_argument('--trials',default=str(DATA/'efficiency_trials_v01.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('efficiency-review-plan',help='blank per-language review sheet for one pseudonymous reviewer')
+    t.add_argument('--reviewer',required=True)
+    t.add_argument('--language',choices=('id','tr','eo','ia'),help='one language (10 rows); omit for all 40')
+    t.add_argument('--manifest',help='aligned manifest with unchanged reference readings')
+    t.add_argument('--output',required=True)
+    t=sub.add_parser('efficiency-review-check',help='audit two self-attested reviewer packets and optionally publish consensus')
+    t.add_argument('--review-a',required=True)
+    t.add_argument('--review-b',required=True)
+    t.add_argument('--manifest',help='existing manifest; supply previous output for incremental languages')
+    t.add_argument('--output',help='write consensus manifest only when all targeted translations approved')
     args=ap.parse_args(argv)
     try:
-        if args.command=='efficiency-template':
+        if args.command=='efficiency-review-plan':
+            manifest=(json.loads(Path(args.manifest).read_text(encoding='utf-8'))
+                      if args.manifest else default_manifest())
+            rows=build_review_packet(manifest,args.reviewer,language=args.language)
+            write_review_packet(rows,args.output)
+            result={'schema_version':'veka.efficiency-review-plan.v02',
+                    'rows':len(rows),'reviewer':args.reviewer,'output':args.output,
+                    'translations_filled':0,'canonical_changes':0}
+        elif args.command=='efficiency-review-check':
+            manifest=(json.loads(Path(args.manifest).read_text(encoding='utf-8'))
+                      if args.manifest else default_manifest())
+            result=evaluate_reviews(read_review_csv(args.review_a),
+                                    read_review_csv(args.review_b),manifest)
+            if args.output:
+                if not result['publishable']:
+                    raise VekaError('translations not approved: all target rows require agreeing reviews')
+                fd=os.open(args.output,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
+                with os.fdopen(fd,'w',encoding='utf-8') as f:
+                    f.write(json.dumps(result['reviewed_manifest'],indent=2,ensure_ascii=False)+'\n')
+                result['output']=args.output
+            result.pop('reviewed_manifest')
+        elif args.command=='efficiency-template':
             template=default_manifest()
             with Path(args.output).open('x',encoding='utf-8') as f:
                 f.write(json.dumps(template,indent=2,ensure_ascii=False)+'\n')
