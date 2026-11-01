@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veka — blinded word recognition pilot</title>
+<style>
+:root{color-scheme:light;--ink:#183042;--accent:#116a62}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f8f7;color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+header{background:#123b42;color:#fff;padding:2rem max(1rem,calc((100vw - 800px)/2))}
+header p{color:#dceae8}h1{margin:0;font-size:clamp(1.8rem,5vw,2.5rem)}
+main{max-width:800px;padding:0 1rem;margin:1.5rem auto}
+section{background:white;border:1px solid #d0e2df;border-radius:14px;padding:clamp(1rem,3vw,2rem);margin-bottom:1rem}
+label{display:block;font-weight:600;margin:.7rem 0 .2rem}
+input[type=text],input[type=file],textarea,select{width:100%;display:block;padding:.7rem;font:inherit;border:1px solid #88aaa1;border-radius:8px}
+textarea{min-height:7rem;resize:vertical}
+button{font:inherit;font-weight:700;background:var(--accent);color:white;border:0;border-radius:8px;padding:.8rem 1rem;cursor:pointer;margin-top:1rem}
+button:disabled{opacity:.5}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #b86f18;outline-offset:2px}
+#stimulus{background:#eaf7f3;font-size:clamp(2.5rem,7vw,4rem);font-weight:800;text-align:center;padding:1.5rem;border-radius:10px}
+.muted{color:#526773}#progress{font-weight:700}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+<h1>Veka first-sight vocabulary pilot</h1>
+<p>Write what unfamiliar words might mean. There are no answer hints. This is research, not a language proficiency test.</p>
+</header>
+<main>
+<section id="setup">
+<h2>Before starting</h2>
+<p class="muted">Everything runs locally in the browser. Nothing is sent to a server, persisted, or scored. You may quit without submitting. To save results, download the CSV at the end; refreshing beforehand loses answers.</p>
+<p class="muted">Use only the participant session JSON supplied by the researcher, never the separate answer key.</p>
+<label for="session-file">Participant-only session JSON</label>
+<input id="session-file" type="file" accept=".json,application/json">
+<label for="first-language">First language (self-reported)</label>
+<input id="first-language" type="text" maxlength="80" autocomplete="off" placeholder="For example: Turkish">
+<label for="language-family">Language family (optional; self-reported)</label>
+<input id="language-family" type="text" maxlength="80" autocomplete="off" placeholder="Leave blank if unsure">
+<label><input id="consent" type="checkbox"> I voluntarily agree to this research practice session. Exporting responses is optional.</label>
+<button id="begin" type="button" disabled>Begin 18 trials</button>
+<p id="status" role="status" aria-live="polite"></p>
+</section>
+<section id="trial-panel" hidden>
+<p id="progress"></p>
+<h2>What might this word mean?</h2>
+<div id="stimulus" aria-live="polite"></div>
+<form id="trial-form">
+<label for="response">Meaning in any language (or type "don't know")</label>
+<textarea id="response" required maxlength="160" spellcheck="false"></textarea>
+<label for="exposure">Have you seen this exact written word before?</label>
+<select id="exposure" required>
+<option value="">Choose one</option><option value="yes">Yes</option><option value="no">No</option><option value="unsure">Unsure</option>
+</select>
+<button id="submit-response" type="submit">Record response and continue</button>
+</form>
+<p class="muted">One attempt per word. Please do not use a dictionary. Browser timings are approximate, not calibrated reaction times.</p>
+</section>
+<section id="complete" hidden>
+<h2>Session complete</h2><p id="completion-count"></p>
+<p>No answers were uploaded. Download the CSV and share it privately with the researcher if you wish.</p>
+<button id="export-responses" type="button">Download responses CSV</button>
+<p class="muted">Do not publish participant responses or the researcher answer key.</p>
+</section>
+</main>
+<script>
+"use strict";
+(() => {
+  const get=id=>document.getElementById(id);
+  let session=null,responses=[],index=0,displayedAt=0,interrupted=false,started=false;
+  function status(s){get("status").textContent=s}
+  function validSession(s) {
+    if (!s||typeof s!=="object"||Array.isArray(s)||
+        Object.keys(s).sort().join(",")!=="participant_id,schema_version,trials"||
+        s.schema_version!=="veka.cognate-session.v07"||
+        !/^[A-Za-z0-9_-]{1,64}$/.test(s.participant_id)||
+        !Array.isArray(s.trials)||s.trials.length!==18) return false;
+    const ids=new Set();
+    return s.trials.every(row=>{
+      if (!row||typeof row!=="object"||Array.isArray(row)||
+          Object.keys(row).sort().join(",")!=="presented_form,trial_id"||
+          typeof row.trial_id!=="string"||!/^[C]07-[0-9a-f]{16}$/.test(row.trial_id)||
+          ids.has(row.trial_id)||typeof row.presented_form!=="string"||
+          !/^[a-záéíóú]+(?:-[a-záéíóú]+)*$/u.test(row.presented_form)||
+          row.presented_form.length>64) return false;
+      ids.add(row.trial_id);return true;
+    });
+  }
+  function ready(){get("begin").disabled=!(session&&get("consent").checked&&get("first-language").value.trim())}
+  get("session-file").addEventListener("change",async ev=>{
+    session=null;status("");ready();
+    const file=ev.target.files[0];if(!file)return;
+    try {
+      if(file.size>25000)throw new Error("Session file too large");
+      const data=JSON.parse(await file.text());
+      if(!validSession(data))throw new Error("Not a valid participant-only session");
+      session=data;status("Valid participant session: 18 blinded trials");
+    }catch(error){status(error.message)}
+    ready();
+  });
+  get("first-language").addEventListener("input",ready);
+  get("consent").addEventListener("change",ready);
+  function show(){
+    const row=session.trials[index];
+    get("progress").textContent="Trial "+(index+1)+" of 18";
+    get("stimulus").textContent=row.presented_form;
+    get("response").value="";get("exposure").value="";
+    get("response").focus();interrupted=false;displayedAt=performance.now();
+  }
+  get("begin").addEventListener("click",()=>{
+    if(started||get("begin").disabled)return;
+    started=true;get("setup").hidden=true;get("trial-panel").hidden=false;show();
+  });
+  document.addEventListener("visibilitychange",()=>{if(started&&!get("trial-panel").hidden&&document.hidden)interrupted=true});
+  window.addEventListener("blur",()=>{if(started&&!get("trial-panel").hidden)interrupted=true});
+  get("trial-form").addEventListener("submit",ev=>{
+    ev.preventDefault();if(!started||index>=18)return;
+    const gloss=get("response").value.trim(),prior=get("exposure").value;
+    if(!gloss||!["yes","no","unsure"].includes(prior))return;
+    const row=session.trials[index],elapsed=Math.max(0,Math.round(performance.now()-displayedAt));
+    responses.push({
+      participant_id:session.participant_id,trial_id:row.trial_id,
+      presented_form:row.presented_form,response_gloss:gloss,response_ms:String(elapsed),
+      prior_exposure:prior,first_language:get("first-language").value.trim(),
+      language_background_family:get("language-family").value.trim(),
+      timing_interrupted:interrupted?"yes":"no"
+    });
+    index++;
+    if(index<18)show();
+    else {
+      get("trial-panel").hidden=true;get("complete").hidden=false;
+      get("completion-count").textContent="18 unscored responses recorded locally";
+    }
+  });
+  const columns=["participant_id","trial_id","presented_form","response_gloss","response_ms","prior_exposure","first_language","language_background_family","timing_interrupted"];
+  // Neutralize spreadsheet formulas in free-text CSV exports; keep the text visible.
+  const quote=v=>{
+    const raw=String(v);
+    const safe=/^[\t\r\n ]*[=+@-]/.test(raw)?"'"+raw:raw;
+    return '"'+safe.replaceAll('"','""')+'"';
+  };
+  get("export-responses").addEventListener("click",()=>{
+    if(index!==18||responses.length!==18)return;
+    const csv=[columns.join(","),...responses.map(r=>columns.map(c=>quote(r[c])).join(","))].join("\r\n")+"\r\n";
+    const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+    const a=document.createElement("a");a.href=url;a.download="veka-responses-"+session.participant_id+".csv";
+    document.body.append(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+})();
+</script>
+</body>
+</html>

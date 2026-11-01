@@ -1,0 +1,19 @@
+concept_id,gloss,pos,category,core_form,candidate_form,control_form,priority,status,note
+N01,taxi,noun,addition,,tak-si,yik-be,1,unverified_draft,International vehicle term; independent donor attestations required
+N02,hotel,noun,addition,,ho-tel,bi-vul,2,unverified_draft,International lodging term; independent donor attestations required
+N03,robot,noun,addition,,ro-bo,pu-li,3,unverified_draft,Adapted form lacks final consonant; test meaning and recognition
+N04,virus,noun,addition,,vi-rus,pu-bas,4,unverified_draft,Check scientific sense and speech intelligibility
+N05,radio,noun,addition,,ra-di-o,hu-ko-ko,5,unverified_draft,Three syllables; audio and written recognition may differ
+N06,coffee,noun,addition,,ka-fe,ge-bo,6,unverified_draft,Coffee word-family hypothesis; etymology not independently verified
+N07,chocolate,noun,addition,,so-ko-la-te,bo-vi-so-ro,7,unverified_draft,Four syllables and strong adaptation; check semantic scope
+N08,pizza,noun,addition,,pi-za,ye-ro,8,unverified_draft,Food borrowing hypothesis; nonuniform regional familiarity
+N09,video,noun,addition,,vi-di-o,se-be-bo,9,unverified_draft,Adapted to avoid protected grammatical syllable de
+N10,yoga,noun,addition,,yo-ga,wi-hu,10,unverified_draft,Potentially culturally specific term; test meaning consistency
+R01,doctor,noun,replacement,hek,dok-ta,,11,unverified_draft,Compare one-syllable current root against internationalism
+R02,camera,noun,replacement,dik,ka-me-ra,,12,unverified_draft,Compare root against longer form
+R03,music,noun,replacement,woi,mu-si-ka,,13,unverified_draft,Compare root against longer form
+R04,data,noun,replacement,do,da-ta,,14,unverified_draft,False-friend risk: Portuguese data means calendar date
+R05,information,noun,replacement,kun,in-fo,,15,unverified_draft,Short clipping; recognition not established
+R06,computer,noun,replacement,za,kon-pu-ta,,16,unverified_draft,Test nasal-retaining adaptation against ko-pu-ta draft
+R07,school,noun,replacement,vik,se-ko-la,,17,unverified_draft,Potential Romance/European skew
+R08,code,noun,replacement,yek,ko-di,,18,unverified_draft,Technical word; meaning may differ across languages

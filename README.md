@@ -13,6 +13,43 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Core / Precise / Research usage gate (tooling v0.8)
+
+New `register-check` classifies **machine-accepted syntax** without changing
+canonical vocabulary or grammar. `Core` is strict canonical single clauses;
+`Precise` additionally permits explicitly scoped canonical propositional logic;
+`Research` explicitly permits opt-in v0.5/v0.6 syntax and the experimental
+toneless profile. Broader input never silently becomes canonical.
+
+```sh
+python3 -m veka register-check 'Mi pa dak mel.'
+python3 -m veka register-check 'Zi mi gos ve ti gos yu.' --max-register precise
+python3 -m veka register-check 'Mi gos zi ti gos.' --max-register research
+python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register research
+```
+
+**Parser acceptance is not human comprehension or safety validation.** See
+[register semantics and limitations](docs/registers_v08.md).
+
+## Veka at first sight (beginner reading guide)
+
+Use the **read-only interlinear guide** to understand canonical Veka before
+memorizing its vocabulary. It shows English word glosses, strict grammatical
+roles, and separate **unverified** international-looking associations where
+available. It never substitutes experimental drafts into canonical text.
+
+```sh
+python3 -m veka beginner 'Mi pa dak mel.'
+python3 -m veka beginner 'Mi sen kun.'
+python3 -m veka beginner 'Mi sen kun.' --format json
+python3 -m veka beginner 'Mi sen kun.' --no-cues
+```
+
+See [the beginner guide](docs/first_sight_guide.md) for a short lesson and
+practice sentences. This is a presentation improvement, **not** evidence
+that Veka is as immediately recognizable as Interlingua or that new word
+forms are accepted into its grammar.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.
@@ -273,6 +310,56 @@ python -m veka international-manifest --participant P001 --output blind.csv --an
 ```
 
 See [the international vocabulary pilot protocol](docs/international_v04.md).
+
+## Opt-in international cognate pilot (0.7 research)
+
+A separate, **noncanonical** pilot now tests 10 new internationalisms against
+matched-syllable invented forms and eight replacement candidates against current
+Veka roots. Participants see one rendition per meaning with balanced randomized
+arms; the researcher key stays separate. It changes **no** dictionary entries,
+accepted vocabulary, parser semantics, or versioned profiles. No human outcomes,
+verified donor attestations, or speech recordings exist.
+
+```sh
+python -m veka cognate-audit
+python -m veka cognate-manifest --participant P001 --arm 0 \
+  --output p001.csv --answer-key p001_key.csv
+# Score only collected and independently annotated human responses:
+python -m veka cognate-score --answer-key p001_key.csv --annotated responses.csv
+```
+
+Review the candidate list, evidence requirements, exact experimental conditions,
+and adoption gates in [the Veka 0.7 cognate pilot protocol](docs/cognate_pilot_v07.md).
+
+Source-linked, **unverified** attestation leads for taxi, hotel, and robot
+are available for independent multilingual review. To audit the 12 pending
+review records without claiming human validation, run:
+
+```sh
+python -m veka cognate-leads
+```
+
+See [the Veka 0.7 source-review packet](docs/cognate_source_review_v07.md).
+
+### Blinded, local first-sight trial collection (research only)
+
+Prepare a participant-only JSON from the pre-generated blind manifest, then
+open `site/cognate-study.html` locally and load that JSON. The page shows
+18 unfamiliar words without translations, captures voluntary free-text guesses
+and exploratory browser durations, and exports an unscored response CSV.
+**No responses are automatically uploaded or collected by this repository.**
+
+```sh
+python -m veka cognate-session --manifest p001.csv --output p001-session.json
+# After a volunteer returns an exported CSV, separately create a PRIVATE human review sheet:
+python -m veka cognate-judge-sheet --answer-key p001_key.csv \
+  --responses /path/to/participant-responses.csv --output p001-PRIVATE-review.csv
+# After independent human adjudication, score with cognate-score as above.
+```
+
+Never provide the researcher key or judgment sheet to participants. No
+cross-language recognition advantage is demonstrated by this tooling. See
+[the first-sight pilot procedure](docs/cognate_first_sight_session_v07.md).
 
 ## Veka 0.6 experimental compound semantics and typed derivation metadata
 
