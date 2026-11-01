@@ -93,6 +93,20 @@ def _pair(key: list[dict], responses: list[dict]) -> tuple[dict, dict]:
                 or len({r["background_stratum"] for r in group}) != 1
                 or sum(r["condition"] == "core" for r in group) != 4):
             raise VekaError("researcher key is not a complete balanced root-study plan")
+    # Every condition must map to a single, stable stimulus and every concept
+    # to one invariant meaning across participants. Otherwise even a complete,
+    # balanced-looking CSV can silently mix experimental arms or target senses.
+    for concept in concepts:
+        group = [row for row in key if row['concept_id'] == concept]
+        if len({row['target_gloss'] for row in group}) != 1:
+            raise VekaError('inconsistent target sense across participants')
+        forms = {
+            cond: {row['presented_form'] for row in group if row['condition'] == cond}
+            for cond in ('core', 'candidate')
+        }
+        if (len(forms['core']) != 1 or len(forms['candidate']) != 1
+                or forms['core'] == forms['candidate']):
+            raise VekaError('inconsistent or identical condition stimuli')
     strata = defaultdict(list)
     for group in by_participant.values():
         strata[group[0]["background_stratum"]].append(group)

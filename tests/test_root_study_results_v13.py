@@ -112,6 +112,26 @@ class RootStudyResultsTests(unittest.TestCase):
         self.assertEqual(report["all_submitted_critical_errors"], 1)
         self.assertEqual(report["by_condition"]["candidate"]["critical_errors"], 0)
 
+    def test_inconsistent_target_sense_and_stimuli_in_keys_fail_closed(self):
+        key, responses, judges = self.synthetic_records()
+        tampered_key = [dict(r) for r in key]
+        tampered_judges = [dict(r) for r in judges]
+        tampered_key[0]["target_gloss"] = "changed-sense"
+        next(j for j in tampered_judges if j["trial_id"] == tampered_key[0]["trial_id"])[
+            "target_gloss"
+        ] = "changed-sense"
+        with self.assertRaises(VekaError):
+            score_root_study(tampered_key, responses, tampered_judges)
+
+        tampered_key = [dict(r) for r in key]
+        tampered_responses = [dict(r) for r in responses]
+        tampered_key[0]["presented_form"] = "invented"
+        next(r for r in tampered_responses if r["trial_id"] == tampered_key[0]["trial_id"])[
+            "presented_form"
+        ] = "invented"
+        with self.assertRaises(VekaError):
+            score_root_study(tampered_key, tampered_responses, judges)
+
     def test_critical_errors_count_only_with_incorrect_judgments(self):
         key, responses, judges = self.synthetic_records()
         target = next(row for row in key if row["condition"] == "candidate")
