@@ -25,3 +25,5 @@ Veka remains an **experimental** human-language research project, not a proven o
   exact-head `Python contract tests` checks complete successfully.
 - No synthesized listener audio, participants, comprehension observations,
   or unsupported claims of empirical improvement may enter fixtures.
+
+- Participant-facing meaning-recovery CSVs must never disclose target meanings or condition labels. Keep recorded audio, private researcher keys and real responses out of Git; use `meaning-plan` for blinded packets, not legacy `study-assign` output.
