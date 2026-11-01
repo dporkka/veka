@@ -31,6 +31,7 @@ from .international import (read_candidates, read_evidence, audit_candidates,
                             compound_family_report, derive_noun_modifier,
                             generate_recognition_manifest, summarize_recognition_scores,
                             write_csv)
+from .multilingual import LANGUAGE_GROUPS, make_cohort, score_cohort
 from .cognates import read_pilot, audit_pilot, make_pilot_manifest, score_pilot
 from .cognate_session import read_blind_manifest, write_blind_session, prepare_judge_sheet
 from .cognate_review import read_cognate_leads, audit_cognate_leads
@@ -125,6 +126,13 @@ def main(argv=None):
     t.add_argument('--output',required=True);t.add_argument('--answer-key',required=True)
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t=sub.add_parser('international-score',help='score manually annotated recognition trials')
+    t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
+    t=sub.add_parser('international-cohort',help='six-language blind recognition cohort; draft vocabulary only')
+    t.add_argument('--participants-per-language',type=int,default=2)
+    t.add_argument('--seed',type=int,default=20261101)
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--participant-csv',required=True);t.add_argument('--answer-key',required=True)
+    t=sub.add_parser('international-cohort-score',help='score adjudicated responses by language stratum')
     t.add_argument('--answer-key',required=True);t.add_argument('--annotated',required=True)
     t=sub.add_parser('cognate-audit',help='audit 0.7 noncanonical cognate pilot and evidence')
     t.add_argument('--candidates',default=str(DATA/'cognate_candidates_v07.csv'))
@@ -327,6 +335,28 @@ def main(argv=None):
             with open(args.annotated,encoding='utf8',newline='') as f:
                 actual=list(csv.DictReader(f))
             result=summarize_recognition_scores(key,actual)
+        elif args.command=='international-cohort':
+            if Path(args.participant_csv).resolve()==Path(args.answer_key).resolve():
+                raise VekaError('participant sheet and researcher key MUST use different files')
+            if Path(args.participant_csv).exists() or Path(args.answer_key).exists():
+                raise VekaError('refusing to overwrite existing participant sheet or answer key')
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            participant,key=make_cohort(read_candidates(args.candidates),lex,
+                                        args.participants_per_language,args.seed)
+            write_csv(args.participant_csv,participant);write_csv(args.answer_key,key)
+            result={'schema_version':'veka.international-cohort.v07',
+                    'languages':list(LANGUAGE_GROUPS),
+                    'participants':len({r['participant_id'] for r in key}),
+                    'trials':len(key),'participant_csv':args.participant_csv,
+                    'answer_key':args.answer_key,
+                    'human_data_collected':False,'audio_recorded':False,
+                    'warning':'Keep restricted answer keys separate from participant sheets.'}
+        elif args.command=='international-cohort-score':
+            with open(args.answer_key,encoding='utf8',newline='') as f:
+                key=list(csv.DictReader(f))
+            with open(args.annotated,encoding='utf8',newline='') as f:
+                actual=list(csv.DictReader(f))
+            result=score_cohort(key,actual)
         elif args.command=='profile':
             result=profile_summary(args.name)
         elif args.command=='convert':

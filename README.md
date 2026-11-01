@@ -165,6 +165,19 @@ parsing semantics are unchanged. See [the Veka 0.7 research protocol](docs/globa
 for evidence fields, blinded pilot methods, candidate provenance rules, privacy,
 and empirical adoption gates.
 
+## Veka 0.7 — six-language recognition cohort (research-only)
+
+A reproducible, **noncanonical** blinded pilot now prepares comparable written
+recognition trials for English, Mandarin, Spanish, Hindi, Portuguese, and
+Indonesian recruitment strata, using the existing eight unverified
+international draft terms. Each language group has balanced core-vs-draft
+presentations, and human-adjudicated scores can later be summarized separately
+by language. No participants, verified translations, donor etymologies,
+recordings, or recognition outcomes are supplied; the 1,025-entry dictionary
+and canonical grammar remain unchanged. See
+[the multilingual cohort protocol](docs/multilingual_cohort_v07.md) and
+run `python -m veka international-cohort --help`.
+
 ## Veka 0.5 lexical-risk research (opt-in; no vocabulary changes)
 
 The new `lexical-risk` command ranks **symbolic** near-pair risks with explicit **assumed**, not measured, exposure and consequence priorities, and generates alternative *unadopted* word forms. It also reports the 708 noun-adjective compounds whose silent hyphen produces the same spoken sequence as an ordinary noun-adjective phrase. It does **not** predict human errors or change the 1,025 canonical entries.
