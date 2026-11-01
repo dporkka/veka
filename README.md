@@ -54,6 +54,34 @@ A strict, empty scenario CSV template lives at
 never constitute recognition estimates or authorize canonical changes.
 See [the root audit and research protocol](docs/root_research_v11.md).
 
+## Globasa-informed root-selection review (v0.13, noncanonical)
+
+`root-review` is a read-only, concept-level dictionary and source-review card.
+It reuses the existing 100-concept international plan, strict semantic
+mappings, transparent-compound families and donor attestation CSV. Inspired by
+Globasa's *check existing expressions → select donor source → define sense →
+screen exact word form* process, it exposes written near-pairs (including
+silent-hyphen overlaps), marks registered versus unverified alternatives, and
+separates language-family attestations from **independent borrowing origins**.
+It reuses the current `root_source_leads_v12.csv` packet (13 sourced leads
+across data, music and school), retaining the false-friend and contrasting-form
+controls as **unreviewed sources**, never approved donor attestations, and
+exposes existing English, Mandarin and Portuguese learner word-glosses with
+explicit fallback labels. It does **not** create a new word or establish
+acoustic/learner performance.
+
+```sh
+python3 -m veka root-review C002 --format text  # woi versus unverified mu-si-ka
+python3 -m veka root-review C056 --format text  # di-a near critical dis
+python3 -m veka root-review C002 --format json  # structured review and source records
+python3 -m veka root-review C002 --format text --lang zh  # curated word gloss, source leads
+python3 -m veka root-review C002 --format text --lang pt-BR
+```
+
+See [Globasa-informed root review, sources and limitations](docs/globasa_root_review_v01.md).
+Draft familiar-vocabulary PR #46 remains independent and is not imported or
+promoted by this feature.
+
 ## Cross-language borrowing research (v0.12, noncanonical)
 
 Seven evidence-gated feature hypotheses inspired by Globasa, Indonesian,

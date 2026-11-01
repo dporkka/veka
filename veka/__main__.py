@@ -37,6 +37,8 @@ from .lexical_readiness import build_lexical_readiness
 from .root_research import build_root_inventory, compare_scenarios, read_scenarios
 from .root_sources import audit_root_sources, read_root_sources
 from .root_study import plan_root_cohorts
+
+from .root_review import build_root_review, format_root_review
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
@@ -274,6 +276,16 @@ def main(argv=None):
     t=sub.add_parser('conversation-score',help='descriptive multilingual dialogue outcomes; never a winner')
     t.add_argument('--trials',default=str(DATA/'conversation_trials_v01.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('root-review',help='Globasa-inspired concept evidence and spelling review (research only)')
+    t.add_argument('concept_id')
+    t.add_argument('--format',choices=('json','text'),default='json')
+    t.add_argument('--lang',choices=LANGUAGES,default='en',help='editorial learner word gloss language')
+    t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'),
+                   help='unreviewed source-screening leads; not donor attestations')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
+    t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
+    t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('international-plan',help='rank unverified international root research, NEVER accepted vocabulary')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
@@ -413,6 +425,17 @@ def main(argv=None):
             result=score_conversations(read_conversation_trials(args.trials))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+        elif args.command=='root-review':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=build_root_review(args.concept_id, read_candidates(args.candidates), lex,
+                       read_review_priorities(args.priorities),
+                       read_global_csv(args.evidence,EVIDENCE_FIELDS),
+                       leads=read_root_sources(args.leads))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+            if args.format=='text':
+                print(format_root_review(result,language=args.lang))
+                return 0
         elif args.command=='international-plan':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             result=build_international_plan(read_candidates(args.candidates), lex,
