@@ -29,6 +29,20 @@ class BeginnerLearningTests(unittest.TestCase):
         self.assertEqual(first["turns"][0]["veka"], "Ti sen mel ke?")
         self.assertEqual(first["turns"][0]["english"], "Do you understand the message?")
 
+    def test_locative_marker_never_teaches_destination_as_location(self):
+        # Canonical "en" marks where an event occurs, not a motion goal.
+        # Do not teach "go to X" using "gos en X" before a goal marker exists.
+        for lesson in self.lessons:
+            for turn in lesson["turns"]:
+                veka = turn["veka"].lower()
+                english = turn["english"].lower()
+                with self.subTest(lesson=lesson["id"], veka=veka):
+                    self.assertNotIn(" gos en ", veka)
+                    if " en " in veka:
+                        self.assertNotIn("go to ", english)
+                        self.assertNotIn("went to ", english)
+                        self.assertNotIn("going to ", english)
+
     def test_quiz_is_reproducible_with_one_correct_answer(self):
         lesson = self.lessons[0]
         question = create_question(lesson, 1, seed=20261101)

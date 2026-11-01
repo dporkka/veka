@@ -62,6 +62,8 @@ is dependency-free, preserves canonical vocabulary and grammar, and supplies
 | adjectives after nouns | modifiers | Mi lin he mik. — I see a broken tool. |
 | wen + separate digits | exact positional number | sil wen ran dis gel su wok — 1.5 liters of water |
 
+**Location is not destination:** `en` specifies where an event occurs ("at/in"), not the endpoint of motion ("to"). The core grammar has no independently specified destination marker. Do not teach `gos en X` as "go to X" or use an inferred motion goal to quiz learners.
+
 All required verb arguments are explicit. The beginner profile does not introduce experimental ellipsis, unrestricted subordinate clauses, logical precedence shortcuts, relative references or generalized quantifier scope.
 
 ## The controlled corpus

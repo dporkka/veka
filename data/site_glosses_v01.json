@@ -2,7 +2,7 @@
   "schema_version": "veka.site-glosses.v01",
   "canonical_profile": "tonal",
   "canonical_language_version": "0.4",
-  "source_sha256": "84142a464c8e96e9052eba82601e2207df9908aaa6a6cea0032177dbbc7f9b44",
+  "source_sha256": "927005e0c9d77557334b4ad06e22e92f39f727f0dafbfe7d02be9089db356e9c",
   "languages": [
     "en",
     "zh",
@@ -1232,7 +1232,7 @@
       "id": "B05",
       "turns": [
         {
-          "veka": "Ti gos en vik ke?",
+          "veka": "Ti lol nol en vik ke?",
           "glosses": {
             "en": [
               {
@@ -1241,8 +1241,13 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "lol",
+                "gloss": "learn",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "language",
                 "gloss_language": "en"
               },
               {
@@ -1268,8 +1273,13 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
+                "token": "lol",
+                "gloss": "learn (en)",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "语言",
                 "gloss_language": "zh"
               },
               {
@@ -1295,8 +1305,13 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
+                "token": "lol",
+                "gloss": "learn (en)",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "língua",
                 "gloss_language": "pt-BR"
               },
               {
@@ -1318,7 +1333,7 @@
           }
         },
         {
-          "veka": "Mi gos en vik.",
+          "veka": "Mi lol nol en vik.",
           "glosses": {
             "en": [
               {
@@ -1327,8 +1342,13 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "lol",
+                "gloss": "learn",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "language",
                 "gloss_language": "en"
               },
               {
@@ -1349,8 +1369,13 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
+                "token": "lol",
+                "gloss": "learn (en)",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "语言",
                 "gloss_language": "zh"
               },
               {
@@ -1371,8 +1396,13 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
+                "token": "lol",
+                "gloss": "learn (en)",
+                "gloss_language": "en"
+              },
+              {
+                "token": "nol",
+                "gloss": "língua",
                 "gloss_language": "pt-BR"
               },
               {
@@ -2098,7 +2128,7 @@
           }
         },
         {
-          "veka": "Mi fu gos en vin.",
+          "veka": "Mi fu re en vin.",
           "glosses": {
             "en": [
               {
@@ -2112,8 +2142,8 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "re",
+                "gloss": "walk",
                 "gloss_language": "en"
               },
               {
@@ -2139,9 +2169,9 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
-                "gloss_language": "zh"
+                "token": "re",
+                "gloss": "walk (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -2166,9 +2196,9 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
-                "gloss_language": "pt-BR"
+                "token": "re",
+                "gloss": "walk (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -2432,7 +2462,7 @@
           }
         },
         {
-          "veka": "Mi fu gos en vin.",
+          "veka": "Mi fu soi en vin.",
           "glosses": {
             "en": [
               {
@@ -2446,8 +2476,8 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "soi",
+                "gloss": "wait",
                 "gloss_language": "en"
               },
               {
@@ -2473,9 +2503,9 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
-                "gloss_language": "zh"
+                "token": "soi",
+                "gloss": "wait (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -2500,9 +2530,9 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
-                "gloss_language": "pt-BR"
+                "token": "soi",
+                "gloss": "wait (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -4287,7 +4317,7 @@
       "id": "B15",
       "turns": [
         {
-          "veka": "Ti gos en yel ke?",
+          "veka": "Ti pau en yel ke?",
           "glosses": {
             "en": [
               {
@@ -4296,8 +4326,8 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "pau",
+                "gloss": "work",
                 "gloss_language": "en"
               },
               {
@@ -4323,9 +4353,9 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
-                "gloss_language": "zh"
+                "token": "pau",
+                "gloss": "work (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -4350,9 +4380,9 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
-                "gloss_language": "pt-BR"
+                "token": "pau",
+                "gloss": "work (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -4373,7 +4403,7 @@
           }
         },
         {
-          "veka": "Mi gos en yel.",
+          "veka": "Mi pau en yel.",
           "glosses": {
             "en": [
               {
@@ -4382,8 +4412,8 @@
                 "gloss_language": "en"
               },
               {
-                "token": "gos",
-                "gloss": "go",
+                "token": "pau",
+                "gloss": "work",
                 "gloss_language": "en"
               },
               {
@@ -4404,9 +4434,9 @@
                 "gloss_language": "zh"
               },
               {
-                "token": "gos",
-                "gloss": "去",
-                "gloss_language": "zh"
+                "token": "pau",
+                "gloss": "work (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",
@@ -4426,9 +4456,9 @@
                 "gloss_language": "pt-BR"
               },
               {
-                "token": "gos",
-                "gloss": "ir",
-                "gloss_language": "pt-BR"
+                "token": "pau",
+                "gloss": "work (en)",
+                "gloss_language": "en"
               },
               {
                 "token": "en",

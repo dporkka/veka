@@ -114,13 +114,13 @@
       "turns": [
         {
           "speaker": "A",
-          "veka": "Ti gos en vik ke?",
-          "english": "Do you go to the school?"
+          "veka": "Ti lol nol en vik ke?",
+          "english": "Do you learn a language at school?"
         },
         {
           "speaker": "B",
-          "veka": "Mi gos en vik.",
-          "english": "I go to the school."
+          "veka": "Mi lol nol en vik.",
+          "english": "I learn a language at school."
         },
         {
           "speaker": "A",
@@ -181,8 +181,8 @@
         },
         {
           "speaker": "B",
-          "veka": "Mi fu gos en vin.",
-          "english": "I will go to the park."
+          "veka": "Mi fu re en vin.",
+          "english": "I will walk in the park."
         }
       ]
     },
@@ -207,8 +207,8 @@
         },
         {
           "speaker": "B",
-          "veka": "Mi fu gos en vin.",
-          "english": "I will go to the park."
+          "veka": "Mi fu soi en vin.",
+          "english": "I will wait in the park."
         }
       ]
     },
@@ -374,13 +374,13 @@
       "turns": [
         {
           "speaker": "A",
-          "veka": "Ti gos en yel ke?",
-          "english": "Do you go to the market?"
+          "veka": "Ti pau en yel ke?",
+          "english": "Do you work at the market?"
         },
         {
           "speaker": "B",
-          "veka": "Mi gos en yel.",
-          "english": "I go to the market."
+          "veka": "Mi pau en yel.",
+          "english": "I work at the market."
         },
         {
           "speaker": "A",
