@@ -49,6 +49,23 @@ python3 -m veka beginner 'Mi pa dak mel.' --families --readings
 Canonical forms and grammar remain frozen, and comprehension benefits have
 **not** been measured. See [semantic family learning study and limits](docs/semantic_family_learning_v09.md).
 
+## Everyday-language learning and requirements (v0.9, noncanonical)
+
+A **four-level beginner lesson set** checks 16 starter examples against strict
+canonical Veka. A separate **100-scenario, two-turn English dialogue inventory**
+maps common communication requirements without inventing Veka translations or
+claiming missing grammar. Neither tool provides human comprehension evidence.
+
+```sh
+python3 -m veka learn --level 1
+python3 -m veka learn --level 4
+python3 -m veka everyday-audit
+python3 -m veka everyday-audit --domain clarification --include-items
+```
+
+See [the v0.9 everyday learnability protocol](docs/everyday_learning_v09.md).
+Canonical vocabulary and grammar remain frozen; extensions are still opt-in.
+
 **International names:** strict parsing now preserves capitalized Unicode single-token names such as `São`, `Łódź`, and `O’Connor` without changing Veka vocabulary or pronunciation. Multiword and uncased-script names require future explicitly scoped grammar. See [proper-name limitations](docs/proper_names_v09.md).
 
 ## Veka at first sight (beginner reading guide)
