@@ -39,7 +39,6 @@ from .root_sources import audit_root_sources, read_root_sources
 from .root_study import plan_root_cohorts
 
 from .root_review import build_root_review, format_root_review
-from .source_leads import read_screening_leads
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
@@ -281,7 +280,7 @@ def main(argv=None):
     t.add_argument('concept_id')
     t.add_argument('--format',choices=('json','text'),default='json')
     t.add_argument('--lang',choices=LANGUAGES,default='en',help='editorial learner word gloss language')
-    t.add_argument('--leads',default=str(DATA/'music_source_screening_v10.csv'),
+    t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'),
                    help='unreviewed source-screening leads; not donor attestations')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v10.csv'))
     t.add_argument('--priorities',default=str(DATA/'international_priorities_v10.csv'))
@@ -431,7 +430,7 @@ def main(argv=None):
             result=build_root_review(args.concept_id, read_candidates(args.candidates), lex,
                        read_review_priorities(args.priorities),
                        read_global_csv(args.evidence,EVIDENCE_FIELDS),
-                       leads=read_screening_leads(args.leads))
+                       leads=read_root_sources(args.leads))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
             if args.format=='text':

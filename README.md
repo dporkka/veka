@@ -63,8 +63,9 @@ Globasa's *check existing expressions → select donor source → define sense �
 screen exact word form* process, it exposes written near-pairs (including
 silent-hyphen overlaps), marks registered versus unverified alternatives, and
 separates language-family attestations from **independent borrowing origins**.
-It also displays the already collected five `music_source_screening_v10.csv`
-leads as **unreviewed source records**, not approved donor attestations, and
+It reuses the current `root_source_leads_v12.csv` packet (13 sourced leads
+across data, music and school), retaining the false-friend and contrasting-form
+controls as **unreviewed sources**, never approved donor attestations, and
 exposes existing English, Mandarin and Portuguese learner word-glosses with
 explicit fallback labels. It does **not** create a new word or establish
 acoustic/learner performance.

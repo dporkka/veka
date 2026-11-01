@@ -42,12 +42,16 @@ python3 -m unittest discover -s tests -p 'test_root_review_v01.py' -v
 The command accepts the existing v0.10 candidate/priorities CSV and v0.7
 cross-family evidence CSV through `--candidates`, `--priorities` and
 `--evidence`. The separate `--leads` flag defaults to
-`data/music_source_screening_v10.csv`, a five-row, source-linked research
-screening file. Its research reference `R03` joins canonical research concept
-`C002` **only via unique exact candidate spelling** `mu-si-ka` (not by
-guessing that the reference IDs are equivalent or that the source words share
-a meaning). No source-screening row can count as a verified attestation;
-only a separately reviewed `--evidence` record has that ability.
+`data/root_source_leads_v12.csv`, a 13-row source-linked research file
+already validated by Veka's `root-sources` command. The record IDs and
+candidate spellings must match the research queue exactly: four music leads,
+four data leads (including the Portuguese false friend), and five school leads.
+The review **reuses the existing** `read_root_sources` /
+`audit_root_sources` provenance contract, rather than defining an incompatible
+second CSV parser or relying on earlier R03 research IDs. Reviewed statuses
+are reporter claims, not authenticated human or semantic verification.
+No source lead is transferred into the separately maintained `--evidence`
+attestation file automatically.
 
 The optional `--lang en|zh|pt-BR` controls the readable word-gloss language.
 JSON includes all three curated word-glosses, their actual source languages,
@@ -57,8 +61,8 @@ teaching list. Word glosses are not verified sentence translations.
 The tool validates **the entire input queue, all evidence, and all source
 leads**, not merely the selected concept, to prevent malformed records from
 being silently ignored. Unknown concepts, duplicate lead languages, unknown
-candidate forms, non-HTTPS URLs, unsupported provenance statuses, and purported
-independently verified screening leads all fail closed.
+candidate forms, private/non-HTTPS URLs, unsupported provenance statuses and
+invalid claimed review records all fail closed under the shared v1.2 contract.
 
 A concept card provides:
 
@@ -73,11 +77,11 @@ A concept card provides:
   registered vocabulary from other unverified candidate forms.
 - Source attestations, including language, branch, claimed verification,
   claimed semantic equivalence and reviewer-supplied URLs/notes.
-- **Separately labeled unreviewed source-screening leads**, including both
-  related loanwords (English, Portuguese, Indonesian, Swahili) and a
-  nonmatching Mandarin form. The screened file's five entries still require
-  independent human sense, sound and borrowing-path review. An indexed search
-  result is not source-page verification.
+- **Separately labeled source-linked research leads** from the existing v1.2
+  source audit. The thirteen current records include candidate-like words,
+  a Portuguese data false-friend warning, and nonmatching Mandarin/Japanese
+  controls. All current records are pending independent review; even a future
+  reviewer-approved claim does not prove actual listener recognition.
 - Curated word-level learner glosses in English, Mandarin and Brazilian
   Portuguese, with transparent English fallback and no invented translations.
 - A mandatory unresolved etymological-independence gate. Even claims of
@@ -125,8 +129,9 @@ with collisions, compound dependencies and study results audited.
 ## Evidence boundaries
 
 The default Veka **verified-attestation** and human-trial tables are **empty**,
-so the root review contains zero verified source records but now shows five
-**unreviewed** music-screening leads. There is no established human learning
+so the root review contains zero verified source records but now displays
+**thirteen unreviewed leads across three concepts**, from the existing v1.2
+review system. There is no established human learning
 benefit, independently reviewed loanword etymology, or license to adopt forms.
 Reviewer labels are not independently authenticated; provenance URLs are
 untrusted research input, not certified source quality. The word card is

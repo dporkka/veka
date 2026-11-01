@@ -14,7 +14,7 @@ from .international_plan import build_international_plan
 from .phonology import edit_distance
 from .semantic_families import describe_family
 from .learner_locales import LANGUAGES, localized_gloss
-from .source_leads import audit_screening_leads
+from .root_sources import audit_root_sources
 
 VERSION = "veka.root-review.v01"
 
@@ -67,7 +67,31 @@ def build_root_review(concept_id: str, candidates: list[dict], lex: Lexicon,
     queue = {item["concept_id"]: item for item in plan["queue"]}
     if concept_id not in queue:
         raise VekaError(f"unknown international root concept: {concept_id}")
-    screened = audit_screening_leads(leads if leads is not None else [], candidates)
+    raw_leads = leads if leads is not None else []
+    # Reuse the canonical v1.2 source-review contract, including source URL,
+    # concept mapping, false-friend and provenance validation.
+    audit_root_sources(raw_leads, lex, candidates)
+    screened = sorted(({
+        "concept_id": row["concept_id"],
+        "research_reference_id": row["concept_id"],
+        "candidate_form": row["candidate_form"],
+        "language": row["language"],
+        "language_family": row["language_family"],
+        "language_branch": row["language_branch"],
+        "sourced_form": row["attested_form"],
+        "source_url": row["source_url"],
+        "source_access": "source_linked_research_lead",
+        "relation_to_draft": row["relation"],
+        "review_status": row["review_status"],
+        "reviewer_claim": row["reviewer"],
+        "semantic_match_claimed": row["semantic_match"],
+        "notes": row["source_note"],
+        "accepted_as_attestation": False,
+        "independent_etymology_established": False,
+        "human_recognition_measured": False,
+    } for row in raw_leads), key=lambda item: (
+        item["concept_id"], item["language"].casefold()
+    ))
     # Validate all source records against the structural candidate contracts.
     global_report = audit_global_candidates(candidates, lex, evidence)
     structural = audit_candidates(candidates, lex)
@@ -206,7 +230,7 @@ def format_root_review(report: dict, *, language: str = "en") -> str:
         'no canonical vocabulary changes or adoption approval.',
     ])
     if report["source_leads"]:
-        lines.append("Source-screening forms (none independently reviewed):")
+        lines.append("Source-linked forms (review states are unverified assertions):")
         for lead in report["source_leads"]:
             lines.append(
                 f'  {lead["language"]}: {lead["sourced_form"]} '
