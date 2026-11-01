@@ -116,6 +116,11 @@ def _read_private_rows(path: str | Path, headers: tuple[str, ...]) -> list[dict]
     return rows
 
 
+def _spreadsheet_safe(value: str) -> str:
+    """Prevent pasted participant text from activating CSV spreadsheet formulas."""
+    return "'" + value if re.match(r"^[\t\r\n ]*[=+@-]", value) else value
+
+
 def prepare_international_judge_sheet(
     key_file: str | Path, responses_file: str | Path, output_file: str | Path
 ) -> dict:
@@ -159,10 +164,11 @@ def prepare_international_judge_sheet(
             raise VekaError("invalid first-sight trial or answer-key mismatch")
         reviewed.append({
             "trial_id": row["trial_id"], "presented_form": row["presented_form"],
-            "response_gloss": row["response_gloss"], "target_gloss": target["target_gloss"],
+            "response_gloss": _spreadsheet_safe(row["response_gloss"]),
+            "target_gloss": _spreadsheet_safe(target["target_gloss"]),
             "response_ms": row["response_ms"], "prior_exposure": row["prior_exposure"],
-            "first_language": row["first_language"],
-            "language_background_family": row["language_background_family"],
+            "first_language": _spreadsheet_safe(row["first_language"]),
+            "language_background_family": _spreadsheet_safe(row["language_background_family"]),
             "timing_interrupted": row["timing_interrupted"],
             "correct": "", "repair_count": "",
         })

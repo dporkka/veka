@@ -149,6 +149,31 @@ class InternationalSessionTests(unittest.TestCase):
             with self.assertRaises(VekaError):
                 prepare_international_judge_sheet(key_file, tampered, base / "bad_judge.csv")
 
+    def test_judgment_sheet_neutralizes_spreadsheet_formulas(self):
+        visible, key = generate_recognition_manifest(self.candidates, self.lex, "VKA101")
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            key_file, response_file, judge_file = (
+                base / "key.csv", base / "responses.csv", base / "judge.csv")
+            write_csv(key_file, key)
+            responses = [{
+                "participant_id": row["participant_id"],
+                "trial_id": row["trial_id"],
+                "presented_form": row["presented_form"],
+                "response_gloss": '=HYPERLINK("https://example.org")',
+                "response_ms": "700",
+                "prior_exposure": "no",
+                "first_language": " +SUM(1,1)",
+                "language_background_family": "@IMPORTXML(1)",
+                "timing_interrupted": "no",
+            } for row in visible]
+            write_csv(response_file, responses)
+            prepare_international_judge_sheet(key_file, response_file, judge_file)
+            with judge_file.open(encoding="utf8", newline="") as stream:
+                first = next(csv.DictReader(stream))
+            for field in ("response_gloss", "first_language", "language_background_family"):
+                self.assertTrue(first[field].startswith("'"), field)
+
     def test_cli_export_no_key_leakage(self):
         with tempfile.TemporaryDirectory() as directory:
             manifest = Path(directory) / "manifest.csv"
