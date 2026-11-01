@@ -1,6 +1,12 @@
 # Veka 0.2 — per-language independent-review packets
 
-**Research-only.** Zero translations from Indonesian, Turkish, Esperanto or
+**Research-only, legacy independent-draft workflow.** Prefer the
+[candidate-bound review protocol](efficiency_candidate_review_v03.md), which
+lets two independent reviewers evaluate the same source-locked translation
+rather than requiring identical independently authored wording. This legacy
+protocol remains available for compatibility.
+
+Zero translations from Indonesian, Turkish, Esperanto or
 Interlingua have been independently checked by this repository. The CLI cannot
 recruit reviewers, verify identity/fluency, check language semantics or establish
 human learning gains. A reviewer ID is **self-declared**, not an attestation

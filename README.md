@@ -332,6 +332,26 @@ See [the dual-review workflow](docs/efficiency_review_v02.md) for
 per-language reviewer assignment, source integrity, bounded CSV validation,
 and the requirements before any authentic participant study.
 
+**Preferred v0.3 candidate-bound workflow:** a qualified author supplies one
+fixed target-language translation, then two separate reviewers assess the
+*same* candidate independently. This avoids the unrealistic requirement that
+two independent authors spontaneously produce identical wording. A source-locked
+candidate sheet is mandatory at the acceptance check; negative/uncertain
+verdicts or changed candidate text fail closed. All evidence remains
+self-attested, and no real reviews have been collected.
+
+```sh
+python3 -m veka efficiency-review-plan --language tr --reviewer tr_author --output /private/tr-candidate.csv
+# A qualified human fills target_text, leaves all verdict columns blank.
+python3 -m veka efficiency-review-bind --candidates /private/tr-candidate.csv --reviewer tr_judge_A --output /private/tr-A.csv
+python3 -m veka efficiency-review-bind --candidates /private/tr-candidate.csv --reviewer tr_judge_B --output /private/tr-B.csv
+python3 -m veka efficiency-review-check --candidates /private/tr-candidate.csv --review-a /private/tr-A.csv --review-b /private/tr-B.csv
+```
+
+See [candidate-bound independent review protocol](docs/efficiency_candidate_review_v03.md)
+for source freezing, protections against overwritten verdicts, and the exact
+limits of what this instrument can verify.
+
 ## Design objective
 
 Veka tries to minimize **total time to correctly understood meaning**, including teaching, speaking, misunderstanding and repair. It combines short syllables, highly regular grammar, fully scoped logic, exact decimal numerals, an experimental Hangul-like featural writing system, and conservative context-based omission. None of these choices have yet been shown to outperform natural languages in human trials.

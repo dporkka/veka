@@ -77,6 +77,31 @@ def build_review_packet(manifest: dict, reviewer_id: str, *, language: str | Non
     return rows
 
 
+def _validated_candidates(rows: list[dict], expected: dict) -> tuple[str, dict]:
+    """A candidate author supplies wording, never review verdicts."""
+    author, by_key = _validate_packet(rows, expected)
+    for row in by_key.values():
+        if not row["target_text"] or any(row[field] for field in (
+                "meaning_equivalent", "natural", "critical_ambiguity")):
+            raise VekaError("candidate sheet requires complete text and no reviewer verdicts")
+    return author, by_key
+
+
+def build_candidate_rating_packet(manifest: dict, candidates: list[dict],
+                                  reviewer_id: str) -> list[dict[str, str]]:
+    """Bind both reviewers to the same independently authored candidate wording."""
+    expected = _items(manifest)
+    author, by_key = _validated_candidates(candidates, expected)
+    if reviewer_id == author:
+        raise VekaError("candidate author cannot review their own wording")
+    active = {lang for _, lang in by_key}
+    language = next(iter(active)) if len(active) == 1 else None
+    rows = build_review_packet(manifest, reviewer_id, language=language)
+    for row in rows:
+        row["target_text"] = by_key[(row["item_id"], row["language"])]["target_text"]
+    return rows
+
+
 def write_review_packet(rows: list[dict[str, str]], output: str | Path) -> None:
     """Refuse overwrites and restrict reviewer material to the owning user."""
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
@@ -151,8 +176,9 @@ def _validate_packet(rows: list[dict], expected: dict) -> tuple[str, dict]:
         if row["critical_ambiguity"] not in ("", "yes", "no", "uncertain"):
             raise VekaError("invalid ambiguity verdict")
         notes = row["review_notes"]
-        if len(notes) > 400 or any(not ch.isprintable() for ch in notes):
-            raise VekaError("review notes must be printable, bounded")
+        if (len(notes) > 400 or any(not ch.isprintable() for ch in notes)
+                or notes.lstrip().startswith(("=", "+", "-", "@"))):
+            raise VekaError("review notes must be printable, bounded and CSV-safe")
         by_key[key] = row
     active_languages = {lang for _, lang in by_key}
     if (len(active_languages) not in (1, len(REVIEW_LANGUAGES))
@@ -161,7 +187,8 @@ def _validate_packet(rows: list[dict], expected: dict) -> tuple[str, dict]:
     return reviewer, by_key
 
 
-def evaluate_reviews(a: list[dict], b: list[dict], manifest: dict | None = None) -> dict:
+def evaluate_reviews(a: list[dict], b: list[dict], manifest: dict | None = None,
+                     *, candidates: list[dict] | None = None) -> dict:
     """Agreeing attestations enable a *provisional* reviewed manifest export.
 
     Does not establish that reviewers are independent humans or correct.
@@ -174,6 +201,16 @@ def evaluate_reviews(a: list[dict], b: list[dict], manifest: dict | None = None)
         raise VekaError("two distinct pseudonymous reviewer sheets required")
     if set(rows_a) != set(rows_b):
         raise VekaError("reviewer sheets disagree on target set")
+    if candidates is not None:
+        author, candidate_rows = _validated_candidates(candidates, expected)
+        if author in (reviewer_a, reviewer_b):
+            raise VekaError("candidate author must differ from both reviewers")
+        if set(candidate_rows) != set(rows_a):
+            raise VekaError("candidate and reviewer targets differ")
+        if any(rows_a[k]["target_text"] != candidate_rows[k]["target_text"]
+               or rows_b[k]["target_text"] != candidate_rows[k]["target_text"]
+               for k in candidate_rows):
+            raise VekaError("reviewer text differs from locked candidate")
     active_languages = tuple(lang for lang in REVIEW_LANGUAGES if any(
         key[1] == lang for key in rows_a))
     result_rows = []
@@ -212,13 +249,16 @@ def evaluate_reviews(a: list[dict], b: list[dict], manifest: dict | None = None)
                 "review_id": fingerprint, "spoken_syllables": None,
                 "morphemes": None, "ambiguity_risk": None,
             }
-        reviewed["provenance"] += ("; 40 consensus translations from two self-declared "
-                                   "pseudonymous reviewers; identity unverified")
+        reviewed["provenance"] += (
+            f"; {len(accepted)} reviewed comparator candidates, "
+            + ("from a source-locked author sheet" if candidates is not None
+               else "with matching independently supplied wording")
+            + "; two self-declared reviewer IDs, identity unverified")
         audit_efficiency(reviewed)
     return {
         "schema_version": "veka.efficiency-review.v02",
         "languages": list(active_languages), "items": len(expected),
-        "review_sheets_supplied": 2,
+        "review_sheets_supplied": 2, "candidate_source_locked": candidates is not None,
         "accepted": len(accepted),
         "pending": sum(row["status"] == "pending" for row in result_rows),
         "blocked": sum(row["status"] == "blocked" for row in result_rows),
