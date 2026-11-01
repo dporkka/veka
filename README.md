@@ -27,7 +27,7 @@ Run a zero-dependency local web learner from the repository root:
 
     python -m http.server 8765 --bind 127.0.0.1
 
-Visit http://127.0.0.1:8765/site/. The [25 four-turn exchanges](data/beginner_dialogues_v01.json) contain 100 strict-grammar-checked Veka sentences with editorial English interpretations. The [browser learner](site/index.html) offers reading and multiple-choice practice. These are **controlled exercises, not evidence of natural fluency or human comprehension**. No locked grammar or vocabulary is changed.
+Visit http://127.0.0.1:8765/site/. The [25 four-turn exchanges](data/beginner_dialogues_v01.json) contain 100 strict-grammar-checked Veka sentences with editorial English interpretations. The [browser learner](site/index.html) offers reading, optional English/Mandarin/Portuguese **word-level hints**, and English-only multiple-choice practice; rebuild static glosses with `python3 scripts/export_site_glosses.py`. All interpretations are editorial, not verified translations. These are **controlled exercises, not evidence of natural fluency or human comprehension**. No locked grammar or vocabulary is changed.
 
 **Licensing decision still required:** [distribution licensing action items](docs/licensing_decision.md). No license is implicitly granted by the learner application.
 
@@ -48,6 +48,25 @@ python3 -m veka register-check 'Mi fok mel.' --profile toneless --max-register r
 
 **Parser acceptance is not human comprehension or safety validation.** See
 [register semantics and limitations](docs/registers_v08.md).
+
+## Lojban-inspired semantic scope (opt-in; no language changes)
+
+The new `semantic` CLI projects **already-valid canonical** Veka into an
+inspectable predicate/argument tree. It shows why `ne` inside a quantified
+clause differs from a fully scoped `na ... yu`, labels a few reviewed
+predicate places (other verbs retain subject/object labels), and expands
+existing transparent noun compounds into their component tokens. There are
+**no** new particles, dictionary entries, or mandatory spoken constructions.
+
+```sh
+python3 -m veka semantic 'Al ren ne gos.'
+python3 -m veka semantic 'Na al ren gos yu.'
+python3 -m veka semantic 'Mi dak mel to ti en pas sun.'
+```
+
+This is structural annotation, not real-world truth evaluation or evidence of
+improved listener comprehension. Multiple quantified participants and
+quantified possessors fail closed. Read the [semantic scope specification](docs/semantic_scope_v01.md).
 
 ## Interlingua-inspired learning aids (opt-in; no language changes)
 
@@ -104,6 +123,27 @@ See [the beginner guide](docs/first_sight_guide.md) for a short lesson and
 practice sentences. This is a presentation improvement, **not** evidence
 that Veka is as immediately recognizable as Interlingua or that new word
 forms are accepted into its grammar.
+
+## English / Mandarin / Brazilian Portuguese learning aids
+
+First-sight teaching is available in three languages, without changing Veka
+vocabulary, grammar, or tonal profile. The ten progressive lessons include
+strictly parsed Veka examples and curated editorial sentence translations.
+Unsupported words in localized interlinear output are **explicitly** marked
+as English fallbacks, never silently translated.
+
+```sh
+python3 -m veka lessons --lang en
+python3 -m veka lessons --lang zh
+python3 -m veka lessons --lang pt-BR
+python3 -m veka beginner 'Mi pa dak mel.' --lang zh
+python3 -m veka beginner 'Mi pa dak mel.' --lang pt-BR --format json
+python3 -m veka learner-audit --profile tonal
+```
+
+The learner audit reports *structural pronunciation review candidates*, not
+acoustic risk scores or actual speaker errors. There are **no human study
+results**. See [multilingual first-sight learning](docs/learning_en_zh_pt_v09.md).
 
 ## Design objective
 

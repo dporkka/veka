@@ -29,6 +29,7 @@ button:focus-visible, select:focus-visible, input:focus-visible + span { outline
 .speaker { flex: 0 0 1.5rem; font-weight: 800; color: var(--primary); }
 .veka { font-size: 1.12rem; font-weight: 650; }
 .english { display: block; color: var(--sub); font-size: .94rem; margin-top: .15rem; }
+.word-gloss { display:block; margin-top:.35rem; font-size:.91rem; line-height:1.65; color:var(--primary); overflow-wrap:anywhere; }
 .choice { display: flex; gap: .75rem; border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; margin: .55rem 0; cursor: pointer; }
 .choice:has(input:checked) { border-color: var(--primary); background: var(--accent); }
 .choice input { accent-color: var(--primary); }
@@ -52,6 +53,14 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
   <section class="controls" aria-label="Choose lesson">
     <label for="lesson-picker">Choose a beginner lesson</label>
     <select id="lesson-picker" disabled><option>Loading lessons…</option></select>
+    <label for="gloss-picker" style="display:block;margin-top:1rem">Word-by-word hints</label>
+    <select id="gloss-picker" disabled>
+      <option value="off">Off</option>
+      <option value="en">English</option>
+      <option value="zh">中文 — Mandarin</option>
+      <option value="pt-BR">Português (Brasil)</option>
+    </select>
+    <p class="muted">Hints are word-level editorial glosses, not complete sentence translations. Some words have labeled English fallbacks; the quiz and sentence interpretations remain English-only and unreviewed.</p>
     <p class="muted">Four short turns per lesson, using the frozen 0.4 vocabulary and strict 0.3 grammar. English interpretations are editorial.</p>
   </section>
   <section aria-labelledby="lesson-title" id="reader">
@@ -88,6 +97,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
 "use strict";
 (() => {
   const picker = document.getElementById("lesson-picker");
+  const glossPicker = document.getElementById("gloss-picker");
   const reader = document.getElementById("reader");
   const dialogue = document.getElementById("dialogue");
   const quiz = document.getElementById("quiz");
@@ -99,6 +109,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
   const next = document.getElementById("next-question");
   const check = document.getElementById("check-answer");
   let lessons = [];
+  let glossLessons = [];
   let reveal = true;
   let lesson = null;
   let index = 0;
@@ -125,7 +136,8 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
     if (!lesson) return;
     document.getElementById("lesson-title").textContent = lesson.id + " · " + lesson.title;
     dialogue.replaceChildren();
-    lesson.turns.forEach(turn => {
+    const glossLesson = glossLessons.find(item => item.id === lesson.id);
+    lesson.turns.forEach((turn, turnIndex) => {
       const row = node("div", undefined, "turn");
       const initials = node("span", turn.speaker, "speaker");
       initials.setAttribute("aria-label", "Speaker " + turn.speaker);
@@ -134,6 +146,12 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
       const meaning = node("span", turn.english, "english");
       meaning.hidden = !reveal;
       text.append(meaning);
+      if (glossPicker.value !== "off") {
+        const glossWords = glossLesson.turns[turnIndex].glosses[glossPicker.value];
+        const hint = node("span", glossWords.map(word => word.token + " [" + word.gloss + "]").join(" "), "word-gloss");
+        hint.setAttribute("aria-label", "Word-by-word hints, not a sentence translation");
+        text.append(hint);
+      }
       row.append(initials, text);
       dialogue.append(row);
     });
@@ -181,6 +199,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
     drawLesson();
     leaveQuiz();
   });
+  glossPicker.addEventListener("change", drawLesson);
   toggle.addEventListener("click", () => {
     reveal = !reveal;
     drawLesson();
@@ -224,14 +243,42 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
     drawQuestion();
   });
 
-  fetch("../data/beginner_dialogues_v01.json", {cache:"no-store"})
-    .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
-    .then(data => {
+  function fetchJson(path) {
+    return fetch(path, {cache:"no-store"})
+      .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); });
+  }
+  Promise.all([
+    fetchJson("../data/beginner_dialogues_v01.json"),
+    fetchJson("../data/site_glosses_v01.json")
+  ])
+    .then(([data, packet]) => {
       if (data.schema_version !== "veka.beginner-dialogues.v01" ||
           data.canonical_profile !== "tonal" || !Array.isArray(data.lessons)) {
         throw new Error("Unsupported beginner curriculum");
       }
+      if (packet.schema_version !== "veka.site-glosses.v01" ||
+          packet.canonical_profile !== "tonal" ||
+          packet.canonical_language_version !== data.canonical_language_version ||
+          packet.human_comprehension_validated !== false ||
+          packet.canonical_vocabulary_changed !== false ||
+          !Array.isArray(packet.lessons) || packet.lessons.length !== data.lessons.length ||
+          !Array.isArray(packet.languages) || ["en","zh","pt-BR"].some(lang => !packet.languages.includes(lang)) ||
+          !data.lessons.every((item, i) => {
+            const counterpart = packet.lessons[i];
+            return counterpart && counterpart.id === item.id &&
+              Array.isArray(counterpart.turns) && counterpart.turns.length === item.turns.length &&
+              item.turns.every((turn, n) => {
+                const match = counterpart.turns[n];
+                return match && match.veka === turn.veka &&
+                  packet.languages.every(lang => Array.isArray(match.glosses?.[lang]) &&
+                    match.glosses[lang].length > 0 &&
+                    match.glosses[lang].every(w => typeof w.token === "string" && typeof w.gloss === "string"));
+              });
+          })) {
+        throw new Error("Mismatched or invalid word-gloss export");
+      }
       lessons = data.lessons;
+      glossLessons = packet.lessons;
       picker.replaceChildren();
       lessons.forEach(item => {
         const option = document.createElement("option");
@@ -240,6 +287,7 @@ footer { max-width: 920px; margin: 0 auto 2rem; padding: 0 1rem; color: var(--su
         picker.append(option);
       });
       picker.disabled = false;
+      glossPicker.disabled = false;
       toggle.disabled = false;
       start.disabled = false;
       drawLesson();

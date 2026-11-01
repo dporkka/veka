@@ -28,6 +28,26 @@ The **dependency-free local web learner** uses the same curriculum as the CLI. F
 
 Open http://127.0.0.1:8765/site/ in a browser. Do not open the HTML via the file:// protocol because the page fetches JSON over HTTP. No analytics, external libraries, synthesis, network AI or learner-response uploads are included. The browser tracks quiz progress only in memory for the current session.
 
+The browser now has an optional **Word-by-word hints** selector for English,
+Mandarin Chinese, and Brazilian Portuguese. These hints come from the already
+implemented `veka.learner_locales` curated dictionary and the strict core
+parser, not from a translation service. Some unfamiliar terms remain clearly
+marked English fallbacks. The sentence interpretations and quizzes are still
+**English-only, unreviewed editorial exercises**; switching the hint language
+does not translate them. The page verifies that every displayed Veka sentence
+matches its gloss export before enabling lessons.
+
+When maintaining the curriculum or curated teaching glossary, rebuild the
+checked-in static asset from the repository root:
+
+    python3 scripts/export_site_glosses.py
+    python3 -m unittest discover -s tests -p 'test_site_glosses_v01.py' -v
+
+The resulting `data/site_glosses_v01.json` records its source corpus hash,
+all 25 lesson IDs and all 100 canonical utterances. The build/check process
+is dependency-free, preserves canonical vocabulary and grammar, and supplies
+**no evidence of accurate sentence translations or human comprehension**.
+
 ## Beginner grammar
 
 | Syntax | Meaning | Sample |
