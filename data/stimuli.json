@@ -1,0 +1,336 @@
+[
+  {
+    "meaning": "I will send you the message tomorrow",
+    "explicit": "Mi fu dak mel to ti sun.",
+    "compact": "Fu dak sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    }
+  },
+  {
+    "meaning": "I received the message",
+    "explicit": "Mi pa ton mel.",
+    "compact": "Pa ton mel.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You saw the garden",
+    "explicit": "Ti pa lin pal.",
+    "compact": "Pa lin pal.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "pal"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I see the hill",
+    "explicit": "Mi lin pál.",
+    "compact": "Lin pál.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "pál"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You went",
+    "explicit": "Ti pa gos.",
+    "compact": "Pa gos.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "We will arrive tomorrow",
+    "explicit": "Ni fu kon sun.",
+    "compact": "Fu kon sun.",
+    "context": {
+      "subjects": [
+        "ni"
+      ],
+      "objects": [],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I am speaking now",
+    "explicit": "Mi du vak nal.",
+    "compact": "Du vak nal.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I found the message",
+    "explicit": "Mi pa fen mel.",
+    "compact": "Pa fen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I do not understand the message",
+    "explicit": "Mi ne sen mel.",
+    "compact": "Ne sen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You will need water",
+    "explicit": "Ti fu rin sil.",
+    "compact": "Fu rin sil.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "sil"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I sent the message to you",
+    "explicit": "Mi pa dak mel to ti.",
+    "compact": "Pa dak.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    }
+  },
+  {
+    "meaning": "I trust you",
+    "explicit": "Mi vén ti.",
+    "compact": "Vén ti.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "ti"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I remembered the message",
+    "explicit": "Mi pa pái mel.",
+    "compact": "Pa pái.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You are doing the task",
+    "explicit": "Ti du tas hai.",
+    "compact": "Du tas.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "hai"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I see the clear message",
+    "explicit": "Mi lin mel kal.",
+    "compact": "Lin mel kal.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You will go tomorrow",
+    "explicit": "Ti fu gos sun.",
+    "compact": "Fu gos sun.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I will arrive tomorrow",
+    "explicit": "Mi fu kon sun.",
+    "compact": "Fu kon sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You found the garden",
+    "explicit": "Ti pa fen pal.",
+    "compact": "Pa fen pal.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "pal"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I needed water",
+    "explicit": "Mi pa rin sil.",
+    "compact": "Pa rin.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "sil"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I do not see the hill",
+    "explicit": "Mi ne lin pál.",
+    "compact": "Ne lin pál.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "pál"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "You will send me the message tomorrow",
+    "explicit": "Ti fu dak mel to mi sun.",
+    "compact": "Fu dak sun.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "mi"
+      ]
+    }
+  },
+  {
+    "meaning": "I understood the message",
+    "explicit": "Mi pa sen mel.",
+    "compact": "Pa sen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  },
+  {
+    "meaning": "I will not be sending you the message tomorrow",
+    "explicit": "Mi fu du ne dak mel to ti sun.",
+    "compact": "Fu du ne dak sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    }
+  },
+  {
+    "meaning": "Did you not receive the message?",
+    "explicit": "Ti pa ne ton mel ke?",
+    "compact": "Pa ne ton ke?",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    }
+  }
+]

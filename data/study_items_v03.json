@@ -1,0 +1,512 @@
+[
+  {
+    "item_id": "ellipsis-01",
+    "category": "ellipsis",
+    "meaning": "I will send you the message tomorrow",
+    "explicit": "Mi fu dak mel to ti sun.",
+    "compact": "Fu dak sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-02",
+    "category": "ellipsis",
+    "meaning": "I received the message",
+    "explicit": "Mi pa ton mel.",
+    "compact": "Pa ton mel.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-03",
+    "category": "ellipsis",
+    "meaning": "You saw the garden",
+    "explicit": "Ti pa lin pal.",
+    "compact": "Pa lin pal.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "pal"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-04",
+    "category": "ellipsis",
+    "meaning": "I see the hill",
+    "explicit": "Mi lin pál.",
+    "compact": "Lin pál.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "pál"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-05",
+    "category": "ellipsis",
+    "meaning": "You went",
+    "explicit": "Ti pa gos.",
+    "compact": "Pa gos.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-06",
+    "category": "ellipsis",
+    "meaning": "We will arrive tomorrow",
+    "explicit": "Ni fu kon sun.",
+    "compact": "Fu kon sun.",
+    "context": {
+      "subjects": [
+        "ni"
+      ],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-07",
+    "category": "ellipsis",
+    "meaning": "I am speaking now",
+    "explicit": "Mi du vak nal.",
+    "compact": "Du vak nal.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-08",
+    "category": "ellipsis",
+    "meaning": "I found the message",
+    "explicit": "Mi pa fen mel.",
+    "compact": "Pa fen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-09",
+    "category": "ellipsis",
+    "meaning": "I do not understand the message",
+    "explicit": "Mi ne sen mel.",
+    "compact": "Ne sen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-10",
+    "category": "ellipsis",
+    "meaning": "You will need water",
+    "explicit": "Ti fu rin sil.",
+    "compact": "Fu rin sil.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "sil"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-11",
+    "category": "ellipsis",
+    "meaning": "I sent the message to you",
+    "explicit": "Mi pa dak mel to ti.",
+    "compact": "Pa dak.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-12",
+    "category": "ellipsis",
+    "meaning": "I trust you",
+    "explicit": "Mi vén ti.",
+    "compact": "Vén ti.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "ti"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-13",
+    "category": "ellipsis",
+    "meaning": "I remembered the message",
+    "explicit": "Mi pa pái mel.",
+    "compact": "Pa pái.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-14",
+    "category": "ellipsis",
+    "meaning": "You are doing the task",
+    "explicit": "Ti du tas hai.",
+    "compact": "Du tas.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "hai"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-15",
+    "category": "ellipsis",
+    "meaning": "I see the clear message",
+    "explicit": "Mi lin mel kal.",
+    "compact": "Lin mel kal.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-16",
+    "category": "ellipsis",
+    "meaning": "You will go tomorrow",
+    "explicit": "Ti fu gos sun.",
+    "compact": "Fu gos sun.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-17",
+    "category": "ellipsis",
+    "meaning": "I will arrive tomorrow",
+    "explicit": "Mi fu kon sun.",
+    "compact": "Fu kon sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-18",
+    "category": "ellipsis",
+    "meaning": "You found the garden",
+    "explicit": "Ti pa fen pal.",
+    "compact": "Pa fen pal.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "pal"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-19",
+    "category": "ellipsis",
+    "meaning": "I needed water",
+    "explicit": "Mi pa rin sil.",
+    "compact": "Pa rin.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "sil"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-20",
+    "category": "ellipsis",
+    "meaning": "I do not see the hill",
+    "explicit": "Mi ne lin pál.",
+    "compact": "Ne lin pál.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "pál"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-21",
+    "category": "ellipsis",
+    "meaning": "You will send me the message tomorrow",
+    "explicit": "Ti fu dak mel to mi sun.",
+    "compact": "Fu dak sun.",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "mi"
+      ]
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-22",
+    "category": "ellipsis",
+    "meaning": "I understood the message",
+    "explicit": "Mi pa sen mel.",
+    "compact": "Pa sen.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-23",
+    "category": "ellipsis",
+    "meaning": "I will not be sending you the message tomorrow",
+    "explicit": "Mi fu du ne dak mel to ti sun.",
+    "compact": "Fu du ne dak sun.",
+    "context": {
+      "subjects": [
+        "mi"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": [
+        "ti"
+      ]
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "ellipsis-24",
+    "category": "ellipsis",
+    "meaning": "Did you not receive the message?",
+    "explicit": "Ti pa ne ton mel ke?",
+    "compact": "Pa ne ton ke?",
+    "context": {
+      "subjects": [
+        "ti"
+      ],
+      "objects": [
+        "mel"
+      ],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-01",
+    "category": "uncompressible_control",
+    "meaning": "The person went",
+    "explicit": "Ren pa gos.",
+    "compact": "Ren pa gos.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-02",
+    "category": "uncompressible_control",
+    "meaning": "I did not go",
+    "explicit": "Mi pa ne gos.",
+    "compact": "Mi pa ne gos.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-03",
+    "category": "uncompressible_control",
+    "meaning": "You will speak",
+    "explicit": "Ti fu vak.",
+    "compact": "Ti fu vak.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-04",
+    "category": "uncompressible_control",
+    "meaning": "Two people went",
+    "explicit": "Ren wen kuk pa gos.",
+    "compact": "Ren wen kuk pa gos.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 1
+  },
+  {
+    "item_id": "control-05",
+    "category": "uncompressible_control",
+    "meaning": "Three people went",
+    "explicit": "Ren wen zun pa gos.",
+    "compact": "Ren wen zun pa gos.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 1
+  },
+  {
+    "item_id": "control-06",
+    "category": "uncompressible_control",
+    "meaning": "The message is clear",
+    "explicit": "Mel es kal.",
+    "compact": "Mel es kal.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-07",
+    "category": "uncompressible_control",
+    "meaning": "I need water",
+    "explicit": "Mi rin sil.",
+    "compact": "Mi rin sil.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  },
+  {
+    "item_id": "control-08",
+    "category": "uncompressible_control",
+    "meaning": "The person will arrive",
+    "explicit": "Ren fu kon.",
+    "compact": "Ren fu kon.",
+    "context": {
+      "subjects": [],
+      "objects": [],
+      "recipients": []
+    },
+    "critical": 0
+  }
+]
