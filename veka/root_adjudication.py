@@ -33,8 +33,8 @@ def _validated_keys(keys: list[dict], candidates: list[dict], lex: Lexicon) -> d
     audited = audit_candidates(candidates, lex)
     usable = {item['concept_id']: item for item in audited['candidates']
               if item['status'] == 'structurally_testable'}
-    if not usable or audited['rejected_forms'] or len(usable) % 2 or not keys:
-        raise VekaError('root study requires valid experimental concepts and a private key')
+    if len(usable) < 2 or audited['rejected_forms'] or not keys:
+        raise VekaError('root study requires at least two valid experimental concepts and a private key')
     seen, participants, cells, trials = set(), defaultdict(list), Counter(), {}
     for row in keys:
         if (not isinstance(row, dict) or tuple(row) != KEY_FIELDS
@@ -66,8 +66,8 @@ def _validated_keys(keys: list[dict], candidates: list[dict], lex: Lexicon) -> d
         if (len(rows) != len(usable) or
                 {r['concept_id'] for r in rows} != set(usable) or
                 {r['background_stratum'] for r in rows} != {rows[0]['background_stratum']} or
-                Counter(r['condition'] for r in rows) !=
-                {'core': len(usable) // 2, 'candidate': len(usable) // 2}):
+                sorted(Counter(r['condition'] for r in rows).values()) !=
+                [len(usable) // 2, (len(usable) + 1) // 2]):
             raise VekaError('incomplete or inconsistent researcher assignment')
     for background, people in groups.items():
         if len(people) < 2 or len(people) % 2:

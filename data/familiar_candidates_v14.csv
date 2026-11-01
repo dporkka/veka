@@ -1,0 +1,8 @@
+concept_id,gloss,pos,core_form,domain,candidate_form,reference_spelling,status,evidence_note
+F001,music,noun,woi,familiar_pilot_v14,mu-si-ka,musica,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F002,school,noun,vik,familiar_pilot_v14,se-ko-la,escola,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F003,book,noun,sau,familiar_pilot_v14,bu-ku,buku,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F004,hospital,noun,noi,familiar_pilot_v14,os-pi-tal,hospital,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F005,camera,noun,dik,familiar_pilot_v14,ka-me-ra,camera,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F006,doctor,noun,hek,familiar_pilot_v14,dok-ta,doctor,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
+F007,metal,noun,ru,familiar_pilot_v14,me-tal,metal,unverified_draft,Editorial prototype from draft PR 46; no independent semantic or recognition evidence.
