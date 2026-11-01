@@ -58,6 +58,14 @@ root-selection or word-recognition model.
   spreadsheet.
 - Create new review sheets only, with owner-only POSIX permissions; never
   overwrite a sheet. Keep raw responses, keys and reviews private.
+- The opaque trial IDs are deterministic, unkeyed hashes, **not cryptographic
+  anonymization**. Keep the roster, participant pseudonyms, randomization seed
+  and private researcher keys restricted; reviewers with those inputs may
+  reconstruct trial associations. Do not advertise guaranteed blinding.
+- Small cohorts produce aggregate cells with only one participant per
+  condition/concept/background. These aggregates can disclose individual
+  judgments; keep all score reports private unless small cells have been
+  suppressed and an independent disclosure review approves release.
 - `prior_exposure=yes` may confound an apparent first-sight advantage. The
   tool reports such counts; it does not automatically exclude people or select
   a convenient subgroup. Exclusions must be registered **before** the study.
