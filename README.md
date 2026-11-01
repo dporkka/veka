@@ -13,6 +13,28 @@ and the [proposed Veka-T technical register](docs/technical_profile_v06.md).
 `.github/workflows/python-contract.yml` requests exact-head hosted
 regression validation for PRs and `main`; check real run results.
 
+## Source-backed international root review and study packets (v1.2, noncanonical)
+
+An explicitly **unreviewed** research packet tracks 13 sourced lexical leads
+for data, music, and school across unrelated learner backgrounds, including
+negative controls and Portuguese `data` as a likely false friend. The
+`root-sources` command validates candidate mappings, source provenance fields,
+and reviewer status without pretending a URL constitutes independent verification.
+
+```bash
+python3 -m veka root-sources
+# From a real PRIVATE pseudonymous enrollment roster; creates private files only
+python3 -m veka root-study-plan --roster /private/roster.csv \
+  --participants-dir /private/participant-packets \
+  --researcher-dir /private/researcher-keys
+```
+
+`root-study-plan` reuses the existing protected cohort file writer to prepare
+blinded, language-background-balanced participant materials comparing the eight
+experimental international root proposals to canonical Veka. It does not
+recruit participants, create responses, establish efficacy, or change any words.
+See [source review and study instructions](docs/root_sources_and_study_v12.md).
+
 ## International-root selection research (v1.1 tooling, noncanonical)
 
 The read-only `root-research` command now audits **all 317 atomic roots** and

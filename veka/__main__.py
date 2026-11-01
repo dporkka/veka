@@ -35,6 +35,8 @@ from .global_comprehension import (read_global_csv, audit_global_candidates,
                                    summarize_global_trials, EVIDENCE_FIELDS, TRIAL_FIELDS)
 from .lexical_readiness import build_lexical_readiness
 from .root_research import build_root_inventory, compare_scenarios, read_scenarios
+from .root_sources import audit_root_sources, read_root_sources
+from .root_study import plan_root_cohorts
 from .international_plan import build_international_plan, read_review_priorities
 from .language_transfer import (load_proposals, audit_proposals,
                                 read_conversation_trials, score_conversations)
@@ -249,6 +251,16 @@ def main(argv=None):
     t.add_argument('--evidence',default=str(DATA/'global_evidence_v07.csv'))
     t.add_argument('--trials',default=str(DATA/'global_trials_v07.csv'))
     t.add_argument('--output')
+    t=sub.add_parser('root-study-plan',help='prepare blinded language-stratified international-root study packets')
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--roster',required=True)
+    t.add_argument('--participants-dir',required=True)
+    t.add_argument('--researcher-dir',required=True)
+    t.add_argument('--seed',type=int,default=20261101)
+    t=sub.add_parser('root-sources',help='audit source-linked multilingual leads with independent review pending')
+    t.add_argument('--leads',default=str(DATA/'root_source_leads_v12.csv'))
+    t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
+    t.add_argument('--output')
     t=sub.add_parser('root-research',help='audit all atomic roots and optional hypothetical international forms')
     t.add_argument('--candidates',default=str(DATA/'international_candidates_v04.csv'))
     t.add_argument('--scenarios',help='optional hypothetical researcher ratings CSV, NOT human trial data')
@@ -372,6 +384,17 @@ def main(argv=None):
                                            read_global_csv(args.evidence,EVIDENCE_FIELDS))
             if args.output:
                 Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        elif args.command=='root-study-plan':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            plan=plan_root_cohorts(read_candidates(args.candidates),lex,
+                        read_cohort_roster(args.roster),seed=args.seed)
+            result=write_cohort_plan(plan,args.participants_dir,args.researcher_dir)
+        elif args.command=='root-sources':
+            lex=Lexicon.from_csv(DATA/'lexicon.csv')
+            result=audit_root_sources(read_root_sources(args.leads), lex,
+                                      read_candidates(args.candidates))
+            if args.output:
+                Path(args.output).write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
         elif args.command=='root-research':
             lex=Lexicon.from_csv(DATA/'lexicon.csv')
             candidates=read_candidates(args.candidates)
