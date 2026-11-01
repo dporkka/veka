@@ -25,6 +25,19 @@ python -m veka audit --profile toneless --top 5
 
 0.4 also tightens punctuation validation, bounds recursive possessions and verifies participant/item condition uniqueness in listening-study input. **No speaker/listener recordings or experiment outcomes have been created.**
 
+## Experimental 0.5 grammar extensions (opt-in)
+
+The reference extension now implements six regular event-derivational suffixes, a 4×6 correlative matrix, and bounded relative/propositional complements without altering the 1,025 canonical headwords. It adds `python -m veka extend`, `derive`, and `correlative` commands; the original `parse` behavior and tonal/toneless profiles remain the baseline. **No spoken-comprehension or speed advantage has been measured.**
+
+```sh
+python -m veka extend 'Ren ri wek dak mel yu pa gos.'
+python -m veka extend 'Mi sen ka ti ton mel yu.'
+python -m veka derive dak-nes
+python -m veka correlative hon-ren
+```
+
+See [Veka 0.5 grammar specification](docs/grammar_v05.md) for restrictions, semantic interpretation, and compatibility guarantees.
+
 ## Quick start (Python 3.10+, zero third-party dependencies)
 
 From the directory containing `README.md`:
